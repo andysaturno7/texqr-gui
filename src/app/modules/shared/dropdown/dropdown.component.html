@@ -1,0 +1,24 @@
+<!-- <button
+  id="button-basic"
+  class="dropdown-toggle"
+  style="color: currentColor; border: none; background: none"
+  dropdownToggle
+  aria-haspopup="true"
+  aria-expanded="false"
+  role="menubar"
+>
+</button> -->
+<span class="dropdown-toggle" dropdownToggle>
+  <ng-container *ngIf="caption">
+    {{ caption }}
+  </ng-container>
+</span>
+<ul
+  id="dropdown-basic"
+  *dropdownMenu
+  class="dropdown-menu shadow"
+  role="menu"
+  aria-labelledby="button-basic"
+>
+  <ng-content></ng-content>
+</ul>

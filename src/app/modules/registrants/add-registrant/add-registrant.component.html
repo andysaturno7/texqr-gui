@@ -1,0 +1,71 @@
+<div class="card shadow">
+  <div class="card-body">
+    <form [formGroup]="regisForm" class="row text-secondary">
+      <div class="col-sm">
+        <label class="col" for="regisName">Nombre</label>
+        <input
+          formControlName="firstName"
+          type="text"
+          class="form-control form-control-sm"
+          id="regisName"
+        />
+      </div>
+      <div class="col-sm">
+        <label class="col" for="regisLast">Apellido</label>
+        <input
+          formControlName="lastName"
+          type="text"
+          class="form-control form-control-sm"
+          id="regisLast"
+        />
+      </div>
+      <div class="col-sm">
+        <label class="col" for="regisEmail">Correo</label>
+        <input
+          formControlName="email"
+          type="email"
+          class="form-control form-control-sm"
+          id="regisEmail"
+        />
+      </div>
+      <div class="col-sm">
+        <label class="col" for="regisCompany">Empresa</label>
+        <input
+          formControlName="company"
+          type="text"
+          class="form-control form-control-sm"
+          id="regisCompany"
+        />
+      </div>
+      <div class="col-sm">
+        <label class="col" for="regisChair">Silla</label>
+        <input
+          formControlName="chair"
+          type="text"
+          class="form-control form-control-sm"
+          id="regisChair"
+        />
+      </div>
+      <div class="col-sm">
+        <label class="col" for="regisCode">Código</label>
+        <input
+          formControlName="code"
+          type="text"
+          class="form-control form-control-sm"
+          id="regisCode"
+        />
+      </div>
+      <div class="col-sm">
+        <label style="opacity: 0">A</label>
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm col-sm"
+          [disabled]="regisForm.invalid"
+          (click)="send()"
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

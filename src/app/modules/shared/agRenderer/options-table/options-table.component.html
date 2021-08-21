@@ -1,0 +1,13 @@
+<span [style]="'float: ' + text">
+  <i [class]="'fa fa-circle text-' + connected"></i>
+  <i
+    class="fa fa-pencil text-primary ml-2"
+    (click)="editItem()"
+    role="button"
+  ></i>
+  <i
+    class="fa fa-trash text-secondary ml-2"
+    (click)="deleteItem()"
+    role="button"
+  ></i>
+</span>

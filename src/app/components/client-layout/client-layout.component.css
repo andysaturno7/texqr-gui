@@ -1,0 +1,60 @@
+.menu-toggle {
+  display: none;
+}
+
+.side-client {
+  width: 13%;
+  position: relative;
+  margin: 0;
+  display: inline-block;
+  transform: translate(0, 0, 0);
+  transition: none;
+}
+
+.fa {
+  font-size: 26px;
+}
+
+.main-client {
+  width: 87%;
+  display: inline-block;
+}
+
+.close-menu {
+  display: none;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    position: absolute;
+  }
+
+  .side-client {
+    z-index: 10;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease-in;
+  }
+
+  .main-client {
+    width: 100% !important;
+    padding-top: 25px !important;
+  }
+
+  input[type="checkbox"]:checked ~ .side-client {
+    transform: translateX(0%);
+  }
+
+  .close-menu {
+    display: block;
+    float: right;
+  }
+}

@@ -1,0 +1,44 @@
+<div class="ag-theme-balham card shadow">
+  <div class="card-header">
+    <span style="float: right; font-size: 1.2rem" class="text-primary">
+      <i
+        class="fa fa-ban"
+        role="button"
+        title="Eliminar Registro"
+        (click)="dropDB()"
+      ></i>
+      <i class="fa fa-plus ml-3" role="button" title="Añadir Nuevo"></i>
+      <i
+        class="fa fa-upload ml-3"
+        role="button"
+        (click)="importDB()"
+        title="Importar"
+      ></i>
+      <i
+        class="fa fa-file-excel-o ml-3"
+        role="button"
+        (click)="exportTable()"
+        title="Exportar como CSV"
+      ></i>
+      <i class="fa fa-ellipsis-v ml-3" role="button"></i>
+    </span>
+  </div>
+  <ag-grid-angular
+    #agGrid
+    style="height: 480px; font-size: 1rem"
+    [rowData]="registrants"
+    [context]="context"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [enableRangeSelection]="true"
+    [rowSelection]="'multiple'"
+    [suppressRowClickSelection]="true"
+    [autoGroupColumnDef]="{ minWidth: 200 }"
+    [editType]="'fullRow'"
+    [pagination]="true"
+    [paginationAutoPageSize]="true"
+    (rowValueChanged)="inlineUpdate($event)"
+    (gridReady)="onGridReady($event)"
+  >
+  </ag-grid-angular>
+</div>

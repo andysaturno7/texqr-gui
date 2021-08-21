@@ -1,0 +1,59 @@
+<div class="w-100 logo-container">
+  <img
+    src="assets/img/logo.png"
+    alt="logo"
+    style="max-height: 80px; width: auto"
+  />
+</div>
+<div
+  class="nav flex-column nav-pills"
+  role="tablist"
+  aria-orientation="vertical"
+>
+  <a
+    class="nav-link"
+    routerLink="client"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-dashboard"></i> Dashboard</a
+  >
+  <a
+    class="nav-link"
+    routerLink="salas"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-bookmark"></i> Salas</a
+  >
+  <a
+    class="nav-link"
+    routerLink="equipos"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-feed"></i> Equipos</a
+  >
+  <a
+    class="nav-link"
+    routerLink="registro"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-address-book"></i> Registro</a
+  >
+  <a
+    class="nav-link"
+    routerLink="asistencia"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-check"></i> Asistencia</a
+  >
+  <a
+    class="nav-link"
+    routerLink="settings"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-wrench"></i> Configuración</a
+  >
+</div>
+
+<div class="barb-container">
+  <img src="assets/img/barb.png" /> <span>Andy Development</span>
+</div>

@@ -1,0 +1,15 @@
+<div class="w-100 m-0" style="height: 100vh">
+  <label #label_menu for="menu-active" class="menu-toggle"
+    ><i class="fa fa-bars text-info p-2" role="button" aria-hidden="true"></i
+  ></label>
+  <input #cb_menu type="checkbox" id="menu-active" />
+  <div class="p-0 bg-light h-100 side-client shadow" style="overflow: auto">
+    <label for="menu-active" class="close-menu p-2" role="button">
+      <i class="fa fa-close"></i>
+    </label>
+    <side-client (selected)="label_menu.click()"></side-client>
+  </div>
+  <div class="p-0 h-100 main-client">
+    <main-client></main-client>
+  </div>
+</div>

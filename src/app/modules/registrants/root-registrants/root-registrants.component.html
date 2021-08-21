@@ -1,0 +1,35 @@
+<div class="row mb-2">
+  <div class="col">
+    <add-registrant></add-registrant>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <registrant-table (QREvent)="seeQR($event)"></registrant-table>
+  </div>
+</div>
+
+<ng-container *ngIf="qrData">
+  <div
+    class="bg-white shadow card animate__animated animate__fadeIn qr-container"
+    draggable="true"
+  >
+    <div>
+      <h5 class="text-right">
+        <i class="fa fa-close mr-2" (click)="closeQR()" role="button"></i>
+      </h5>
+    </div>
+    <div class="card-body p-2">
+      <qrcode
+        #qr
+        [qrdata]="qrData"
+        [margin]="1"
+        [elementType]="'img'"
+        [width]="200"
+        (click)="downloadQR($event)"
+        role="button"
+        title="Descargar"
+      ></qrcode>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+.frame-brand {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  padding: 3px;
+  padding-left: 5px;
+  color: aliceblue;
+}
+
+.table th {
+  border: none;
+}
+
+.ag-center-cols-container {
+  width: 100% !important;
+}
+
+.ag-row:hover {
+  background-color: rgba(0, 0, 0, 0.075) !important;
+}
+
+.ag-input-field-input {
+  padding: 6px !important;
+  border-radius: 3px !important;
+  border-color: #49505770 !important;
+  color: #495057 !important;
+  outline: 0 !important;
+  line-height: 20px !important;
+}
+
+.ag-input-field-input:focus {
+  border-color: #80bdff !important;
+  box-shadow: 0 -0.1rem 0.5rem 0 rgba(0, 123, 255, 0.25) !important;
+  background-color: #fff !important;
+  outline: 0 !important;
+}
+
+.ag-cell-inline-editing {
+  border: none !important;
+  border-radius: 3px !important;
+  outline: 0 !important;
+  overflow: visible !important;
+}
+
+.ag-cell-focus {
+  border: none !important;
+}

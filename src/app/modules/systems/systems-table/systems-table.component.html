@@ -1,0 +1,28 @@
+<div class="table-responsive card card-body shadow">
+  <table class="table table-white table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>id</th>
+        <th>Nombre</th>
+        <th>Sala</th>
+        <th>Address</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="systems">
+        <tr *ngFor="let i of systems">
+          <td><i class="fa fa-television"></i></td>
+          <td>{{ i.id }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.room.name }}</td>
+          <td>{{ i.address }}</td>
+          <td>
+            <i class="fa fa-pencil text-success"></i>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

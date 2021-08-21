@@ -1,0 +1,20 @@
+<div class="ag-theme-balham card" style="height: 100%">
+  <div class="card-header">
+    <h5 class="text-right">
+      <i
+        class="fa fa-file-excel-o text-success"
+        (click)="exportTable()"
+        title="Exportar como CSV"
+        role="button"
+      ></i>
+    </h5>
+  </div>
+  <ag-grid-angular
+    #agGrid
+    style="height: 100%"
+    [rowData]="asistanceData"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+  >
+  </ag-grid-angular>
+</div>

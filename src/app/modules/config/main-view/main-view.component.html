@@ -1,0 +1,19 @@
+<ng-container *ngIf="ip; else noIP">
+  <ng-container *ngFor="let item of ip; let i = index">
+    <div class="card-body">
+      <b>{{ i + 1 }}. {{ item.type }}:</b>
+      <div>
+        <ng-container *ngFor="let k of item | keyvalue">
+          <ng-container *ngIf="k.key !== 'type'">
+            <div class="row">
+              <b class="mx-2">{{ k.key }}: </b>
+              <span>{{ k.value }}</span>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #noIP>No está conectado a ninguna red</ng-template>
