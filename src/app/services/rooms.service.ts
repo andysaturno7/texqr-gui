@@ -5,13 +5,13 @@ import { ElectronService } from './electron.service';
 export interface Room {
   id?: number;
   name: string;
-  capacity: number;
+  capacity?: number;
   isDefaultRoom: boolean;
   clientSystems?: any[];
   Registrants?: any[];
   Asistances?: any[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 @Injectable({
@@ -40,6 +40,12 @@ export class RoomsService {
       this._electron.invoke('get_rooms', null).then((rooms: Room[]) => {
         this.rooms$.next(rooms);
       });
+    }
+  }
+
+  addRoom(room){
+    if(this._electron.isElectron()){
+      return this._electron.invoke('add_room', room);
     }
   }
 }
