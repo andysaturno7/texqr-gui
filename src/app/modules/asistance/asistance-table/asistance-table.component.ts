@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
+import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { AsistanceService } from 'src/app/services/asistance.service';
 
@@ -33,7 +34,7 @@ export class AsistanceTableComponent
     { field: 'Registrant.firstName', headerName: 'Nombre' },
     { field: 'Registrant.lastName', headerName: 'Apellido' },
     { field: 'Room.name', headerName: 'Sala' },
-    { field: 'joinTime', headerName: 'Entrada', filter: false },
+    { field: 'joinTime', headerName: 'Entrada', filter: false, cellRenderer: this.DateRender },
     { field: 'leaveTime', headerName: 'Salida', filter: false },
     { field: 'updatedAt', headerName: 'Actualizado', filter: false },
   ];
@@ -73,5 +74,12 @@ export class AsistanceTableComponent
 
   exportTable() {
     this.table.api.exportDataAsCsv({ fileName: 'asistanceReport' });
+  }
+
+  DateRender(params: ICellRendererParams) {
+    let date = new Date(params.value).toLocaleString();
+    return `
+      ${date}
+    `;
   }
 }
