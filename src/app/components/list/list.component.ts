@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ElectronService } from 'src/app/services/electron.service';
 
 @Component({
   selector: 'app-list',
@@ -7,8 +6,6 @@ import { ElectronService } from 'src/app/services/electron.service';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
-  isElectron: any = null;
-
   participants: string[] = [
     'Andy Gabriel Sanchez Sandoval',
     'Gabrielon',
@@ -22,9 +19,7 @@ export class ListComponent implements OnInit {
 
   n: number;
 
-  constructor(private _electron: ElectronService) {
-    this.isElectron = _electron.isElectron();
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 

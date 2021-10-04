@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ElectronService } from './electron.service';
 import { environment } from '../../environments/environment';
 
 export interface Room {
@@ -24,11 +23,7 @@ export class RoomsService {
   private rooms$: BehaviorSubject<Room[]> = new BehaviorSubject([]);
   public rooms: Observable<Room[]> = this.rooms$.asObservable();
 
-  constructor(private _electron: ElectronService, private http: HttpClient) {
-    if (_electron.isElectron()) {
-      this.invokeRooms();
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   setRooms(rooms: Room[]) {
     this.rooms$.next(rooms);
