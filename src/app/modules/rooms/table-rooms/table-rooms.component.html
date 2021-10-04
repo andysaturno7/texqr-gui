@@ -26,7 +26,11 @@
             <td class="text-danger">pendiente</td>
             <td class="text-right">
               <i class="fa fa-pencil text-success mx-2" role="button"></i>
-              <i class="fa fa-trash text-danger mx-2" role="button"></i>
+              <i
+                class="fa fa-trash text-danger mx-2"
+                role="button"
+                (click)="delete(room.id)"
+              ></i>
             </td>
           </tr>
         </ng-container>

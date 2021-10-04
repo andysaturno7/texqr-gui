@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ElectronService } from './electron.service';
 
 @Injectable({
@@ -24,17 +25,10 @@ export class AsistanceService {
   );
   public asistance: Observable<any> = this.asistance$.asObservable();
 
-  constructor(private _electron: ElectronService, private http: HttpClient) {
-    if (_electron.isElectron()) {
-      this._electron
-        .invoke('get_asistance_count', null)
-        .then((res) => {
-          this.data$.next(res);
-        })
-        .catch((err: Error) => {
-          console.error(err);
-        });
-    }
+  private uri: string;
+
+  constructor(private http: HttpClient) {
+    this.uri = environment.uri;
   }
 
   setData(newData: any) {
@@ -50,13 +44,8 @@ export class AsistanceService {
   }
 
   getAsistance(): void {
-    if (this._electron.isElectron()) {
-      this._electron
-        .invoke('get_asistance', null)
-        .then((res: any) => {
-          this.setAsistance(res);
-        })
-        .catch((err: any) => console.error(err));
-    }
+    this.http.get(this.uri + '/asistance').subscribe((res) => {
+      this.setAsistance(res);
+    }, console.log);
   }
 }

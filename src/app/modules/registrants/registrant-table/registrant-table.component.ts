@@ -124,8 +124,9 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
     `;
   }
 
-  importDB() {
-    this._registrants.import();
+  importDB(ev) {
+    let file = ev.target.files[0];
+    this._registrants.import(file);
   }
 
   exportTable() {

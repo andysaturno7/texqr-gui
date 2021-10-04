@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ElectronService } from './electron.service';
 import { Room } from './rooms.service';
+import { environment } from '../../environments/environment';
 
 export interface Registrant {
   id?: number | string;
@@ -53,48 +54,55 @@ export class RegistrantsService {
     },
   ];
 
-  private registrants$: BehaviorSubject<any> = new BehaviorSubject(
+  private registrants$: BehaviorSubject<Registrant[]> = new BehaviorSubject(
     this.sampleRegistrant
   );
-  public registrants: Observable<any> = this.registrants$.asObservable();
+  public registrants: Observable<Registrant[]> =
+    this.registrants$.asObservable();
 
-  constructor(private _electron: ElectronService) {
-    if (_electron.isElectron()) {
-      _electron.invoke('get_registrants', null).then((res) => {
-        let result = [];
-        res.forEach((element) => {
-          if (element.dataValues) {
-            result.push(element.dataValues);
-          } else {
-            result.push(element);
-          }
-        });
-        this.setRegistrants(result);
-      });
-    }
+  private uri: string;
+
+  constructor(private http: HttpClient) {
+    this.uri = environment.uri;
+    http.get(this.uri + '/registrants').subscribe((res: Registrant[]) => {
+      this.setRegistrants(res);
+    }, console.log);
   }
 
-  setRegistrants(registrants: any) {
+  setRegistrants(registrants: Registrant[]) {
     this.registrants$.next(registrants);
   }
 
-  addOne(registrant: any) {
-    this._electron.invoke('add_registrant', registrant);
+  addOne(registrant: Registrant) {
+    this.http
+      .post(this.uri + '/registrants', registrant)
+      .subscribe((res: Registrant) => {}, console.log);
   }
 
-  update(registrants: any) {
-    this._electron.invoke('update_registrants', registrants);
+  update(registrants: Registrant) {
+    this.http
+      .post(this.uri + '/registrants/update', registrants)
+      .subscribe(console.log, console.log);
   }
 
   deleteOne(id: number) {
-    this._electron.invoke('delete_registrant', id);
+    this.http.delete(this.uri + '/registrants/' + id).subscribe(console.log),
+      console.log;
   }
 
-  import() {
-    this._electron.launchImport();
+  import(file: File) {
+    const formdata = new FormData();
+    formdata.append('import', file);
+    this.http
+      .post(this.uri + '/registrants/import', formdata)
+      .subscribe(console.log, console.log);
+    return;
   }
 
   drop() {
-    this._electron.invoke('drop_registrants', null);
+    this.http
+      .delete(this.uri + '/registrants/all')
+      .subscribe(console.log, console.log);
+    return;
   }
 }

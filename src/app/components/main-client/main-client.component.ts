@@ -23,7 +23,6 @@ export class MainClientComponent implements OnInit {
   ];
 
   constructor(private _ws: SocketService) {
-    this.uri = _ws.getUriServer();
   }
 
   ngOnInit(): void {}

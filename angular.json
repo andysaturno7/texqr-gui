@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../texqr-server/src/render/main",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -118,7 +118,13 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "fervi:serve:production"
+              "devServerTarget": "fervi:serve:production",
+              "fileReplacements": [
+                {
+                   "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.prod.ts"
+                }
+             ]
             }
           }
         }

@@ -31,4 +31,10 @@ export class TableRoomsComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  delete(id) {
+    if (confirm('Estás seguro de borrar la sala?')) {
+      this._rooms.deleteRoom(id);
+    }
+  }
 }

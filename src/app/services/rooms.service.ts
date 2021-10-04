@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ElectronService } from './electron.service';
+import { environment } from '../../environments/environment';
 
 export interface Room {
   id?: number;
@@ -18,10 +20,11 @@ export interface Room {
   providedIn: 'root',
 })
 export class RoomsService {
+  uri: string = environment.uri;
   private rooms$: BehaviorSubject<Room[]> = new BehaviorSubject([]);
   public rooms: Observable<Room[]> = this.rooms$.asObservable();
 
-  constructor(private _electron: ElectronService) {
+  constructor(private _electron: ElectronService, private http: HttpClient) {
     if (_electron.isElectron()) {
       this.invokeRooms();
     }
@@ -36,16 +39,22 @@ export class RoomsService {
   }
 
   invokeRooms() {
-    if (this._electron.isElectron()) {
-      this._electron.invoke('get_rooms', null).then((rooms: Room[]) => {
-        this.rooms$.next(rooms);
-      });
-    }
+    this.http.get(this.uri + '/rooms').subscribe((rooms: Room[]) => {
+      this.setRooms(rooms);
+    });
   }
 
-  addRoom(room){
-    if(this._electron.isElectron()){
-      return this._electron.invoke('add_room', room);
-    }
+  addRoom(room: Room) {
+    this.http.post(this.uri + '/rooms', room).subscribe((addedRoom: Room) => {
+      return;
+    }, console.log);
+  }
+
+  deleteRoom(id: number) {
+    console.log(id);
+
+    this.http
+      .delete(this.uri + '/rooms/' + id)
+      .subscribe(console.log, console.log);
   }
 }

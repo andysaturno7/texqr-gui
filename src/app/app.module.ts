@@ -16,8 +16,12 @@ import { ClientLayoutComponent } from './components/client-layout/client-layout.
 import { SideClientComponent } from './components/side-client/side-client.component';
 import { MainClientComponent } from './components/main-client/main-client.component';
 import { CommonModule } from '@angular/common';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 
 declare const __dirname: any;
+let uri = environment.uri;
+const socketConfig: SocketIoConfig = {url: uri, options:{}}
 
 @NgModule({
   declarations: [
@@ -39,6 +43,7 @@ declare const __dirname: any;
     ReactiveFormsModule,
     FormsModule,
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
+    SocketIoModule.forRoot(socketConfig)
   ],
   providers: [
     {
