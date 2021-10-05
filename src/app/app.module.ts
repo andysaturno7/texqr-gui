@@ -9,6 +9,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrantsModule } from './modules/registrants/registrants.module';
 import { PreDataModule } from './modules/pre-data/pre-data.module';
+
 import { SharedModule } from './modules/shared/shared.module';
 
 import { ListComponent } from './components/list/list.component';
@@ -18,10 +19,16 @@ import { MainClientComponent } from './components/main-client/main-client.compon
 import { CommonModule } from '@angular/common';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { LibraryConfig } from './modules/authentication/models/config';
 
 declare const __dirname: any;
 let uri = environment.uri;
-const socketConfig: SocketIoConfig = {url: uri, options:{}}
+const socketConfig: SocketIoConfig = { url: uri, options: {} };
+const authConfig: LibraryConfig = {
+  authEndpoint: environment.uri + '/users/authenticate',
+  initialPage: 'admin/client',
+};
 
 @NgModule({
   declarations: [
@@ -35,7 +42,6 @@ const socketConfig: SocketIoConfig = {url: uri, options:{}}
     CommonModule,
     SharedModule,
     PreDataModule,
-    RegistrantsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -43,7 +49,8 @@ const socketConfig: SocketIoConfig = {url: uri, options:{}}
     ReactiveFormsModule,
     FormsModule,
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
-    SocketIoModule.forRoot(socketConfig)
+    SocketIoModule.forRoot(socketConfig),
+    AuthenticationModule.forRoot(authConfig),
   ],
   providers: [
     {

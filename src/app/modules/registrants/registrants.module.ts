@@ -31,7 +31,6 @@ import { AddRegistrantFormComponent } from './add-registrant-form/add-registrant
     ReactiveFormsModule,
     SharedModule,
     BsDropdownModule.forRoot(),
-    PreDataModule,
     AgGridModule.withComponents([OptionsTableComponent]),
     QRCodeModule,
   ],

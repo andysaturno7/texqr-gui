@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-sm-12">
+    <p class="text-center">
+      <img
+        src="assets/img/logo.png"
+        alt="logo"
+        style="max-height: 80px; width: auto"
+      />
+    </p>
+  </div>
+  <div class="col-sm-12">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <label>Nombre:</label>
+      <p>
+        <input class="form-control" type="text" formControlName="username" />
+      </p>
+      <label>Contraseña</label>
+      <p>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+        />
+      </p>
+
+      <div *ngIf="error" class="error">{{ error }}</div>
+
+      <div class="row col">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </div>
+    </form>
+  </div>
+</div>
