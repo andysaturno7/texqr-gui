@@ -37,4 +37,13 @@ export class TableRoomsComponent implements OnInit, OnDestroy {
       this._rooms.deleteRoom(id);
     }
   }
+
+  createMobileUrl(roomId: number | string) {
+    this._rooms
+      .createMobileUrl(roomId)
+      .then((url: string) => {
+        alert(url);
+      })
+      .catch(console.log);
+  }
 }

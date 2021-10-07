@@ -52,4 +52,13 @@ export class RoomsService {
       .delete(this.uri + '/rooms/' + id)
       .subscribe(console.log, console.log);
   }
+
+  createMobileUrl(id) {
+    return this.http
+      .get(this.uri + '/rooms/' + id + '/mobile')
+      .toPromise()
+      .then((res: any) => {
+        return `${environment.mobileUri}/?room=${res.roomId}&tk=${res.mobileToken}`;
+      });
+  }
 }

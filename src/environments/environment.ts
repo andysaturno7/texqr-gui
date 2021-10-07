@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  uri: "http://localhost:5050"
+  uri: 'http://localhost:5050',
+  mobileUri: 'https://mobile.qr.tex.cr',
 };
 
 /*

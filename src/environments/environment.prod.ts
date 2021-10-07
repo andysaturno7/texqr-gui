@@ -4,4 +4,5 @@ export const environment = {
     window.location.hostname == 'localhost'
       ? 'http://' + window.location.host
       : '',
+  mobileUri: 'https://mobile.qr.tex.cr',
 };
