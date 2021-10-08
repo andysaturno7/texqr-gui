@@ -11,9 +11,9 @@ export class AddRegistrantComponent implements OnInit {
   regisForm: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
     lastName: [''],
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email, Validators.pattern]],
     company: ['', Validators.maxLength(30)],
-    chair: ['', [Validators.maxLength(8)]],
+    country: ['', [Validators.maxLength(30)]],
     code: [''],
   });
 

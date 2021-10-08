@@ -18,6 +18,14 @@ const routes: Routes = [
         component: LoadDataViewComponent,
       },
       {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./modules/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
+        canActivate: [AuthenticationGuard],
+      },
+      {
         path: 'registro',
         loadChildren: () =>
           import('./modules/registrants/registrants.module').then(

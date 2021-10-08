@@ -11,7 +11,10 @@ import {
 import { AgGridAngular } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
-import { RegistrantsService } from 'src/app/services/registrants.service';
+import {
+  Registrant,
+  RegistrantsService,
+} from 'src/app/services/registrants.service';
 import { OptionsTableComponent } from '../../shared/agRenderer/options-table/options-table.component';
 import { QrRendererComponent } from '../../shared/agRenderer/qr-renderer/qr-renderer.component';
 
@@ -56,7 +59,7 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
     { field: 'lastName', headerName: 'Apellido' },
     { field: 'email', headerName: 'Correo' },
     { field: 'company', headerName: 'Empresa' },
-    { field: 'chair', headerName: 'Silla', maxWidth: 80 },
+    { field: 'country', headerName: 'País', maxWidth: 80 },
     {
       field: 'code',
       headerName: 'Codigo QR',
@@ -97,7 +100,7 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
   }
 
   subscribeRegistrants() {
-    return this._registrants.registrants.subscribe((res) => {
+    return this._registrants.registrants.subscribe((res: Registrant[]) => {
       this.registrants = res;
       this.cdr.detectChanges();
     });

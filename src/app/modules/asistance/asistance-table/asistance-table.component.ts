@@ -34,7 +34,11 @@ export class AsistanceTableComponent
     { field: 'Registrant.firstName', headerName: 'Nombre' },
     { field: 'Registrant.lastName', headerName: 'Apellido' },
     { field: 'Room.name', headerName: 'Sala' },
-    { field: 'joinTime', headerName: 'Entrada', filter: false, cellRenderer: this.DateRender },
+    {
+      field: 'joinTime',
+      headerName: 'Entrada',
+      filter: true,
+    },
     { field: 'leaveTime', headerName: 'Salida', filter: false },
     { field: 'updatedAt', headerName: 'Actualizado', filter: false },
   ];
@@ -64,7 +68,14 @@ export class AsistanceTableComponent
 
   subscAsistance(): Subscription {
     return this._asistance.asistance.subscribe(
-      (res) => {
+      (res: any[]) => {
+        res.forEach((asis) => {
+          asis.joinTime = new Date(asis.joinTime).toLocaleString();
+          asis.leaveTime =
+            asis.leaveTime == ''
+              ? new Date(asis.leaveTime).toLocaleString()
+              : '';
+        });
         this.asistanceData = res;
         this.cdr.detectChanges();
       },

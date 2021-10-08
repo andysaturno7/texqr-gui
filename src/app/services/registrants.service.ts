@@ -11,7 +11,7 @@ export interface Registrant {
   code?: string | number;
   email: string;
   company?: string;
-  chair?: number;
+  country?: string;
   connected: number;
   Rooms?: Room[];
 }
@@ -28,7 +28,7 @@ export class RegistrantsService {
       code: '556541',
       email: 'jdoe@mail.com',
       connected: 0,
-      chair: 21,
+      country: 'Costa Rica',
       Rooms: [
         { name: 'defaultRoom', capacity: 100, isDefaultRoom: true },
         { name: 'Sala 1', capacity: 50, isDefaultRoom: false },

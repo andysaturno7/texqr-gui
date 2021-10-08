@@ -42,4 +42,35 @@
       </tbody>
     </table>
   </div>
+  <div
+    style="display: none"
+    *ngIf="!clipboardMobileActive; else mobileTokenClipboard"
+  >
+    clipboard false
+  </div>
 </div>
+
+<ng-template #mobileTokenClipboard>
+  <div
+    class="modal-content animate__animated animate__fadeIn modal-clipboard"
+    style="width: 50%"
+  >
+    <div class="modal-header">
+      <span style="float: left">Enlace para Mobile CheckIn</span>
+      <i
+        class="fa fa-close"
+        role="button"
+        (click)="clipboardMobileActive = false"
+        style="float: right"
+      ></i>
+    </div>
+    <div class="modal-body">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="mobileToken"
+        readonly
+      />
+    </div>
+  </div>
+</ng-template>

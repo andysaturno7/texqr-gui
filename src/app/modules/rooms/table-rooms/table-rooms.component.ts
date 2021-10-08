@@ -10,6 +10,8 @@ import { Room, RoomsService } from 'src/app/services/rooms.service';
 export class TableRoomsComponent implements OnInit, OnDestroy {
   rooms: Room[];
   roomSubsc: Subscription;
+  clipboardMobileActive: boolean = false;
+  mobileToken: string = '';
 
   constructor(private _rooms: RoomsService) {}
 
@@ -42,7 +44,8 @@ export class TableRoomsComponent implements OnInit, OnDestroy {
     this._rooms
       .createMobileUrl(roomId)
       .then((url: string) => {
-        alert(url);
+        this.mobileToken = url;
+        this.clipboardMobileActive = true;
       })
       .catch(console.log);
   }

@@ -26,6 +26,10 @@
           type="email"
           class="form-control form-control-sm"
           id="regisEmail"
+          pattern="
+          /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+          1
+          /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
         />
       </div>
       <div class="col-sm">
@@ -40,16 +44,16 @@
       <div class="col-sm">
         <label class="col" for="regisChair">Silla</label>
         <input
-          formControlName="chair"
+          formControlName="country"
           type="text"
           class="form-control form-control-sm"
           id="regisChair"
         />
       </div>
       <div class="col-sm">
-        <label class="col" for="regisCode">Código</label>
+        <label class="col" for="regisCode">País</label>
         <input
-          formControlName="code"
+          formControlName="country"
           type="text"
           class="form-control form-control-sm"
           id="regisCode"

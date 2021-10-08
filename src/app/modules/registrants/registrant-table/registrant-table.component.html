@@ -11,15 +11,13 @@
       <label for="import">
         <i class="fa fa-upload ml-3" role="button" title="Importar"></i>
       </label>
-      <form method="POST">
-        <input
-          type="file"
-          name="import"
-          id="import"
-          style="display: none"
-          (change)="importDB($event)"
-        />
-      </form>
+      <input
+        type="file"
+        name="import"
+        id="import"
+        style="display: none"
+        (change)="importDB($event)"
+      />
       <i
         class="fa fa-file-excel-o ml-3"
         role="button"
