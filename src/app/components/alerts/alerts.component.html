@@ -1,0 +1,11 @@
+<div style="position: absolute; bottom: 0; right: 0; overflow: hidden">
+  <div class="alerts-container" style="margin-right: 3px">
+    <div *ngFor="let alert of alerts">
+      <div
+        class="alert alert-{{ alert.type }} animate__animated animate__fadeInUp"
+      >
+        {{ alert.message }}
+      </div>
+    </div>
+  </div>
+</div>

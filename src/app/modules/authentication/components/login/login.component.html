@@ -1,4 +1,4 @@
-<div class="row">
+<div class="container row" style="max-width: 360px">
   <div class="col-sm-12">
     <p class="text-center">
       <img
@@ -10,23 +10,27 @@
   </div>
   <div class="col-sm-12">
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <label>Nombre:</label>
       <p>
-        <input class="form-control" type="text" formControlName="username" />
+        <input
+          class="form-control"
+          type="text"
+          formControlName="username"
+          placeholder="Usuario"
+        />
       </p>
-      <label>Contraseña</label>
       <p>
         <input
           type="password"
           class="form-control"
           formControlName="password"
+          placeholder="Contraseña"
         />
       </p>
 
       <div *ngIf="error" class="error">{{ error }}</div>
 
-      <div class="row col">
-        <button type="submit" class="btn btn-primary">Entrar</button>
+      <div>
+        <button type="submit" class="w-100 btn btn-primary">Entrar</button>
       </div>
     </form>
   </div>

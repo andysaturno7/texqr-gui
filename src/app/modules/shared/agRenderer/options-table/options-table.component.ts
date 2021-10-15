@@ -28,6 +28,10 @@ export class OptionsTableComponent {
     this.params.context.componentParent.deleteItem(this.params.data.id);
   }
 
+  sendEmail() {
+    this.params.context.componentParent.sendEmail(this.params.data);
+  }
+
   alert(ctx) {
     alert(ctx);
   }

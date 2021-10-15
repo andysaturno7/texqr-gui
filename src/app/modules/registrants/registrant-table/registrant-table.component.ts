@@ -11,6 +11,7 @@ import {
 import { AgGridAngular } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { MailService } from 'src/app/services/mail.service';
 import {
   Registrant,
   RegistrantsService,
@@ -79,7 +80,8 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private _registrants: RegistrantsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private _mail: MailService
   ) {
     this.context = { componentParent: this };
   }
@@ -119,6 +121,13 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
   inlineUpdate(event: any): void {
     let data = event.data;
     this._registrants.update(data);
+  }
+
+  sendEmail(data: Registrant) {
+    if (confirm(`Deseas enviar un correo a ${data.firstName}?`)) {
+      this._mail.sendMail(data.email, data, 'Invitacion al Evento');
+    }
+    return;
   }
 
   getCodeCellRender(params: ICellRendererParams) {

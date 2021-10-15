@@ -73,8 +73,8 @@ export class AsistanceTableComponent
           asis.joinTime = new Date(asis.joinTime).toLocaleString();
           asis.leaveTime =
             asis.leaveTime == ''
-              ? new Date(asis.leaveTime).toLocaleString()
-              : '';
+              ? ''
+              : new Date(asis.leaveTime).toLocaleString();
         });
         this.asistanceData = res;
         this.cdr.detectChanges();

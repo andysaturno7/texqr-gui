@@ -21,6 +21,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { LibraryConfig } from './modules/authentication/models/config';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 declare const __dirname: any;
 let uri = environment.uri;
@@ -37,6 +38,7 @@ const authConfig: LibraryConfig = {
     ClientLayoutComponent,
     SideClientComponent,
     MainClientComponent,
+    AlertsComponent,
   ],
   imports: [
     CommonModule,
