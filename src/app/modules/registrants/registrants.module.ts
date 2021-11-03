@@ -9,7 +9,6 @@ import { AddRegistrantComponent } from './add-registrant/add-registrant.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from '../shared/dropdown/dropdown.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { RootRegistrantsComponent } from './root-registrants/root-registrants.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { OptionsTableComponent } from '../shared/agRenderer/options-table/options-table.component';

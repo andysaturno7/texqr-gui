@@ -28,7 +28,7 @@ let uri = environment.uri;
 const socketConfig: SocketIoConfig = { url: uri, options: {} };
 const authConfig: LibraryConfig = {
   authEndpoint: environment.uri + '/users/authenticate',
-  initialPage: 'admin/client',
+  initialPage: 'admin/dashboard',
 };
 
 @NgModule({

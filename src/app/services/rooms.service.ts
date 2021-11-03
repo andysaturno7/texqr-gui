@@ -53,12 +53,29 @@ export class RoomsService {
       .subscribe(console.log, console.log);
   }
 
-  createMobileUrl(id) {
+  getMobileUri(id) {
     return this.http
       .get(this.uri + '/rooms/' + id + '/mobile')
       .toPromise()
       .then((res: any) => {
-        return `${environment.mobileUri}/?room=${res.roomId}&tk=${res.mobileToken}`;
+        localStorage.setItem('mtk', res.mobileToken);
+        return localStorage.getItem('mtk');
       });
+  }
+
+  createMobileUrl(id) {
+    return new Promise((resolve, reject) => {
+      if (!!localStorage.getItem('mtk')) {
+        return resolve(
+          `${environment.mobileUri}/?room=${id}&tk=${localStorage.getItem(
+            'mtk'
+          )}`
+        );
+      } else {
+        this.getMobileUri(id).then((tk) => {
+          return resolve(`${environment.mobileUri}/?room=${id}&tk=${tk}`);
+        });
+      }
+    });
   }
 }

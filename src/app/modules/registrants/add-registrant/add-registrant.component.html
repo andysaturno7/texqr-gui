@@ -1,7 +1,7 @@
 <div class="card shadow">
   <div class="card-body">
     <form [formGroup]="regisForm" class="row text-secondary">
-      <div class="col-sm">
+      <div class="col-sm fieldForm">
         <label class="col" for="regisName">Nombre</label>
         <input
           formControlName="firstName"
@@ -10,7 +10,7 @@
           id="regisName"
         />
       </div>
-      <div class="col-sm">
+      <div class="col-sm fieldForm">
         <label class="col" for="regisLast">Apellido</label>
         <input
           formControlName="lastName"
@@ -19,7 +19,7 @@
           id="regisLast"
         />
       </div>
-      <div class="col-sm">
+      <div class="col-sm fieldForm">
         <label class="col" for="regisEmail">Correo</label>
         <input
           formControlName="email"
@@ -29,7 +29,7 @@
           pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$"
         />
       </div>
-      <div class="col-sm">
+      <div class="col-sm fieldForm">
         <label class="col" for="regisCompany">Empresa</label>
         <input
           formControlName="company"
@@ -38,7 +38,7 @@
           id="regisCompany"
         />
       </div>
-      <div class="col-sm">
+      <div class="col-sm fieldForm">
         <label class="col" for="regisChair">País</label>
         <input
           formControlName="country"
@@ -47,7 +47,7 @@
           id="regisChair"
         />
       </div>
-      <div class="col-sm">
+      <div class="col-sm fieldForm">
         <label class="col" for="regisCode">Código</label>
         <input
           formControlName="code"
@@ -56,7 +56,20 @@
           id="regisCode"
         />
       </div>
-      <div class="col-sm">
+      <ng-container *ngFor="let dynamic of dynamics">
+        <div class="col-sm fieldForm">
+          <label class="col" for="{{ dynamic.field }}">{{
+            dynamic.fieldLabel
+          }}</label>
+          <input
+            formControlName="{{ dynamic.field }}"
+            type="{{ dynamic.type }}"
+            class="form-control form-control-sm"
+            id="{{ dynamic.field }}"
+          />
+        </div>
+      </ng-container>
+      <div class="col-sm fieldForm">
         <label style="opacity: 0">A</label>
         <button
           type="submit"

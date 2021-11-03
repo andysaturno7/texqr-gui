@@ -1,12 +1,4 @@
-<h4 class="text-center">Equipos Conectados</h4>
-<div class="row">
-  <div
-    class="col-sm"
-    style="max-width: 250px; min-width: 250px"
-    *ngFor="let system of systems"
-  >
-    <div class="card card-body shadow">
-      <item-system [system]="system"></item-system>
-    </div>
-  </div>
+<h4 class="text-center">Equipos Conectados ({{ systems.length }})</h4>
+<div class="d-flex" *ngFor="let system of systems">
+  <item-system [system]="system" class="m-4"></item-system>
 </div>

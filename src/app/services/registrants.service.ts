@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Room } from './rooms.service';
 import { environment } from '../../environments/environment';
+import { Dynamic } from '../models/dynamic.interface';
 
 export interface Registrant {
   id?: number | string;
@@ -60,6 +61,9 @@ export class RegistrantsService {
   public registrants: Observable<Registrant[]> =
     this.registrants$.asObservable();
 
+  private dynamics$: BehaviorSubject<Dynamic[]> = new BehaviorSubject([]);
+  public dynamics: Observable<Dynamic[]> = this.dynamics$.asObservable();
+
   private uri: string;
 
   constructor(private http: HttpClient) {
@@ -86,8 +90,31 @@ export class RegistrantsService {
   }
 
   deleteOne(id: number) {
-    this.http.delete(this.uri + '/registrants/' + id).subscribe(console.log),
-      console.log;
+    this.http
+      .delete(this.uri + '/registrants/' + id)
+      .subscribe(console.log, console.log);
+  }
+
+  getDynamics() {
+    this.http.get(this.uri + '/registrants/dynamics').subscribe((res: any) => {
+      this.dynamics$.next(res.dynamics);
+    }, console.log);
+  }
+
+  getDynamicsValue() {
+    return this.dynamics$.getValue();
+  }
+
+  addDynamic(dynamic: Dynamic) {
+    this.http
+      .post(this.uri + '/registrants/dynamics', { dynamic })
+      .subscribe(console.log, console.log);
+  }
+
+  deleteDynamic(id: number) {
+    this.http
+      .delete(this.uri + '/registrants/dynamics' + id)
+      .subscribe(console.log, console.log);
   }
 
   import(file: File) {

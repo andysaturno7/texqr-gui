@@ -72,7 +72,7 @@ export class AsistanceTableComponent
         res.forEach((asis) => {
           asis.joinTime = new Date(asis.joinTime).toLocaleString();
           asis.leaveTime =
-            asis.leaveTime == ''
+            asis.leaveTime == '' || asis.leaveTime == null
               ? ''
               : new Date(asis.leaveTime).toLocaleString();
         });

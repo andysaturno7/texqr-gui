@@ -11,6 +11,7 @@ import {
 import { AgGridAngular } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { Dynamic } from 'src/app/models/dynamic.interface';
 import { MailService } from 'src/app/services/mail.service';
 import {
   Registrant,
@@ -30,6 +31,7 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
   registrants: any[];
   private subsc: Subscription;
   context: any;
+  // dynamics: Dynamic[];
 
   @Output() QREvent: EventEmitter<string> = new EventEmitter();
 
@@ -84,6 +86,14 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
     private _mail: MailService
   ) {
     this.context = { componentParent: this };
+    this._registrants.dynamics.subscribe((res) => {
+      res.forEach((val, index) => {
+        this.columnDefs.push({
+          field: val.field,
+          headerName: val.fieldLabel,
+        });
+      });
+    });
   }
 
   ngOnInit(): void {

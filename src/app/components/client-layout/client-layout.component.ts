@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RegistrantsService } from 'src/app/services/registrants.service';
 
 @Component({
   selector: 'client-layout',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientLayoutComponent implements OnInit {
   activeMenu: boolean = false;
-  constructor() {}
+  constructor(private _regis: RegistrantsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._regis.getDynamics();
+  }
 
   log() {
     console.log(this.activeMenu);
