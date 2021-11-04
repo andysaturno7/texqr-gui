@@ -1,5 +1,5 @@
 export interface Dynamic {
-  id?: number | string;
+  id?: number;
   table: string;
   field: string;
   fieldLabel: string;

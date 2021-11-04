@@ -13,6 +13,7 @@ export interface Registrant {
   email: string;
   company?: string;
   country?: string;
+  dynamics?: string;
   connected: number;
   Rooms?: Room[];
 }
@@ -55,9 +56,7 @@ export class RegistrantsService {
     },
   ];
 
-  private registrants$: BehaviorSubject<Registrant[]> = new BehaviorSubject(
-    this.sampleRegistrant
-  );
+  private registrants$: BehaviorSubject<Registrant[]> = new BehaviorSubject([]);
   public registrants: Observable<Registrant[]> =
     this.registrants$.asObservable();
 
@@ -108,13 +107,21 @@ export class RegistrantsService {
   addDynamic(dynamic: Dynamic) {
     this.http
       .post(this.uri + '/registrants/dynamics', { dynamic })
-      .subscribe(console.log, console.log);
+      .subscribe((res: any) => {
+        let tDynamics = this.dynamics$.getValue();
+        tDynamics.push(res.dynamic);
+        this.dynamics$.next(tDynamics);
+      }, console.log);
   }
 
   deleteDynamic(id: number) {
     this.http
-      .delete(this.uri + '/registrants/dynamics' + id)
-      .subscribe(console.log, console.log);
+      .delete(this.uri + '/registrants/dynamics/' + id)
+      .subscribe((res: any) => {
+        if (res.deleted > 0) {
+          this.dynamics$.next(res.dynamics);
+        }
+      }, console.log);
   }
 
   import(file: File) {

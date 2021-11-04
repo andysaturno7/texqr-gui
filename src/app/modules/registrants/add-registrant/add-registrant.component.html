@@ -29,23 +29,62 @@
           pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$"
         />
       </div>
-      <div class="col-sm fieldForm">
-        <label class="col" for="regisCompany">Empresa</label>
-        <input
-          formControlName="company"
-          type="text"
+      <!-- Custom Cliente -->
+      <div class="col col-fieldForm">
+        <label class="col" for="participation">Tipo de Participante</label>
+        <select
+          formControlName="participation"
+          id="participation"
           class="form-control form-control-sm"
-          id="regisCompany"
-        />
+        >
+          <ng-container *ngFor="let type of participationsOptions">
+            <option [value]="type" class="form-control">{{ type }}</option>
+          </ng-container>
+        </select>
       </div>
-      <div class="col-sm fieldForm">
-        <label class="col" for="regisChair">País</label>
-        <input
-          formControlName="country"
+      <div class="col fieldForm">
+        <label class="col">Evento</label>
+        <select
           type="text"
+          formControlName="event"
           class="form-control form-control-sm"
-          id="regisChair"
-        />
+          (change)="loadCustomCompaniesSelects()"
+        >
+          <ng-container *ngFor="let event of eventOptions">
+            <option class="form-control" [value]="event">
+              {{ event }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-4 col-md4 fieldForm">
+        <label class="col">Area</label>
+        <select class="form-control form-control-sm" formControlName="area">
+          <ng-container *ngFor="let area of areasOptions">
+            <option class="form-control" [value]="area">{{ area }}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-4 col-md4 fieldForm">
+        <label class="col">Actividad</label>
+        <select class="form-control form-control-sm" formControlName="activity">
+          <ng-container *ngFor="let activity of activitiesOptions">
+            <option class="form-control" [value]="activity">
+              {{ activity }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-4 col-md4 fieldForm">
+        <label class="col">Especialización</label>
+        <select
+          class="form-control form-control-sm"
+          formControlName="specialization"
+        >
+          <ng-container *ngFor="let option of specializationsOptions">
+            <option class="form-control" [value]="option">{{ option }}</option>
+          </ng-container>
+        </select>
       </div>
       <div class="col-sm fieldForm">
         <label class="col" for="regisCode">Código</label>
@@ -56,6 +95,7 @@
           id="regisCode"
         />
       </div>
+      <!-- Dinamicos -->
       <ng-container *ngFor="let dynamic of dynamics">
         <div class="col-sm fieldForm">
           <label class="col" for="{{ dynamic.field }}">{{
@@ -69,6 +109,7 @@
           />
         </div>
       </ng-container>
+      <!-- Boton -->
       <div class="col-sm fieldForm">
         <label style="opacity: 0">A</label>
         <button

@@ -93,7 +93,6 @@ export class RegistrantDynamicComponent implements OnInit, OnDestroy {
   }
 
   resetDynamicForm() {
-    this.table = '';
     this.field = '';
     this.fieldLabel = '';
     this.type = '';

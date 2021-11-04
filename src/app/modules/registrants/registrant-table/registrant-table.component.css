@@ -1,0 +1,7 @@
+.qr-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-radius: 12px;
+  transform: translate(20%, -50%);
+}

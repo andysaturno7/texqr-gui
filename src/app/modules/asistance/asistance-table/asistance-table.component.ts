@@ -10,7 +10,12 @@ import {
 import { AgGridAngular } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
-import { AsistanceService } from 'src/app/services/asistance.service';
+import { Dynamic } from 'src/app/models/dynamic.interface';
+import {
+  Asistance,
+  AsistanceService,
+} from 'src/app/services/asistance.service';
+import { RegistrantsService } from 'src/app/services/registrants.service';
 
 @Component({
   selector: 'asistance-table',
@@ -21,6 +26,7 @@ import { AsistanceService } from 'src/app/services/asistance.service';
 export class AsistanceTableComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
+  dynamics: Dynamic[];
   @ViewChild('agGrid') table: AgGridAngular;
   asistanceData: any[];
   private subsc: Subscription;
@@ -34,6 +40,11 @@ export class AsistanceTableComponent
     { field: 'Registrant.firstName', headerName: 'Nombre' },
     { field: 'Registrant.lastName', headerName: 'Apellido' },
     { field: 'Room.name', headerName: 'Sala' },
+    { field: 'Registrant.participation', headerName: 'Tipo de Participante' },
+    { field: 'Registrant.event', headerName: 'Evento' },
+    { field: 'Registrant.area', headerName: 'Area' },
+    { field: 'Registrant.activity', headerName: 'Actividad' },
+    { field: 'Registrant.specialization', headerName: 'Especialización' },
     {
       field: 'joinTime',
       headerName: 'Entrada',
@@ -52,8 +63,12 @@ export class AsistanceTableComponent
 
   constructor(
     private _asistance: AsistanceService,
+    private _registrant: RegistrantsService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.dynamics = this._registrant.getDynamicsValue();
+    this.setHeaderDynamics();
+  }
 
   ngOnInit(): void {
     this.subsc = this.subscAsistance();
@@ -68,19 +83,40 @@ export class AsistanceTableComponent
 
   subscAsistance(): Subscription {
     return this._asistance.asistance.subscribe(
-      (res: any[]) => {
+      (res: Asistance[]) => {
         res.forEach((asis) => {
           asis.joinTime = new Date(asis.joinTime).toLocaleString();
           asis.leaveTime =
             asis.leaveTime == '' || asis.leaveTime == null
               ? ''
               : new Date(asis.leaveTime).toLocaleString();
+          // Set Dynamics
+          let regDynamics = null;
+          if (
+            !!asis.Registrant.dynamics &&
+            asis.Registrant.dynamics.length > 0
+          ) {
+            regDynamics = JSON.parse(asis.Registrant.dynamics);
+            this.dynamics.forEach((dynamic) => {
+              asis[dynamic.field] = regDynamics[dynamic.field];
+            });
+          }
+          console.log({ asis });
         });
         this.asistanceData = res;
         this.cdr.detectChanges();
       },
       (error) => {}
     );
+  }
+
+  setHeaderDynamics() {
+    this.dynamics.forEach((dynamic, index) => {
+      this.columnDefs.push({
+        field: dynamic.field,
+        headerName: dynamic.fieldLabel,
+      });
+    });
   }
 
   exportTable() {

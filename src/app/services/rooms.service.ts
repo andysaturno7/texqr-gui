@@ -41,16 +41,21 @@ export class RoomsService {
 
   addRoom(room: Room) {
     this.http.post(this.uri + '/rooms', room).subscribe((addedRoom: Room) => {
+      let Rooms = this.rooms$.getValue();
+      Rooms.push(addedRoom);
+      this.rooms$.next(Rooms);
       return;
     }, console.log);
   }
 
   deleteRoom(id: number) {
-    console.log(id);
-
-    this.http
-      .delete(this.uri + '/rooms/' + id)
-      .subscribe(console.log, console.log);
+    this.http.delete(this.uri + '/rooms/' + id).subscribe((res: any) => {
+      if (res.deleted > 0) {
+        let Rooms = this.rooms$.getValue().filter((val) => val.id != id);
+        this.rooms$.next(Rooms);
+      }
+      return;
+    }, console.log);
   }
 
   getMobileUri(id) {

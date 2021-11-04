@@ -2,35 +2,43 @@
   <form [formGroup]="addForm" class="card-body row">
     <div class="col-sm">
       <label for="roomName">Nombre</label>
-      <input formControlName="name" type="text" class="form-control form-control-sm" id="roomName" />
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control form-control-sm"
+        id="roomName"
+      />
     </div>
     <div class="col-sm">
       <label for="roomCapacity">Aforo</label>
       <input
-      formControlName="capacity"
+        formControlName="capacity"
         type="text"
         class="form-control form-control-sm"
         id="roomCapacity"
       />
     </div>
     <div class="col-sm">
-      <label for="roomConnected">Afluencia</label>
-      <input
-        type="text"
-        class="form-control form-control-sm"
-        id="roomConnected"
-      />
-    </div>
-    <div class="col-sm">
       <label for="parentRoom">Sala Padre</label>
-      <select formControlName="parentRoom" class="form-control form-control-sm" id="parentRoom">
+      <select
+        formControlName="parentRoom"
+        class="form-control form-control-sm"
+        id="parentRoom"
+      >
         <option [value]="null">Null</option>
-        <option *ngFor="let room of rooms; let i = index" [value]="rooms[i].id">{{rooms[i].name}}</option>
+        <option *ngFor="let room of rooms; let i = index" [value]="rooms[i].id">
+          {{ rooms[i].name }}
+        </option>
       </select>
     </div>
     <div class="col-sm">
       <label style="opacity: 0">S</label>
-      <button type="submit" class="btn btn-sm col-sm btn-primary" (click)="addRoom()" [disabled]="addForm.disabled">
+      <button
+        type="submit"
+        class="btn btn-sm col-sm btn-primary"
+        (click)="addRoom()"
+        [disabled]="addForm.disabled"
+      >
         <i class="fa fa-plus"></i>
       </button>
     </div>

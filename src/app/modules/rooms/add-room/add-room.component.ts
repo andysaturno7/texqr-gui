@@ -6,7 +6,7 @@ import { Room, RoomsService } from 'src/app/services/rooms.service';
 @Component({
   selector: 'add-room',
   templateUrl: './add-room.component.html',
-  styleUrls: ['./add-room.component.css']
+  styleUrls: ['./add-room.component.css'],
 })
 export class AddRoomComponent implements OnInit, OnDestroy {
   rooms: Room[] = [];
@@ -20,10 +20,10 @@ export class AddRoomComponent implements OnInit, OnDestroy {
   });
 
   constructor(private fb: FormBuilder, private _room: RoomsService) {
-    this.subscRooms = _room.rooms.subscribe(res=>{
+    this.subscRooms = _room.rooms.subscribe((res) => {
       this.rooms = res;
-    }, console.log)
-   }
+    }, console.log);
+  }
 
   ngOnInit(): void {
     this._room.invokeRooms();
@@ -33,13 +33,16 @@ export class AddRoomComponent implements OnInit, OnDestroy {
     this.subscRooms.unsubscribe();
   }
 
-  addRoom(){
-    let parentRoomValue = this.addForm.value.parentRoom
-    if(parentRoomValue == "null" || parentRoomValue == '' || parentRoomValue == null){
-      delete this.addForm.value.parentRoom
+  addRoom() {
+    let parentRoomValue = this.addForm.value.parentRoom;
+    if (
+      parentRoomValue == 'null' ||
+      parentRoomValue == '' ||
+      parentRoomValue == null
+    ) {
+      delete this.addForm.value.parentRoom;
     }
-    console.log(this.addForm.value);
     this._room.addRoom(this.addForm.value);
+    this.addForm.reset();
   }
-
 }

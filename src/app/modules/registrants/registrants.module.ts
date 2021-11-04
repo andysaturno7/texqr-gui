@@ -14,6 +14,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { OptionsTableComponent } from '../shared/agRenderer/options-table/options-table.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { AddRegistrantFormComponent } from './add-registrant-form/add-registrant-form.component';
+import { SettingsComponent } from './settings/settings.component';
+import { RegistrantDynamicComponent } from './registrant-dynamic/registrant-dynamic.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { AddRegistrantFormComponent } from './add-registrant-form/add-registrant
     DropdownComponent,
     RootRegistrantsComponent,
     AddRegistrantFormComponent,
+    SettingsComponent,
+    RegistrantDynamicComponent,
   ],
   imports: [
     CommonModule,

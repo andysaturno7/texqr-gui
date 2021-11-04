@@ -31,7 +31,8 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
   registrants: any[];
   private subsc: Subscription;
   context: any;
-  // dynamics: Dynamic[];
+  dynamics: Dynamic[];
+  qrData: any;
 
   @Output() QREvent: EventEmitter<string> = new EventEmitter();
 
@@ -61,11 +62,14 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
     { field: 'firstName', headerName: 'Nombre' },
     { field: 'lastName', headerName: 'Apellido' },
     { field: 'email', headerName: 'Correo' },
-    { field: 'company', headerName: 'Empresa' },
-    { field: 'country', headerName: 'País', maxWidth: 80 },
+    { field: 'participation', headerName: 'Tipo de Participante' },
+    { field: 'event', headerName: 'Evento' },
+    { field: 'area', headerName: 'Area' },
+    { field: 'activity', headerName: 'Actividad' },
+    { field: 'specialization', headerName: 'Especialización' },
     {
       field: 'code',
-      headerName: 'Codigo QR',
+      headerName: 'Codigo DECODED',
       cellRendererFramework: QrRendererComponent,
       filter: true,
     },
@@ -86,14 +90,8 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
     private _mail: MailService
   ) {
     this.context = { componentParent: this };
-    this._registrants.dynamics.subscribe((res) => {
-      res.forEach((val, index) => {
-        this.columnDefs.push({
-          field: val.field,
-          headerName: val.fieldLabel,
-        });
-      });
-    });
+    this.dynamics = this._registrants.getDynamicsValue();
+    this.setHeaderDynamics();
   }
 
   ngOnInit(): void {
@@ -113,8 +111,26 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
 
   subscribeRegistrants() {
     return this._registrants.registrants.subscribe((res: Registrant[]) => {
+      res.forEach((registrant, index) => {
+        let regDynamics = null;
+        if (!!registrant.dynamics && registrant.dynamics.length > 0) {
+          regDynamics = JSON.parse(registrant.dynamics);
+          this.dynamics.forEach((dynamic) => {
+            registrant[dynamic.field] = regDynamics[dynamic.field];
+          });
+        }
+      });
       this.registrants = res;
       this.cdr.detectChanges();
+    });
+  }
+
+  setHeaderDynamics() {
+    this.dynamics.forEach((dynamic, index) => {
+      this.columnDefs.push({
+        field: dynamic.field,
+        headerName: dynamic.fieldLabel,
+      });
     });
   }
 
@@ -130,6 +146,13 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
 
   inlineUpdate(event: any): void {
     let data = event.data;
+    let dynamics = {};
+    this.dynamics.forEach((dbDynamic) => {
+      dynamics[dbDynamic.field] = data[dbDynamic.field];
+      delete data[dbDynamic.field];
+    });
+    data['dynamics'] = dynamics;
+
     this._registrants.update(data);
   }
 
@@ -163,6 +186,24 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
   }
 
   QRTouched(code: string) {
-    this.QREvent.emit(code);
+    // this.QREvent.emit(code);
+    this.qrData = code;
+  }
+
+  closeQR() {
+    this.qrData = null;
+  }
+
+  downloadQR(event) {
+    let img = event.srcElement;
+    let a;
+    if (confirm('Deseas descargar la el código como imágen?')) {
+      a = document.createElement('a');
+      a.href = img.src;
+      a.download = this.qrData;
+      a.click();
+    } else {
+      this.closeQR();
+    }
   }
 }

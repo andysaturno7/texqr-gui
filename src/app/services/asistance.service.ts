@@ -2,6 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Registrant } from './registrants.service';
+import { Room } from './rooms.service';
+
+export interface Asistance {
+  id?: number;
+  joinTime: string;
+  leaveTime: string;
+  Registrant: Registrant;
+  Room: Room;
+}
 
 @Injectable({
   providedIn: 'root',
