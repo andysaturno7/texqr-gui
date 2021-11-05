@@ -44,5 +44,6 @@ export class AddRoomComponent implements OnInit, OnDestroy {
     }
     this._room.addRoom(this.addForm.value);
     this.addForm.reset();
+    this.addForm.patchValue({ useDefaultRegistrants: true });
   }
 }
