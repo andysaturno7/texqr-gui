@@ -1,53 +1,31 @@
-<div class="card shadow">
-  <div class="card-header"></div>
-  <div class="card-body table-responsive">
-    <table class="table table-white table-hover">
-      <thead>
-        <tr>
-          <th></th>
-          <th>id</th>
-          <th>Nombre</th>
-          <th>Aforo</th>
-          <th>Afluencia</th>
-          <th>Sala Padre</th>
-          <th>Sala Hija</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngIf="rooms">
-          <tr *ngFor="let room of rooms">
-            <td><i class="fa fa-map"></i></td>
-            <td>{{ room.id }}</td>
-            <td>{{ room.name }}</td>
-            <td>{{ room.capacity }}</td>
-            <td class="text-danger">pendiente</td>
-            <td class="text-danger">pendiente</td>
-            <td class="text-danger">pendiente</td>
-            <td class="text-right">
-              <i class="fa fa-pencil text-success mx-2" role="button"></i>
-              <i
-                class="fa fa-trash text-danger mx-2"
-                role="button"
-                (click)="delete(room.id)"
-              ></i>
-              <i
-                class="fa fa-link mx-2"
-                role="button"
-                (click)="createMobileUrl(room.id)"
-              ></i>
-            </td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
+<div class="ag-theme-balham card" style="height: 100%">
+  <div class="card-header">
+    <h5 class="text-right">
+      <i
+        class="fa fa-file-excel-o text-success"
+        (click)="exportTable()"
+        title="Exportar como CSV"
+        role="button"
+      ></i>
+    </h5>
   </div>
-  <div
-    style="display: none"
-    *ngIf="!clipboardMobileActive; else mobileTokenClipboard"
+  <ag-grid-angular
+    #agGrid
+    style="height: 100%"
+    [context]="context"
+    [rowData]="rooms"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [enableRangeSelection]="true"
+    [rowSelection]="'multiple'"
+    [suppressRowClickSelection]="true"
+    [autoGroupColumnDef]="{ minWidth: 200 }"
+    [editType]="'fullRow'"
+    [pagination]="true"
+    [paginationAutoPageSize]="true"
+    (rowValueChanged)="editItem($event)"
   >
-    clipboard false
-  </div>
+  </ag-grid-angular>
 </div>
 
 <ng-template #mobileTokenClipboard>

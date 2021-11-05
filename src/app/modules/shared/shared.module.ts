@@ -6,9 +6,10 @@ import { OptionsTableComponent } from './agRenderer/options-table/options-table.
 import { AgGridModule } from 'ag-grid-angular';
 import { InputCellComponent } from './agRenderer/input-cell/input-cell.component';
 import { QrRendererComponent } from './agRenderer/qr-renderer/qr-renderer.component';
+import { RoomsOptionsComponent } from './agRenderer/rooms-options/rooms-options.component';
 
 @NgModule({
-  declarations: [SearchPipe, QrRendererComponent],
+  declarations: [SearchPipe, QrRendererComponent, RoomsOptionsComponent],
   imports: [CommonModule, AgGridModule],
   exports: [SearchPipe],
 })

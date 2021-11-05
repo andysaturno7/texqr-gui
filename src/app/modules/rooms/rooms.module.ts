@@ -5,9 +5,16 @@ import { RoomsRoutingModule } from './rooms-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRoomComponent } from './add-room/add-room.component';
 import { TableRoomsComponent } from './table-rooms/table-rooms.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [RootRoomsComponent, AddRoomComponent, TableRoomsComponent],
-  imports: [CommonModule, RoomsRoutingModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RoomsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AgGridModule.withComponents(),
+  ],
 })
 export class RoomsModule {}

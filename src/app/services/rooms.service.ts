@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { NotificationsService } from './notifications.service';
 
 export interface Room {
   id?: number;
@@ -23,7 +24,7 @@ export class RoomsService {
   private rooms$: BehaviorSubject<Room[]> = new BehaviorSubject([]);
   public rooms: Observable<Room[]> = this.rooms$.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private _toast: NotificationsService) {}
 
   setRooms(rooms: Room[]) {
     this.rooms$.next(rooms);
@@ -56,6 +57,15 @@ export class RoomsService {
       }
       return;
     }, console.log);
+  }
+
+  editRoom(room: Room) {
+    this.http
+      .post(this.uri + '/rooms/update', { room })
+      .subscribe((res: any[]) => {
+        if (res.length > 0 && res[0] > 0)
+          this._toast.showSuccess(`Room ${room.name} ha sido actualizado`);
+      });
   }
 
   getMobileUri(id) {

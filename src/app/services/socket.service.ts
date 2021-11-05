@@ -42,10 +42,10 @@ export class SocketService {
       this._systems.setSystems(data.systems);
     });
     this.socket.on('updated_rooms', (data: any) => {
-      console.log('rooms Updated: ' + data);
+      // console.log('rooms Updated: ' + data);
     });
     this.socket.on('updated_registrants_dynamics', (data: any) => {
-      console.log({ data });
+      // console.log({ data });
     });
   }
 }
