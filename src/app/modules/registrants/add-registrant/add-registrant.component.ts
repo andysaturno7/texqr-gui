@@ -52,8 +52,6 @@ export class AddRegistrantComponent implements OnInit {
       delete this.regisForm.value[val.field];
     });
     this.regisForm.value['dynamics'] = dynamics;
-    console.log(this.regisForm.value);
-
     this._registrant.addOne(this.regisForm.value);
     this.regisForm.reset();
   }

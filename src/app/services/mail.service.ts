@@ -29,7 +29,7 @@ export class MailService {
   uriServer: string = environment.uri;
 
   user = {
-    name: 'Remitente',
+    name: 'Refri Américas 2021',
     address: 'no-reply@tex.cr',
   };
   from = this.user;
@@ -42,6 +42,7 @@ export class MailService {
         registrant: data,
       },
       mail: {
+        from: this.from,
         to: address,
         subject,
       },

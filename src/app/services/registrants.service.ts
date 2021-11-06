@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Room } from './rooms.service';
 import { environment } from '../../environments/environment';
 import { Dynamic } from '../models/dynamic.interface';
+import { NotificationsService } from './notifications.service';
 
 export interface Registrant {
   id?: number | string;
@@ -38,22 +39,6 @@ export class RegistrantsService {
         { name: 'Sala 3', capacity: 50, isDefaultRoom: false },
       ],
     },
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      code: '556541ecg',
-      email: 'jdoe@mail.com',
-      connected: 0,
-    },
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      code: 'poiiy556541',
-      email: 'jdoe@mail.com',
-      connected: 0,
-    },
   ];
 
   private registrants$: BehaviorSubject<Registrant[]> = new BehaviorSubject([]);
@@ -65,7 +50,7 @@ export class RegistrantsService {
 
   private uri: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private _toast: NotificationsService) {
     this.uri = environment.uri;
     http.get(this.uri + '/registrants').subscribe((res: Registrant[]) => {
       this.setRegistrants(res);
@@ -129,7 +114,13 @@ export class RegistrantsService {
     formdata.append('import', file);
     this.http
       .post(this.uri + '/registrants/import', formdata)
-      .subscribe(console.log, console.log);
+      .subscribe((res: any) => {
+        if (res.status == 'bad_data')
+          this._toast.showSuccess(
+            `${res.bad_data.length} datos no han sido admitidos`
+          );
+        console.log({ res });
+      }, console.log);
     return;
   }
 

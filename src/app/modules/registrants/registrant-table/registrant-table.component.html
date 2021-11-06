@@ -1,4 +1,34 @@
-<add-registrant></add-registrant><br />
+<div class="row row-cols-2">
+  <div class="col-sm-10 col-sm-auto">
+    <add-registrant></add-registrant>
+  </div>
+  <div class="col col-sm-2" style="min-width: 200; max-width: 200">
+    <ng-container *ngIf="qrData">
+      <div>
+        <div>
+          <h5 class="text-right">
+            <i class="fa fa-close mr-2" (click)="closeQR()" role="button"></i>
+          </h5>
+        </div>
+        <div
+          class="card shadow card-body p-2 d-flex justify-content-center w-100"
+        >
+          <qrcode
+            #qr
+            [qrdata]="qrData"
+            [margin]="1"
+            [elementType]="'img'"
+            [width]="170"
+            (click)="downloadQR($event)"
+            role="button"
+            title="Descargar"
+          ></qrcode>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<br />
 <div class="ag-theme-balham card shadow">
   <div class="card-header">
     <span style="float: right; font-size: 1.2rem" class="text-primary">
@@ -45,28 +75,3 @@
   >
   </ag-grid-angular>
 </div>
-
-<ng-container *ngIf="qrData">
-  <div
-    class="bg-white shadow card animate__animated animate__fadeIn qr-container"
-    draggable="true"
-  >
-    <div>
-      <h5 class="text-right">
-        <i class="fa fa-close mr-2" (click)="closeQR()" role="button"></i>
-      </h5>
-    </div>
-    <div class="card-body p-2">
-      <qrcode
-        #qr
-        [qrdata]="qrData"
-        [margin]="1"
-        [elementType]="'img'"
-        [width]="200"
-        (click)="downloadQR($event)"
-        role="button"
-        title="Descargar"
-      ></qrcode>
-    </div>
-  </div>
-</ng-container>
