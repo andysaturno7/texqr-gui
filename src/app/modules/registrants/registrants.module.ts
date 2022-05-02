@@ -9,6 +9,7 @@ import { AddRegistrantComponent } from './add-registrant/add-registrant.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from '../shared/dropdown/dropdown.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { RootRegistrantsComponent } from './root-registrants/root-registrants.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { OptionsTableComponent } from '../shared/agRenderer/options-table/options-table.component';
@@ -16,6 +17,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { AddRegistrantFormComponent } from './add-registrant-form/add-registrant-form.component';
 import { SettingsComponent } from './settings/settings.component';
 import { RegistrantDynamicComponent } from './registrant-dynamic/registrant-dynamic.component';
+import { AddDynamicsComponent } from './add-dynamics/add-dynamics.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { RegistrantDynamicComponent } from './registrant-dynamic/registrant-dyna
     AddRegistrantFormComponent,
     SettingsComponent,
     RegistrantDynamicComponent,
+    AddDynamicsComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +40,8 @@ import { RegistrantDynamicComponent } from './registrant-dynamic/registrant-dyna
     BsDropdownModule.forRoot(),
     AgGridModule.withComponents([OptionsTableComponent]),
     QRCodeModule,
+    NgxDatatableModule,
+    ModalModule.forRoot(),
   ],
   exports: [
     RegistrantTableComponent,

@@ -24,13 +24,15 @@ export class SocketService {
       room: 'globalRoom',
     });
     this.socket.on('updated_registrant', (data: any) => {
-      // let asistData = this._asistance.getData();
-      // asistData.total = data.length;
-      // this._asistance.setData(asistData);
-      this._registrants.setRegistrants(data);
+      this._registrants.setRegistrants(data.data);
     });
     this.socket.on('dropped_registrants', () => {
-      this._registrants.setRegistrants([]);
+      this._registrants.setRegistrants({
+        data: [],
+        count: 0,
+        limit: 0,
+        offset: 0,
+      });
     });
     this.socket.on('updated_asistance', (data: any) => {
       // this._asistance.setData(data);

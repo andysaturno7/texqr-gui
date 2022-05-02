@@ -1,52 +1,57 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" routerLink="detail" routerLinkActive="active"
-      >Detalle</a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="settings" routerLinkActive="active"
-      >Configuraciones</a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled">Disabled</a>
-  </li>
-</ul>
-<br />
-<router-outlet></router-outlet>
-<div class="row mb-2">
-  <div class="col">
-    <!-- <add-registrant></add-registrant> -->
-  </div>
-</div>
 <div class="row">
   <div class="col">
-    <!-- <registrant-table (QREvent)="seeQR($event)"></registrant-table> -->
+<div *ngIf="dataRegistrants" class="card shadow mt-4">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-9">
+        <i
+          class="fa fa-plus"
+          role="button"
+          (click)="openModal(addEditTemplate)"
+        ></i>
+      </div>
+      <div class="col-sm-3">
+        <input
+          type="text"
+          class="form-control"
+          (keyup.enter)="getRegistrants({ limit: 10, offset: 0 })"
+          [(ngModel)]="dataRegistrantsFilter"
+          placeholder="Buscar"
+        />
+      </div>
+    </div>
   </div>
+  <registrant-table
+    [data]="dataRegistrants"
+    (select)="onSelect($event)"
+    (page)="getRegistrants($event)"
+    (QREvent)="handleQRTouched($event)"
+  ></registrant-table>
 </div>
 
-<ng-container *ngIf="qrData">
-  <div
-    class="bg-white shadow card animate__animated animate__fadeIn qr-container"
-    draggable="true"
-  >
-    <div>
-      <h5 class="text-right">
-        <i class="fa fa-close mr-2" (click)="closeQR()" role="button"></i>
-      </h5>
-    </div>
-    <div class="card-body p-2">
-      <qrcode
-        #qr
-        [qrdata]="qrData"
-        [margin]="1"
-        [elementType]="'img'"
-        [width]="200"
-        (click)="downloadQR($event)"
-        role="button"
-        title="Descargar"
-      ></qrcode>
-    </div>
+<!-- Add Form Component -->
+<ng-template #addEditTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Registro</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
   </div>
-</ng-container>
+  <div class="modal-body">
+    <add-registrant (added)="addToTable($event)"></add-registrant>
+  </div>
+</ng-template>
+</div>
+<div class="col mt-4" style="max-width: 165px">
+  <ng-container *ngIf="qrdata">
+    <qrcode [qrdata]="qrdata" [errorCorrectionLevel]="'M'" [width]="128"></qrcode>
+    <i class="fa fa-close mr-3" role="button" (click)="qrdata = null"></i>
+    <i class="fa fa-print mr-3" role="button"></i>
+  </ng-container>
+</div>
+</div>

@@ -47,9 +47,8 @@ export class MailService {
         subject,
       },
     };
-    return this.http
-      .post(this.uriServer + '/mail/send', mail)
-      .subscribe((res: any) => {
+    return this.http.post(this.uriServer + '/mail/send', mail).subscribe(
+      (res: any) => {
         if (res.info.rejected.length > 0) {
           this._not.showError({
             type: 'danger',
@@ -60,6 +59,12 @@ export class MailService {
             `Mensaje enviado satisfactoriamente a ${data.firstName}`
           );
         }
-      }, this._not.showError);
+      },
+      (error) => {
+        console.log({ error });
+
+        this._not.showError(error, error?.syscall + ' code: ' + error?.code);
+      }
+    );
   }
 }

@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { PaginatedData } from '../interfaces/paginated-data';
 import { NotificationsService } from './notifications.service';
+import { ProjectsService } from './projects.service';
 
 export interface Room {
   id?: number;
@@ -24,14 +27,25 @@ export class RoomsService {
   private rooms$: BehaviorSubject<Room[]> = new BehaviorSubject([]);
   public rooms: Observable<Room[]> = this.rooms$.asObservable();
 
-  constructor(private http: HttpClient, private _toast: NotificationsService) {}
+  constructor(
+    private http: HttpClient,
+    private _toast: NotificationsService,
+    private _projects: ProjectsService
+  ) {}
 
   setRooms(rooms: Room[]) {
     this.rooms$.next(rooms);
   }
 
-  get getRooms() {
-    return this.rooms$.getValue();
+  getRooms(offset: number, limit: number, filter?: string | number) {
+    offset = offset ? offset : 0;
+    limit = limit || 10;
+    let query = new URLSearchParams(`offset=${offset}&limit=${limit}`);
+    if (filter) query.append('filter', `${filter}`);
+    let projectId = this._projects.project;
+    return this.http.get<PaginatedData<Room>>(
+      `${this.uri}/projects/${projectId}/rooms?${query.toString()}`
+    );
   }
 
   invokeRooms() {

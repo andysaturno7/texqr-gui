@@ -1,8 +1,21 @@
-<div class="row">
-  <div class="col-12"><add-room></add-room> <br /></div>
-</div>
-<div class="row" style="height: 800px">
-  <div class="col-12">
-    <table-rooms></table-rooms>
+<div *ngIf="dataRooms" class="card shadow mt-4">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-9"></div>
+      <div class="col-sm-3">
+        <input
+          type="text"
+          class="form-control"
+          (keyup.enter)="getRooms({ limit: 15, offset: 0 })"
+          [(ngModel)]="dataRoomsFilter"
+          placeholder="Buscar"
+        />
+      </div>
+    </div>
   </div>
+  <table-rooms
+    [data]="dataRooms"
+    (page)="getRooms($event)"
+    (select)="onSelect($event)"
+  ></table-rooms>
 </div>

@@ -26,10 +26,10 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
       },
       {
-        path: 'registro',
+        path: 'proyectos',
         loadChildren: () =>
-          import('./modules/registrants/registrants.module').then(
-            (m) => m.RegistrantsModule
+          import('./modules/projects/projects.module').then(
+            (m) => m.ProjectsModule
           ),
         canActivate: [AuthenticationGuard],
       },
@@ -37,28 +37,6 @@ const routes: Routes = [
         path: 'settings',
         loadChildren: () =>
           import('./modules/config/config.module').then((m) => m.ConfigModule),
-        canActivate: [AuthenticationGuard],
-      },
-      {
-        path: 'asistencia',
-        loadChildren: () =>
-          import('./modules/asistance/asistance.module').then(
-            (m) => m.AsistanceModule
-          ),
-        canActivate: [AuthenticationGuard],
-      },
-      {
-        path: 'salas',
-        loadChildren: () =>
-          import('./modules/rooms/rooms.module').then((m) => m.RoomsModule),
-        canActivate: [AuthenticationGuard],
-      },
-      {
-        path: 'equipos',
-        loadChildren: () =>
-          import('./modules/systems/systems.module').then(
-            (m) => m.SystemsModule
-          ),
         canActivate: [AuthenticationGuard],
       },
     ],

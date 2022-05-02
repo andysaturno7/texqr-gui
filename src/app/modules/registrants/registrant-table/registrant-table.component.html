@@ -1,77 +1,54 @@
-<div class="row row-cols-2">
-  <div class="col-sm-10 col-sm-auto">
-    <add-registrant></add-registrant>
-  </div>
-  <div class="col col-sm-2" style="min-width: 200; max-width: 200">
-    <ng-container *ngIf="qrData">
-      <div>
-        <div>
-          <h5 class="text-right">
-            <i class="fa fa-close mr-2" (click)="closeQR()" role="button"></i>
-          </h5>
-        </div>
-        <div
-          class="card shadow card-body p-2 d-flex justify-content-center w-100"
-        >
-          <qrcode
-            #qr
-            [qrdata]="qrData"
-            [margin]="1"
-            [elementType]="'img'"
-            [width]="170"
-            (click)="downloadQR($event)"
-            role="button"
-            title="Descargar"
-          ></qrcode>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-</div>
-<br />
-<div class="ag-theme-balham card shadow">
-  <div class="card-header">
-    <span style="float: right; font-size: 1.2rem" class="text-primary">
-      <i
-        class="fa fa-ban"
-        role="button"
-        title="Eliminar Registro"
-        (click)="dropDB()"
-      ></i>
-      <label for="import">
-        <i class="fa fa-upload ml-3" role="button" title="Importar"></i>
-      </label>
-      <input
-        type="file"
-        name="import"
-        id="import"
-        style="display: none"
-        (change)="importDB($event)"
-      />
-      <i
-        class="fa fa-file-excel-o ml-3"
-        role="button"
-        (click)="exportTable()"
-        title="Exportar como CSV"
-      ></i>
-    </span>
-  </div>
-  <ag-grid-angular
-    #agGrid
-    style="height: 480px; font-size: 1rem"
-    [rowData]="registrants"
-    [context]="context"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
-    [rowSelection]="'multiple'"
-    [suppressRowClickSelection]="true"
-    [autoGroupColumnDef]="{ minWidth: 200 }"
-    [editType]="'fullRow'"
-    [pagination]="true"
-    [paginationAutoPageSize]="true"
-    (rowValueChanged)="inlineUpdate($event)"
-    (gridReady)="onGridReady($event)"
+<ngx-datatable
+  *ngIf="registrantsData"
+  class="bootstrap"
+  [rows]="registrantsData.data"
+  columnMode="force"
+  [footerHeight]="50"
+  [rowHeight]="60"
+  [selected]="selected"
+  [selectionType]="selectionType.checkbox"
+  [externalPaging]="true"
+  [count]="registrantsData.count"
+  [offset]="registrantsData.offset"
+  [limit]="registrantsData.limit"
+  (page)="onPage($event)"
+  (select)="onSelect($event)"
+>
+  <ngx-datatable-column
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true"
   >
-  </ag-grid-angular>
-</div>
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    [cellTemplate]="contextMenuTemplate"
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false">
+  </ngx-datatable-column>
+  <ngx-datatable-column prop="firstName" name="Nombre"></ngx-datatable-column>
+  <ngx-datatable-column prop="lastName" name="Apellidos"></ngx-datatable-column>
+  <ngx-datatable-column prop="email" name="Correo"></ngx-datatable-column>
+  <ngx-datatable-column name="Código" [cellTemplate]="codeTemplate"></ngx-datatable-column>
+  <ng-template #nameTemplate let-row="row">
+    <a routerLink="">{{ row.firstName }} {{ row.lastName }}</a>
+  </ng-template>
+  <ng-template #codeTemplate let-row="row">
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text text-danger"><i class="fa fa-qrcode" role="button" (click)="QRTouched(row.code)"></i></span>
+      </div>
+      <input type="text" class="form-control" aria-label="80" value="{{row.code}}" readonly>
+    </div>
+  </ng-template>
+  <ng-template #contextMenuTemplate><i class="fa fa-caret-down" role="button"></i></ng-template>
+  <ng-container *ngFor="let dynamic of dynamics">
+    <ngx-datatable-column [name]="dynamic.fieldLabel"></ngx-datatable-column>
+  </ng-container>
+</ngx-datatable>

@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@swimlane/ngx-datatable": "^20.0.0",
     "ag-grid-angular": "^25.3.0",
     "ag-grid-community": "^25.3.0",
     "angularx-qrcode": "^11.0.0",

@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Room } from './rooms.service';
 import { environment } from '../../environments/environment';
 import { Dynamic } from '../models/dynamic.interface';
 import { NotificationsService } from './notifications.service';
+import { PaginatedData } from '../interfaces/paginated-data';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectsService } from './projects.service';
 
 export interface Registrant {
   id?: number | string;
@@ -12,10 +15,8 @@ export interface Registrant {
   lastName?: string;
   code?: string | number;
   email: string;
-  company?: string;
-  country?: string;
   dynamics?: string;
-  connected: number;
+  connected?: number;
   Rooms?: Room[];
 }
 
@@ -31,7 +32,6 @@ export class RegistrantsService {
       code: '556541',
       email: 'jdoe@mail.com',
       connected: 0,
-      country: 'Costa Rica',
       Rooms: [
         { name: 'defaultRoom', capacity: 100, isDefaultRoom: true },
         { name: 'Sala 1', capacity: 50, isDefaultRoom: false },
@@ -41,8 +41,8 @@ export class RegistrantsService {
     },
   ];
 
-  private registrants$: BehaviorSubject<Registrant[]> = new BehaviorSubject([]);
-  public registrants: Observable<Registrant[]> =
+  private registrants$: Subject<PaginatedData<Registrant>> = new Subject();
+  public registrants: Observable<PaginatedData<Registrant>> =
     this.registrants$.asObservable();
 
   private dynamics$: BehaviorSubject<Dynamic[]> = new BehaviorSubject([]);
@@ -50,21 +50,35 @@ export class RegistrantsService {
 
   private uri: string;
 
-  constructor(private http: HttpClient, private _toast: NotificationsService) {
+  constructor(
+    private http: HttpClient,
+    private _toast: NotificationsService,
+    private _projects: ProjectsService
+  ) {
     this.uri = environment.uri;
-    http.get(this.uri + '/registrants').subscribe((res: Registrant[]) => {
-      this.setRegistrants(res);
-    }, console.log);
   }
 
-  setRegistrants(registrants: Registrant[]) {
+  getRegistrants(page: number, limit: number, filter?: string | number) {
+    page = page ? page : 0;
+    limit = limit || 10;
+    let offset = limit * page;
+    let query = new URLSearchParams(`offset=${offset}&limit=${limit}`);
+    if (filter) query.append('filter', `${filter}`);
+    let projectId = this._projects.project;
+    return this.http.get<PaginatedData<Registrant>>(
+      `${this.uri}/projects/${projectId}/registrants?${query}`
+    );
+  }
+
+  setRegistrants(registrants: PaginatedData<Registrant>) {
     this.registrants$.next(registrants);
   }
 
   addOne(registrant: Registrant) {
-    this.http
-      .post(this.uri + '/registrants', registrant)
-      .subscribe((res: Registrant) => {}, console.log);
+    return this.http.post<Registrant>(
+      this.uri + '/projects/' + this._projects.project + '/registrants',
+      registrant
+    );
   }
 
   update(registrants: Registrant) {
@@ -80,9 +94,16 @@ export class RegistrantsService {
   }
 
   getDynamics() {
-    this.http.get(this.uri + '/registrants/dynamics').subscribe((res: any) => {
-      this.dynamics$.next(res.dynamics);
-    }, console.log);
+    this.http
+      .get(
+        this.uri +
+          '/projects/' +
+          this._projects.project +
+          '/registrants/dynamics'
+      )
+      .subscribe((res: any) => {
+        this.dynamics$.next(res.data);
+      }, console.log);
   }
 
   getDynamicsValue() {
@@ -91,7 +112,13 @@ export class RegistrantsService {
 
   addDynamic(dynamic: Dynamic) {
     this.http
-      .post(this.uri + '/registrants/dynamics', { dynamic })
+      .post(
+        this.uri +
+          '/projects/' +
+          this._projects.project +
+          '/registrants/dynamics',
+        dynamic
+      )
       .subscribe((res: any) => {
         let tDynamics = this.dynamics$.getValue();
         tDynamics.push(res.dynamic);
@@ -104,7 +131,7 @@ export class RegistrantsService {
       .delete(this.uri + '/registrants/dynamics/' + id)
       .subscribe((res: any) => {
         if (res.deleted > 0) {
-          this.dynamics$.next(res.dynamics);
+          this.dynamics$.next(res.dynamics.data);
         }
       }, console.log);
   }

@@ -1,37 +1,41 @@
-<div class="container row" style="max-width: 360px">
-  <div class="col-sm-12">
-    <p class="text-center">
-      <img
-        src="assets/img/logo.png"
-        alt="logo"
-        style="max-height: 80px; width: auto"
-      />
-    </p>
-  </div>
-  <div class="col-sm-12">
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <p>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="username"
-          placeholder="Usuario"
-        />
-      </p>
-      <p>
-        <input
-          type="password"
-          class="form-control"
-          formControlName="password"
-          placeholder="Contraseña"
-        />
-      </p>
-
-      <div *ngIf="error" class="error">{{ error }}</div>
-
-      <div>
-        <button type="submit" class="w-100 btn btn-primary">Entrar</button>
+<div class="container">
+  <div class="card shadow m-auto" style="max-width: 360px">
+    <div class="card-body row">
+      <div class="col-sm-12 logo-brand">
+        <p class="text-center mb-4">
+          <img
+            src="assets/img/logo.png"
+            alt="logo"
+            style="max-height: 80px; width: auto"
+          />
+        </p>
       </div>
-    </form>
+      <div class="col-sm-12">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <p>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="username"
+              placeholder="Usuario"
+            />
+          </p>
+          <p>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Contraseña"
+            />
+          </p>
+
+          <div *ngIf="error" class="error w-100">{{ error }}</div>
+
+          <div>
+            <button type="submit" class="w-100 btn btn-primary">Entrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,8 +1,15 @@
-<h4 class="text-center">Equipos Conectados ({{ systems.length }})</h4>
-<div class="d-flex" style="flex-flow: row">
-  <item-system
-    [system]="system"
-    *ngFor="let system of systems"
-    class="m-4"
-  ></item-system>
+<div class="container container-fluid">
+  <h4 class="text-center">Proyectos (0)</h4>
+  <div
+    class="projects-box card"
+    style="background-color: rgba(255, 255, 255, 0.4) !important"
+  ></div>
+  <h4 class="text-center mt-4">Equipos Conectados ({{ systems.length }})</h4>
+  <div class="d-flex" style="flex-flow: row">
+    <item-system
+      [system]="system"
+      *ngFor="let system of systems"
+      class="m-4"
+    ></item-system>
+  </div>
 </div>

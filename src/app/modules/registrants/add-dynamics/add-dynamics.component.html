@@ -1,0 +1,70 @@
+<div [formGroup]="form">
+  <div>
+    <label for="table">Tabla:</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="table"
+      id="table"
+      readonly
+    />
+  </div>
+  <div>
+    <label for="field">Campo:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="field"
+      formControlName="field"
+    />
+  </div>
+  <div>
+    <label for="label">Label:</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="fieldLabel"
+      id="label"
+    />
+  </div>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="exampleCheck1"
+      formControlName="required"
+    />
+    <label class="form-check-label" for="exampleCheck1">Obligatorio</label>
+  </div>
+  <div>
+    <label for="label">Tipo:</label>
+    <select id="type" formControlName="type" class="form-control">
+      <option value="text">Texto</option>
+      <option value="number">Número</option>
+      <option value="select">Selección</option>
+      <option value="checkbox">Check</option>
+    </select>
+  </div>
+  <ng-container formArrayName="selectOptions" *ngIf="type == 'select'">
+    <i
+      class="fa fa-plus-circle text-success"
+      role="button"
+      (click)="addOption()"
+    ></i>
+    <ng-container *ngFor="let option of selectOptions.controls; let i = index">
+      <input
+        type="text"
+        id="option-{{ i }}"
+        [formControlName]="i"
+        class="form-control"
+      />
+      <i
+        class="fa fa-trash text-danger"
+        role="button"
+        (click)="removeOption(i)"
+      ></i>
+    </ng-container>
+  </ng-container>
+  <br />
+  <button class="btn btn-info" (click)="formSubmit()">Listo</button>
+</div>

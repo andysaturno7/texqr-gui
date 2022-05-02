@@ -10,9 +10,7 @@ export class ClientLayoutComponent implements OnInit {
   activeMenu: boolean = false;
   constructor(private _regis: RegistrantsService) {}
 
-  ngOnInit(): void {
-    this._regis.getDynamics();
-  }
+  ngOnInit(): void {}
 
   log() {
     console.log(this.activeMenu);

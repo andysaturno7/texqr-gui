@@ -1,52 +1,11 @@
 <!-- add Dynamic -->
-<h5 class="text-center">Campos Dinámicos</h5>
-<div class="card shadow">
+<div class="card shadow mx-3">
   <div class="card-body">
-    <div class="row text-secondary form">
-      <div class="col-sm">
-        <label for="table">Tabla</label>
-        <input
-          class="form-control"
-          type="text"
-          id="table"
-          [(ngModel)]="table"
-          readonly
-        />
-      </div>
-      <div class="col-sm">
-        <label for="field">Campo</label>
-        <input
-          class="form-control"
-          type="text"
-          id="field"
-          [(ngModel)]="field"
-        />
-      </div>
-      <div class="col-sm">
-        <label for="fieldLabel">Label</label>
-        <input
-          class="form-control"
-          type="text"
-          id="fieldLabel"
-          [(ngModel)]="fieldLabel"
-        />
-      </div>
-      <div class="col-sm">
-        <label for="type">Tipo</label>
-        <input class="form-control" type="text" id="type" [(ngModel)]="type" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col mt-4">
-        <button class="btn btn-primary col" (click)="addDynamic()">
-          Agregar
-        </button>
-      </div>
-    </div>
+    <add-dynamics (submit)="addDynamic($event)"></add-dynamics>
   </div>
 </div>
 <br />
-<div class="card shadow">
+<div class="card shadow mx-3">
   <div class="card-body">
     <table class="table table-responsive">
       <thead>

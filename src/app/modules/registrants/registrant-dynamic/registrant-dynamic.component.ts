@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
 import { Subscription } from 'rxjs';
 import { Dynamic } from 'src/app/models/dynamic.interface';
@@ -16,19 +16,6 @@ export class RegistrantDynamicComponent implements OnInit, OnDestroy {
   dynamics: Dynamic[];
   private subsc: Subscription;
   context: any;
-
-  // Form
-  // newDynamicForm: FormGroup = this.fb.group({
-  //   table: ['', Validators.required],
-  //   field: ['', Validators.required],
-  //   fieldLabel: [''],
-  //   type: [''],
-  // });
-
-  table: string = 'Registrant';
-  field: string;
-  fieldLabel: string;
-  type: string;
 
   // AGGRID
   @ViewChild('agGrid') agTable: AgGridAngular;
@@ -75,26 +62,13 @@ export class RegistrantDynamicComponent implements OnInit, OnDestroy {
 
   inlineUpdate(event) {}
 
-  addDynamic() {
-    let dynamic = {
-      table: this.table,
-      field: this.field,
-      fieldLabel: this.fieldLabel,
-      type: this.type,
-    };
-    this._regis.addDynamic(dynamic);
-    this.resetDynamicForm();
+  addDynamic(data: any) {
+    this._regis.addDynamic(data);
   }
 
   deleteDynamic(id: number) {
     confirm('Estás seguro que deseas eliminar este campo?')
       ? this._regis.deleteDynamic(id)
       : null;
-  }
-
-  resetDynamicForm() {
-    this.field = '';
-    this.fieldLabel = '';
-    this.type = '';
   }
 }

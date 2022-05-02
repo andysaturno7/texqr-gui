@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PageInfo, PaginatedData } from 'src/app/interfaces/paginated-data';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { Room, RoomsService } from 'src/app/services/rooms.service';
 
 @Component({
   selector: 'root-rooms',
@@ -6,7 +9,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./root-rooms.component.css'],
 })
 export class RootRoomsComponent implements OnInit {
-  constructor() {}
+  dataRooms: PaginatedData<Room>;
+  dataRoomsFilter: string = '';
 
-  ngOnInit(): void {}
+  constructor(
+    private _rooms: RoomsService,
+    private _toast: NotificationsService
+  ) {}
+
+  ngOnInit(): void {
+    this.getRooms({ offset: 0, limit: 15 });
+  }
+
+  getRooms(pageInfo: PageInfo): void {
+    this._rooms
+      .getRooms(pageInfo.offset, pageInfo.limit, this.dataRoomsFilter)
+      .subscribe(
+        (res: PaginatedData<Room>) => {
+          this.dataRooms = res;
+        },
+        (error) => {
+          this._toast.showError(error, 'Problema al cargar datos.');
+        }
+      );
+  }
+
+  onSelect(event) {
+    console.log(event);
+  }
 }

@@ -1,7 +1,11 @@
 :host {
+  height: 100vh;
   display: flex;
   justify-content: center;
-  margin: 100px 0px;
+  align-items: center;
+  flex-flow: column;
+  background-image: url(/admin/assets/img/bg1.jpg);
+  background-size: cover;
 }
 
 .mat-form-field {
@@ -10,10 +14,12 @@
 }
 
 .error {
-  padding: 16px;
+  padding: 10px;
   width: 300px;
   color: white;
   background-color: red;
+  margin-bottom: 3px;
+  border-radius: 0.25rem;
 }
 
 .button {

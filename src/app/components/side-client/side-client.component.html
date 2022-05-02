@@ -1,9 +1,8 @@
-<div class="w-100 logo-container">
+<div class="w-100 bg-white my-4 shadow logo-container">
   <img
     src="assets/img/logo.png"
     alt="logo"
     style="max-height: 80px; width: auto"
-    class="my-3"
   />
 </div>
 <div
@@ -12,39 +11,25 @@
   aria-orientation="vertical"
 >
   <a
-    class="nav-link"
+    class="nav-link mt-4"
     routerLink="dashboard"
     (click)="onSelected()"
     routerLinkActive="active"
     ><i class="fa fa-dashboard"></i> Dashboard</a
   >
   <a
-    class="nav-link"
-    routerLink="salas"
+    class="nav-link mt-4"
+    routerLink="proyectos"
     (click)="onSelected()"
     routerLinkActive="active"
-    ><i class="fa fa-bookmark"></i> Salas</a
+    ><i class="fa fa-dashboard"></i> Proyectos</a
   >
   <a
-    class="nav-link"
-    routerLink="equipos"
+    class="nav-link mt-4"
+    routerLink="settings"
     (click)="onSelected()"
     routerLinkActive="active"
-    ><i class="fa fa-feed"></i> Equipos</a
-  >
-  <a
-    class="nav-link"
-    routerLink="registro"
-    (click)="onSelected()"
-    routerLinkActive="active"
-    ><i class="fa fa-address-book"></i> Registro</a
-  >
-  <a
-    class="nav-link"
-    routerLink="asistencia"
-    (click)="onSelected()"
-    routerLinkActive="active"
-    ><i class="fa fa-check"></i> Asistencia</a
+    ><i class="fa fa-setting"></i> Configuraciones</a
   >
 </div>
 

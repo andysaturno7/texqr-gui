@@ -1,0 +1,50 @@
+<ng-container *ngFor="let dynamic of dynamics; let i = index">
+  <div [formGroup]="form">
+    <label for="dyn-{{ i }}" class="form-check-label"
+      >{{ dynamic.fieldLabel }}:</label
+    >
+    <ng-container [ngSwitch]="dynamic.type">
+      <ng-container *ngSwitchCase="'text'">
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="{{ dynamic.field }}"
+          id="dyn-{{ i }}"
+        />
+      </ng-container>
+      <ng-container *ngSwitchCase="'number'">
+        <input
+          type="number"
+          class="form-control form-control-sm"
+          id="dyn-{{ i }}"
+          formControlName="{{ dynamic.field }}"
+        />
+      </ng-container>
+      <ng-container *ngSwitchCase="'select'">
+        <select
+          formControlName="{{ dynamic.field }}"
+          class="form-control form-control-sm"
+          id="dyn-{{ i }}"
+        >
+          <option
+            *ngFor="let option of dynamic.selectOptions"
+            value="{{ option }}"
+          >
+            {{ option }}
+          </option>
+        </select>
+      </ng-container>
+      <ng-container *ngSwitchCase="'checkbox'">
+        <input
+          type="checkbox"
+          class="ml-2"
+          id="dyn-{{ i }}"
+          formControlName="{{ dynamic.field }}"
+        />
+      </ng-container>
+      <ng-container class="text-danger" *ngSwitchDefault>
+        Un error inesperado ha ocurrido con un campo
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

@@ -1,51 +1,32 @@
-<div class="ag-theme-balham card" style="height: 100%">
-  <div class="card-header">
-    <h5 class="text-right">
-      <i
-        class="fa fa-file-excel-o text-success"
-        (click)="exportTable()"
-        title="Exportar como CSV"
-        role="button"
-      ></i>
-    </h5>
-  </div>
-  <ag-grid-angular
-    #agGrid
-    style="height: 100%"
-    [context]="context"
-    [rowData]="rooms"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
-    [rowSelection]="'multiple'"
-    [suppressRowClickSelection]="true"
-    [autoGroupColumnDef]="{ minWidth: 200 }"
-    [editType]="'fullRow'"
-    [pagination]="true"
-    [paginationAutoPageSize]="true"
-    (rowValueChanged)="editItem($event)"
+<ngx-datatable
+  *ngIf="dataServer"
+  class="bootstrap"
+  [rows]="dataServer.data"
+  [columnMode]="columnMode.force"
+  [footerHeight]="50"
+  [rowHeight]="40"
+  [selected]="selected"
+  [selectionType]="selectionType.checkbox"
+  [externalPaging]="true"
+  [count]="dataServer.count"
+  [offset]="dataServer.offset"
+  [limit]="dataServer.limit"
+  (page)="onPage($event)"
+  (select)="onSelect($event)"
+>
+  <ngx-datatable-column
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true"
   >
-  </ag-grid-angular>
-</div>
-
-<ng-template #mobileTokenClipboard>
-  <div class="modal-clipboard" style="width: 50%">
-    <div class="modal-header">
-      <span style="float: left">Enlace para Mobile CheckIn</span>
-      <i
-        class="fa fa-close"
-        role="button"
-        (click)="clipboardMobileActive = false"
-        style="float: right"
-      ></i>
-    </div>
-    <div class="modal-body">
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="mobileToken"
-        readonly
-      />
-    </div>
-  </div>
-</ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column prop="name" name="Nombre"> </ngx-datatable-column>
+  <ngx-datatable-column prop="parentRoom" name="Sala Padre">
+  </ngx-datatable-column>
+  <ngx-datatable-column prop="capacity" name="Capacidad"></ngx-datatable-column>
+  <ngx-datatable-column prop="createdAt" name="Creación"></ngx-datatable-column>
+</ngx-datatable>

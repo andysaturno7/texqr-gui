@@ -40,11 +40,6 @@ export class AsistanceTableComponent
     { field: 'Registrant.firstName', headerName: 'Nombre' },
     { field: 'Registrant.lastName', headerName: 'Apellido' },
     { field: 'Room.name', headerName: 'Sala' },
-    { field: 'Registrant.participation', headerName: 'Tipo de Participante' },
-    { field: 'Registrant.event', headerName: 'Evento' },
-    { field: 'Registrant.area', headerName: 'Area' },
-    { field: 'Registrant.activity', headerName: 'Actividad' },
-    { field: 'Registrant.specialization', headerName: 'Especialización' },
     {
       field: 'joinTime',
       headerName: 'Entrada',

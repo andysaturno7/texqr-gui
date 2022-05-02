@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  ViewChild,
+  EventEmitter,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Dynamic } from 'src/app/models/dynamic.interface';
+import { CustomselectsService } from 'src/app/services/customselects.service';
 import {
-  CustomEventSelects,
-  CustomselectsService,
-} from 'src/app/services/customselects.service';
-import { RegistrantsService } from 'src/app/services/registrants.service';
+  Registrant,
+  RegistrantsService,
+} from 'src/app/services/registrants.service';
 
 @Component({
   selector: 'add-registrant',
@@ -17,63 +23,38 @@ export class AddRegistrantComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: [''],
     email: ['', [Validators.required, Validators.email, Validators.pattern]],
-    participation: ['', [Validators.required]],
-    event: ['', Validators.required],
-    area: [''],
-    activity: [''],
-    specialization: [''],
     code: [''],
   };
   regisForm: FormGroup;
   dynamics: Dynamic[];
-
-  eventOptions: string[] = this.ctmCS.getCompanies();
-  areasOptions: string[] = [];
-  activitiesOptions: string[] = [];
-  specializationsOptions: string[] = [];
-  participationsOptions: string[] = this.ctmCS.getParticipantsType();
+  @ViewChild('DynamicsRender') dynamicsRender;
+  @Output('added') AddEvent: EventEmitter<Registrant> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
-    private _registrant: RegistrantsService,
-    private ctmCS: CustomselectsService
+    private _registrant: RegistrantsService
   ) {
     this.dynamics = this._registrant.getDynamicsValue();
-    if (this.dynamics.length > 0) this.setDynamics();
     this.regisForm = this.fb.group(this.controlsSettings);
   }
 
   ngOnInit(): void {}
 
   send() {
-    let dynamics = {};
-    this.dynamics.forEach((val, index) => {
-      dynamics[val.field] = this.regisForm.value[val.field];
-      delete this.regisForm.value[val.field];
-    });
-    this.regisForm.value['dynamics'] = dynamics;
-    this._registrant.addOne(this.regisForm.value);
+    let data = this.regisForm.value;
+    if (this.dynamics.length > 0) data['dynamics'] = this.dynamicsValues;
+    this._registrant
+      .addOne(data)
+      .subscribe((res) => this.AddEvent.emit(res), console.log);
+    this.resetForm();
+  }
+
+  get dynamicsValues() {
+    return this.dynamicsRender.value;
+  }
+
+  resetForm() {
     this.regisForm.reset();
-  }
-
-  setDynamics() {
-    this.dynamics.forEach((val, index) => {
-      this.controlsSettings[val.field] = [''];
-    });
-  }
-
-  loadCustomCompaniesSelects() {
-    this.areasOptions = this.ctmCS.getFields(
-      'areas',
-      this.regisForm.value.event
-    );
-    this.activitiesOptions = this.ctmCS.getFields(
-      'activities',
-      this.regisForm.value.event
-    );
-    this.specializationsOptions = this.ctmCS.getFields(
-      'specializations',
-      this.regisForm.value.event
-    );
+    this.dynamicsRender.clean();
   }
 }

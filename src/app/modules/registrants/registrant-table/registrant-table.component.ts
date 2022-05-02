@@ -7,16 +7,20 @@ import {
   Output,
   ViewChild,
   EventEmitter,
+  Input,
 } from '@angular/core';
+import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { PaginatedData } from 'src/app/interfaces/paginated-data';
 import { Dynamic } from 'src/app/models/dynamic.interface';
 import { MailService } from 'src/app/services/mail.service';
 import {
   Registrant,
   RegistrantsService,
 } from 'src/app/services/registrants.service';
+import { ServerSideDataSource } from 'src/app/services/utils.service';
 import { OptionsTableComponent } from '../../shared/agRenderer/options-table/options-table.component';
 import { QrRendererComponent } from '../../shared/agRenderer/qr-renderer/qr-renderer.component';
 
@@ -26,112 +30,41 @@ import { QrRendererComponent } from '../../shared/agRenderer/qr-renderer/qr-rend
   styleUrls: ['./registrant-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrantTableComponent implements OnInit, OnDestroy {
-  searchCondition: string;
-  registrants: any[];
-  private subsc: Subscription;
-  context: any;
+export class RegistrantTableComponent implements OnInit {
   dynamics: Dynamic[];
   qrData: any;
 
-  @Output() QREvent: EventEmitter<string> = new EventEmitter();
+  @Input('data') registrantsData: PaginatedData<Registrant>;
+  @Output('page') PageEvent: EventEmitter<any> = new EventEmitter();
+  @Output('select') SelectEvent: EventEmitter<any> = new EventEmitter();
+  @Output('QREvent') QREvent: EventEmitter<string> = new EventEmitter();
 
-  // AGGRID
-  @ViewChild('agGrid') table: AgGridAngular;
-  columnDefs = [
-    {
-      field: '',
-      headerName: '',
-      cellRendererFramework: OptionsTableComponent,
-      checkboxSelection: true,
-      headerCheckboxSelection: true,
-      filter: false,
-      pinned: 'left',
-      editable: false,
-      maxWidth: 120,
-      flex: 1,
-    },
-    {
-      field: 'id',
-      headerName: '#',
-      editable: false,
-      maxWidth: 60,
-      filter: false,
-      hide: true,
-    },
-    { field: 'firstName', headerName: 'Nombre' },
-    { field: 'lastName', headerName: 'Apellido' },
-    { field: 'email', headerName: 'Correo' },
-    { field: 'participation', headerName: 'Tipo de Participante' },
-    { field: 'event', headerName: 'Evento' },
-    { field: 'area', headerName: 'Area' },
-    { field: 'activity', headerName: 'Actividad' },
-    { field: 'specialization', headerName: 'Especialización' },
-    {
-      field: 'code',
-      headerName: 'Codigo DECODED',
-      cellRendererFramework: QrRendererComponent,
-      filter: true,
-    },
-    { field: 'connected', headerName: '', hide: true },
-  ];
+  selected = [];
 
-  defaultColDef = {
-    minWidth: 100,
-    editable: true,
-    flex: 1,
-    resizable: true,
-    filter: true,
-  };
+  columnMode = ColumnMode;
+  selectionType = SelectionType;
 
   constructor(
     private _registrants: RegistrantsService,
     private cdr: ChangeDetectorRef,
     private _mail: MailService
   ) {
-    this.context = { componentParent: this };
     this.dynamics = this._registrants.getDynamicsValue();
-    this.setHeaderDynamics();
+    console.log('dyna: ' + this.dynamics);
   }
 
-  ngOnInit(): void {
-    this.subsc = this.subscribeRegistrants();
+  ngOnInit(): void {}
+
+  onPage(event: any) {
+    this.PageEvent.emit(event);
   }
 
-  ngOnDestroy(): void {
-    this.subsc.unsubscribe();
+  onSelect(event: any) {
+    this.SelectEvent.emit(event);
   }
 
-  onGridReady(params) {
-    // this._registrants.registrants.subscribe((data) => {
-    //   this.registrants = data;
-    //   this.cdr.detectChanges();
-    // });
-  }
-
-  subscribeRegistrants() {
-    return this._registrants.registrants.subscribe((res: Registrant[]) => {
-      res.forEach((registrant, index) => {
-        let regDynamics = null;
-        if (!!registrant.dynamics && registrant.dynamics.length > 0) {
-          regDynamics = JSON.parse(registrant.dynamics);
-          this.dynamics.forEach((dynamic) => {
-            registrant[dynamic.field] = regDynamics[dynamic.field];
-          });
-        }
-      });
-      this.registrants = res;
-      this.cdr.detectChanges();
-    });
-  }
-
-  setHeaderDynamics() {
-    this.dynamics.forEach((dynamic, index) => {
-      this.columnDefs.push({
-        field: dynamic.field,
-        headerName: dynamic.fieldLabel,
-      });
-    });
+  public getSelecteds() {
+    return this.selected;
   }
 
   deleteItem(id: number) {
@@ -144,38 +77,9 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
     console.log(id);
   }
 
-  inlineUpdate(event: any): void {
-    let data = event.data;
-    let dynamics = {};
-    this.dynamics.forEach((dbDynamic) => {
-      dynamics[dbDynamic.field] = data[dbDynamic.field];
-      delete data[dbDynamic.field];
-    });
-    data['dynamics'] = dynamics;
-
-    this._registrants.update(data);
-  }
-
-  sendEmail(data: Registrant) {
-    if (confirm(`Deseas enviar un correo a ${data.firstName}?`)) {
-      this._mail.sendMail(data.email, data, 'Invitacion al Evento');
-    }
-    return;
-  }
-
-  getCodeCellRender(params: ICellRendererParams) {
-    return `
-      <i class="fa fa-qrcode mr-2 text-primary" role="button"></i>${params.value}
-    `;
-  }
-
   importDB(ev) {
     let file = ev.target.files[0];
     this._registrants.import(file);
-  }
-
-  exportTable() {
-    this.table.api.exportDataAsCsv({ fileName: 'registro' });
   }
 
   dropDB() {
@@ -186,8 +90,7 @@ export class RegistrantTableComponent implements OnInit, OnDestroy {
   }
 
   QRTouched(code: string) {
-    // this.QREvent.emit(code);
-    this.qrData = code;
+    this.QREvent.emit(code);
   }
 
   closeQR() {

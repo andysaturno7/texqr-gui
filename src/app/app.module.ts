@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RegistrantsModule } from './modules/registrants/registrants.module';
 import { PreDataModule } from './modules/pre-data/pre-data.module';
 
 import { SharedModule } from './modules/shared/shared.module';

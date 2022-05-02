@@ -31,6 +31,9 @@
               "./node_modules/ag-grid-community/dist/styles/ag-grid.css",
               "./node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css",
               "./node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
+              "./node_modules/@swimlane/ngx-datatable/index.css",
+              "./node_modules/@swimlane/ngx-datatable/themes/bootstrap.css",
+              "./node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "src/styles.css",
               "src/assets/css/animate.min.css"
             ],
@@ -121,10 +124,10 @@
               "devServerTarget": "fervi:serve:production",
               "fileReplacements": [
                 {
-                   "replace": "src/environments/environment.ts",
-                    "with": "src/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
-             ]
+              ]
             }
           }
         }
