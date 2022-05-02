@@ -24,9 +24,47 @@
     [checkboxable]="true"
   >
   </ngx-datatable-column>
+  <ngx-datatable-column
+    [cellTemplate]="contextMenuTemplate"
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+  >
+  </ngx-datatable-column>
   <ngx-datatable-column prop="name" name="Nombre"> </ngx-datatable-column>
   <ngx-datatable-column prop="parentRoom" name="Sala Padre">
   </ngx-datatable-column>
   <ngx-datatable-column prop="capacity" name="Capacidad"></ngx-datatable-column>
   <ngx-datatable-column prop="createdAt" name="Creación"></ngx-datatable-column>
 </ngx-datatable>
+<ng-template #contextMenuTemplate let-row="row">
+  <span
+    dropdown
+    (onShown)="(false)"
+    (onHidden)="(false)"
+    (isOpenChange)="(false)"
+  >
+    <i
+      dropdownToggle
+      (click)="(false)"
+      aria-controls="basic-link-dropdown"
+      class="fa fa-caret-down"
+      role="button"
+    ></i>
+    <ul
+      id="basic-link-dropdown"
+      *dropdownMenu
+      class="dropdown-menu p-2 shadow"
+      role="menu"
+      aria-labelledby="basic-link"
+    >
+      <li role="button" (click)="onExportReport(row)">
+        <i class="fa fa-file-excel-o"></i> Descargar asistencia
+      </li>
+      <li class="divider dropdown-divider"></li>
+      <li>Gráfico de asistencia</li>
+    </ul>
+  </span>
+</ng-template>

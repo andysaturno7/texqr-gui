@@ -11,11 +11,13 @@
   },
   "private": true,
   "dependencies": {
+    "@molteni/export-csv": "0.0.8",
     "@swimlane/ngx-datatable": "^20.0.0",
     "ag-grid-angular": "^25.3.0",
     "ag-grid-community": "^25.3.0",
     "angularx-qrcode": "^11.0.0",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-print-element": "^2.0.14",
     "ngx-socket-io": "^4.1.0"
   },
   "devDependencies": {

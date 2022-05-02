@@ -34,6 +34,10 @@ export class RootRoomsComponent implements OnInit {
       );
   }
 
+  exportAsistancesByRoom(room: Room) {
+    this._rooms.getAsistances(room);
+  }
+
   onSelect(event) {
     console.log(event);
   }

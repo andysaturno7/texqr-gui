@@ -15,6 +15,15 @@
   (select)="onSelect($event)"
 >
   <ngx-datatable-column
+    [cellTemplate]="contextMenuTemplate"
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+  >
+  </ngx-datatable-column>
+  <ngx-datatable-column
     [width]="30"
     [sortable]="false"
     [canAutoResize]="false"
@@ -24,30 +33,65 @@
     [checkboxable]="true"
   >
   </ngx-datatable-column>
-  <ngx-datatable-column
-    [cellTemplate]="contextMenuTemplate"
-    [width]="30"
-    [sortable]="false"
-    [canAutoResize]="false"
-    [draggable]="false"
-    [resizeable]="false">
-  </ngx-datatable-column>
   <ngx-datatable-column prop="firstName" name="Nombre"></ngx-datatable-column>
   <ngx-datatable-column prop="lastName" name="Apellidos"></ngx-datatable-column>
   <ngx-datatable-column prop="email" name="Correo"></ngx-datatable-column>
-  <ngx-datatable-column name="Código" [cellTemplate]="codeTemplate"></ngx-datatable-column>
+  <ngx-datatable-column
+    name="Código"
+    [cellTemplate]="codeTemplate"
+  ></ngx-datatable-column>
   <ng-template #nameTemplate let-row="row">
     <a routerLink="">{{ row.firstName }} {{ row.lastName }}</a>
   </ng-template>
   <ng-template #codeTemplate let-row="row">
     <div class="input-group input-group-sm mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text text-danger"><i class="fa fa-qrcode" role="button" (click)="QRTouched(row.code)"></i></span>
+        <span class="input-group-text text-danger"
+          ><i
+            class="fa fa-qrcode"
+            role="button"
+            (click)="QRTouched(row.code)"
+          ></i
+        ></span>
       </div>
-      <input type="text" class="form-control" aria-label="80" value="{{row.code}}" readonly>
+      <input
+        type="text"
+        class="form-control"
+        aria-label="80"
+        value="{{ row.code }}"
+        readonly
+      />
     </div>
   </ng-template>
-  <ng-template #contextMenuTemplate><i class="fa fa-caret-down" role="button"></i></ng-template>
+  <ng-template #contextMenuTemplate let-row="row">
+    <span
+      dropdown
+      (onShown)="(false)"
+      (onHidden)="(false)"
+      (isOpenChange)="(false)"
+    >
+      <i
+        dropdownToggle
+        (click)="(false)"
+        aria-controls="basic-link-dropdown"
+        class="fa fa-caret-down"
+        role="button"
+      ></i>
+      <ul
+        id="basic-link-dropdown"
+        *dropdownMenu
+        class="dropdown-menu p-2 shadow"
+        role="menu"
+        aria-labelledby="basic-link"
+      >
+        <li role="button" (click)="handlePrintStickerEvent(row)">
+          <i class="fa fa-print"></i> Imprimir Sticker
+        </li>
+        <li class="divider dropdown-divider"></li>
+        <li>Gráfico de asistencia</li>
+      </ul>
+    </span>
+  </ng-template>
   <ng-container *ngFor="let dynamic of dynamics">
     <ngx-datatable-column [name]="dynamic.fieldLabel"></ngx-datatable-column>
   </ng-container>

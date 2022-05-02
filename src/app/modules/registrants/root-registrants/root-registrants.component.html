@@ -1,57 +1,69 @@
 <div class="row">
   <div class="col">
-<div *ngIf="dataRegistrants" class="card shadow mt-4">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-sm-9">
-        <i
-          class="fa fa-plus"
-          role="button"
-          (click)="openModal(addEditTemplate)"
-        ></i>
+    <div *ngIf="dataRegistrants" class="card shadow mt-4">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-sm-9">
+            <i
+              class="fa fa-plus"
+              role="button"
+              (click)="openModal(addEditTemplate)"
+            ></i>
+          </div>
+          <div class="col-sm-3">
+            <input
+              type="text"
+              class="form-control"
+              (keyup.enter)="getRegistrants({ limit: 10, offset: 0 })"
+              [(ngModel)]="dataRegistrantsFilter"
+              placeholder="Buscar"
+            />
+          </div>
+        </div>
       </div>
-      <div class="col-sm-3">
-        <input
-          type="text"
-          class="form-control"
-          (keyup.enter)="getRegistrants({ limit: 10, offset: 0 })"
-          [(ngModel)]="dataRegistrantsFilter"
-          placeholder="Buscar"
-        />
-      </div>
+      <registrant-table
+        [data]="dataRegistrants"
+        (select)="onSelect($event)"
+        (page)="getRegistrants($event)"
+        (QREvent)="handleQRTouched($event)"
+        (PrintStickerEvent)="printStickerEvent($event)"
+      ></registrant-table>
     </div>
-  </div>
-  <registrant-table
-    [data]="dataRegistrants"
-    (select)="onSelect($event)"
-    (page)="getRegistrants($event)"
-    (QREvent)="handleQRTouched($event)"
-  ></registrant-table>
-</div>
 
-<!-- Add Form Component -->
-<ng-template #addEditTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Registro</h4>
-    <button
-      type="button"
-      class="btn-close close pull-right"
-      aria-label="Close"
-      (click)="modalRef?.hide()"
-    >
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
+    <!-- Add Form Component -->
+    <ng-template #addEditTemplate>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Registro</h4>
+        <button
+          type="button"
+          class="btn-close close pull-right"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <add-registrant (added)="addToTable($event)"></add-registrant>
+      </div>
+    </ng-template>
   </div>
-  <div class="modal-body">
-    <add-registrant (added)="addToTable($event)"></add-registrant>
+  <div class="col mt-4" style="max-width: 165px">
+    <ng-container *ngIf="qrdata">
+      <qrcode
+        [qrdata]="qrdata"
+        [errorCorrectionLevel]="'M'"
+        [width]="128"
+      ></qrcode>
+      <i class="fa fa-close mr-3" role="button" (click)="qrdata = null"></i>
+      <i class="fa fa-print mr-3" role="button"></i>
+    </ng-container>
   </div>
-</ng-template>
-</div>
-<div class="col mt-4" style="max-width: 165px">
-  <ng-container *ngIf="qrdata">
-    <qrcode [qrdata]="qrdata" [errorCorrectionLevel]="'M'" [width]="128"></qrcode>
-    <i class="fa fa-close mr-3" role="button" (click)="qrdata = null"></i>
-    <i class="fa fa-print mr-3" role="button"></i>
+
+  <ng-container *ngIf="dataPrint">
+    <app-print-template
+      [data]="dataPrint"
+      (clean)="dataPrint = null"
+    ></app-print-template>
   </ng-container>
-</div>
 </div>

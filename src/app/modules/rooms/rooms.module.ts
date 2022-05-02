@@ -5,8 +5,8 @@ import { RoomsRoutingModule } from './rooms-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRoomComponent } from './add-room/add-room.component';
 import { TableRoomsComponent } from './table-rooms/table-rooms.component';
-import { AgGridModule } from 'ag-grid-angular';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [RootRoomsComponent, AddRoomComponent, TableRoomsComponent],
@@ -16,6 +16,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FormsModule,
     ReactiveFormsModule,
     NgxDatatableModule,
+    BsDropdownModule.forRoot(),
   ],
 })
 export class RoomsModule {}

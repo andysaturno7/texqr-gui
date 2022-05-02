@@ -12,6 +12,7 @@ export class TableRoomsComponent implements OnInit {
   @Input('data') dataServer: PaginatedData<Room>;
   @Output('page') PageEvent: EventEmitter<any> = new EventEmitter();
   @Output('select') SelectEvent: EventEmitter<any> = new EventEmitter();
+  @Output('exportReport') ExportReport: EventEmitter<any> = new EventEmitter();
 
   selected = [];
 
@@ -28,6 +29,10 @@ export class TableRoomsComponent implements OnInit {
 
   onSelect(event) {
     this.SelectEvent.emit(event);
+  }
+
+  onExportReport(room: Room) {
+    this.ExportReport.emit(room);
   }
 
   deleteItem(id) {}

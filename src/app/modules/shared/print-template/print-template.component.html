@@ -1,0 +1,35 @@
+<ng-container *ngIf="printData">
+  <div class="paper" id="demoPrint">
+    <div class="row h-100">
+      <div class="col-4">
+        <div class="row h-100 align-items-center code-container" id="qrcode">
+          <!-- <img class="col" src="./img/logo.png" alt="qrcode" /> -->
+        </div>
+      </div>
+      <div class="col-8 data-container">
+        <div class="row text-left data">
+          <div class="name" id="name">
+            {{ printData.firstName }} {{ printData.lastName[0] | titlecase }}.
+          </div>
+          <div class="divider my-2"></div>
+          <div class="company" id="company">Empresa o Compania</div>
+          <div class="country" id="country">Pais</div>
+        </div>
+        <div class="row water-mark">
+          <div class="col-12">
+            <!-- <img src="./img/logo.png" alt="logo" /> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <script src="./js/qrcode.min.js"></script> -->
+  <button
+    #buttonContainer
+    [print]="['demoPrint']"
+    [config]="config"
+    (click)="navigateBack()"
+  >
+    Print
+  </button>
+</ng-container>

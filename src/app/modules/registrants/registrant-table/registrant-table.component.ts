@@ -38,6 +38,8 @@ export class RegistrantTableComponent implements OnInit {
   @Output('page') PageEvent: EventEmitter<any> = new EventEmitter();
   @Output('select') SelectEvent: EventEmitter<any> = new EventEmitter();
   @Output('QREvent') QREvent: EventEmitter<string> = new EventEmitter();
+  @Output('PrintStickerEvent') PrintStickerEvent: EventEmitter<Registrant> =
+    new EventEmitter();
 
   selected = [];
 
@@ -108,5 +110,9 @@ export class RegistrantTableComponent implements OnInit {
     } else {
       this.closeQR();
     }
+  }
+
+  handlePrintStickerEvent(data: Registrant) {
+    this.PrintStickerEvent.emit(data);
   }
 }

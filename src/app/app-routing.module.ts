@@ -4,10 +4,12 @@ import { ClientLayoutComponent } from './components/client-layout/client-layout.
 import { LoginComponent } from './modules/authentication/components/login/login.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { LoadDataViewComponent } from './modules/pre-data/load-data-view/load-data-view.component';
+import { PrintTemplateComponent } from './modules/shared/print-template/print-template.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
+  { path: 'print', component: PrintTemplateComponent },
   {
     path: 'admin',
     component: ClientLayoutComponent,

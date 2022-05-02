@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import '~ngx-print-element/styles.css';
 .frame-brand {
   user-select: none;
   -webkit-user-select: none;
@@ -9,41 +9,71 @@
   color: aliceblue;
 }
 
-.table th {
-  border: none;
+.ngx-datatable {
+  overflow:unset !important;
 }
 
-.ag-center-cols-container {
-  width: 100% !important;
+/* @page {
+  margin: 0;
 }
 
-.ag-row:hover {
-  background-color: rgba(0, 0, 0, 0.075) !important;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-.ag-input-field-input {
-  padding: 6px !important;
-  border-radius: 3px !important;
-  border-color: #49505770 !important;
-  color: #495057 !important;
-  outline: 0 !important;
-  line-height: 20px !important;
+.paper {
+  width: 400px;
+  height: 193px;
+  margin: 0;
+  padding: 2px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.ag-input-field-input:focus {
-  border-color: #80bdff !important;
-  box-shadow: 0 -0.1rem 0.5rem 0 rgba(0, 123, 255, 0.25) !important;
-  background-color: #fff !important;
-  outline: 0 !important;
+.code-container img {
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 3px;
+  transform: translateY(5px);
 }
 
-.ag-cell-inline-editing {
-  border: none !important;
-  border-radius: 3px !important;
-  outline: 0 !important;
-  overflow: visible !important;
+
+
+.data-container .data {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  position: relative !important;
+  height: 161px;
+  transform: translateY(15px);
+  text-transform: uppercase;
 }
 
-.ag-cell-focus {
-  border: none !important;
+.data-container .data div {
+  padding-left: 12px;
+  padding-right: 15px;
 }
+
+.data-container .divider {
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.data-container .name {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.data-container .company,
+.data-container .country {
+  font-size: 15px;
+}
+
+.water-mark img {
+  width: 25px;
+  height: auto;
+  float: right;
+} */

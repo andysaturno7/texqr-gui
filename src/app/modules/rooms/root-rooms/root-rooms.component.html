@@ -1,7 +1,9 @@
 <div *ngIf="dataRooms" class="card shadow mt-4">
   <div class="card-header">
     <div class="row">
-      <div class="col-sm-9"></div>
+      <div class="col-sm-9">
+        <i class="fa fa-plus" role="button" (click)="(false)"></i>
+      </div>
       <div class="col-sm-3">
         <input
           type="text"
@@ -17,5 +19,6 @@
     [data]="dataRooms"
     (page)="getRooms($event)"
     (select)="onSelect($event)"
+    (exportReport)="exportAsistancesByRoom($event)"
   ></table-rooms>
 </div>

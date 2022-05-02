@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Dynamic } from 'src/app/models/dynamic.interface';
-import { CustomselectsService } from 'src/app/services/customselects.service';
 import {
   Registrant,
   RegistrantsService,

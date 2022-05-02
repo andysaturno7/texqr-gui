@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PaginatedData } from '../interfaces/paginated-data';
+import { Asistance } from './asistance.service';
 import { NotificationsService } from './notifications.service';
 import { ProjectsService } from './projects.service';
+
+import { ExportToCSV } from '@molteni/export-csv';
 
 export interface Room {
   id?: number;
@@ -27,6 +29,8 @@ export class RoomsService {
   private rooms$: BehaviorSubject<Room[]> = new BehaviorSubject([]);
   public rooms: Observable<Room[]> = this.rooms$.asObservable();
 
+  private exportToCsv = new ExportToCSV();
+
   constructor(
     private http: HttpClient,
     private _toast: NotificationsService,
@@ -37,14 +41,14 @@ export class RoomsService {
     this.rooms$.next(rooms);
   }
 
-  getRooms(offset: number, limit: number, filter?: string | number) {
-    offset = offset ? offset : 0;
+  getRooms(page: number, limit: number, filter?: string | number) {
+    page = page ? page : 0;
     limit = limit || 10;
+    let offset = limit * page;
     let query = new URLSearchParams(`offset=${offset}&limit=${limit}`);
     if (filter) query.append('filter', `${filter}`);
-    let projectId = this._projects.project;
     return this.http.get<PaginatedData<Room>>(
-      `${this.uri}/projects/${projectId}/rooms?${query.toString()}`
+      `${this.uri}/projects/${this._projects.project}/rooms?${query}`
     );
   }
 
@@ -79,6 +83,41 @@ export class RoomsService {
       .subscribe((res: any[]) => {
         if (res.length > 0 && res[0] > 0)
           this._toast.showSuccess(`Room ${room.name} ha sido actualizado`);
+      });
+  }
+
+  getAsistances(room: Room) {
+    this.http
+      .get(
+        `${this.uri}/projects/${this._projects.project}/rooms/${room.id}/asistance`
+      )
+      .subscribe((res: Asistance[]) => {
+        let dataModified = [];
+        res.forEach((row) => {
+          let registrant = row.Registrant;
+          delete row.Registrant;
+          dataModified.push({ ...row, ...registrant });
+        });
+        if (dataModified.length > 0) {
+          // descargar
+          let columns = [
+            'firstName',
+            'lastName',
+            'email',
+            'joinTime',
+            'leaveTime',
+          ];
+          this.exportToCsv.exportColumnsToCSV(
+            dataModified,
+            room.name + '_asistencias',
+            columns
+          );
+          this._toast.showSuccess('Archivo Descargado.');
+        } else {
+          this._toast.showError(
+            new Error(`${room.name} no tiene asistencias.`)
+          );
+        }
       });
   }
 
