@@ -7,6 +7,7 @@ import {
 } from 'src/app/services/registrants.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
+import { PrintService } from '../../print/print.service';
 
 @Component({
   selector: 'root-registrants',
@@ -26,7 +27,7 @@ export class RootRegistrantsComponent implements OnInit {
   constructor(
     private _regis: RegistrantsService,
     private _modalService: BsModalService,
-    private _router: Router
+    private _print: PrintService
   ) {
     this.getRegistrants({ offset: 0, limit: 10 });
   }
@@ -68,9 +69,7 @@ export class RootRegistrantsComponent implements OnInit {
   }
 
   printStickerEvent(dataSticker: Registrant) {
-    this._router.navigate(['print'], {
-      queryParams: dataSticker,
-    });
+    this._print.printSticker(dataSticker);
   }
 
   ngOnInit(): void {}

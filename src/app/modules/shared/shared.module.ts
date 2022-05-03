@@ -9,8 +9,6 @@ import { QrRendererComponent } from './agRenderer/qr-renderer/qr-renderer.compon
 import { RoomsOptionsComponent } from './agRenderer/rooms-options/rooms-options.component';
 import { InputDynamicComponent } from './dynamics/input-dynamic/input-dynamic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PrintTemplateComponent } from './print-template/print-template.component';
-import { NgxPrintElementModule } from 'ngx-print-element';
 
 @NgModule({
   declarations: [
@@ -18,15 +16,8 @@ import { NgxPrintElementModule } from 'ngx-print-element';
     QrRendererComponent,
     RoomsOptionsComponent,
     InputDynamicComponent,
-    PrintTemplateComponent,
   ],
-  imports: [
-    CommonModule,
-    AgGridModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxPrintElementModule,
-  ],
-  exports: [SearchPipe, InputDynamicComponent, PrintTemplateComponent],
+  imports: [CommonModule, AgGridModule, FormsModule, ReactiveFormsModule],
+  exports: [SearchPipe, InputDynamicComponent],
 })
 export class SharedModule {}

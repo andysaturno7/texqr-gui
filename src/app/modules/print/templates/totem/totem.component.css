@@ -1,0 +1,81 @@
+@page {
+  margin: 0;
+}
+
+@media screen {
+  * {
+    margin: 0;
+  }
+}
+
+@media print {
+  * {
+    margin: 0;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.paper {
+  width: 400px;
+  height: 193px;
+  margin: 0;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid black;
+}
+
+.code-container img {
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 3px;
+  transform: translateY(5px);
+}
+
+.data-container {
+  /* padding-left: 0; */
+}
+
+.data-container .data {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  position: relative !important;
+  height: 161px;
+  transform: translateY(15px);
+  text-transform: uppercase;
+}
+
+.data-container .data div {
+  padding-left: 12px;
+  padding-right: 15px;
+}
+
+.data-container .divider {
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.data-container .name {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.data-container .company,
+.data-container .country {
+  font-size: 15px;
+}
+
+.water-mark img {
+  width: 25px;
+  height: auto;
+  float: right;
+}

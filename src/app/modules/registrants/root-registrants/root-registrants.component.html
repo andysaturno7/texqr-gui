@@ -59,11 +59,4 @@
       <i class="fa fa-print mr-3" role="button"></i>
     </ng-container>
   </div>
-
-  <ng-container *ngIf="dataPrint">
-    <app-print-template
-      [data]="dataPrint"
-      (clean)="dataPrint = null"
-    ></app-print-template>
-  </ng-container>
 </div>
