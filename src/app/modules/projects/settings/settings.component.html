@@ -1,1 +1,22 @@
-<p>settings works!</p>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="text-center">Nuevo Campo</h3>
+      </div>
+      <div class="card-body">
+        <add-dynamic (add)="addDynamic($event)"></add-dynamic>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="text-center">Campos Dinámicos</h3>
+      </div>
+      <div class="card-body">
+        <table-dynamic (delete)="deleteDynamic($event)"></table-dynamic>
+      </div>
+    </div>
+  </div>
+</div>

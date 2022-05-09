@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Clave</th>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dynamic of dynamics">
+      <td>
+        <i
+          role="button"
+          class="fa fa-trash"
+          (click)="launchDeleteEvent(dynamic.id)"
+        ></i>
+      </td>
+      <td>{{ dynamic.field }}</td>
+      <td>{{ dynamic.fieldLabel }}</td>
+      <td>{{ dynamic.type }}</td>
+      <td>{{ dynamic.required }}</td>
+    </tr>
+  </tbody>
+</table>

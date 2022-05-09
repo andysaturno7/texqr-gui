@@ -8,6 +8,8 @@ import {
   ViewChild,
   EventEmitter,
   Input,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -20,9 +22,6 @@ import {
   Registrant,
   RegistrantsService,
 } from 'src/app/services/registrants.service';
-import { ServerSideDataSource } from 'src/app/services/utils.service';
-import { OptionsTableComponent } from '../../shared/agRenderer/options-table/options-table.component';
-import { QrRendererComponent } from '../../shared/agRenderer/qr-renderer/qr-renderer.component';
 
 @Component({
   selector: 'registrant-table',
@@ -30,11 +29,11 @@ import { QrRendererComponent } from '../../shared/agRenderer/qr-renderer/qr-rend
   styleUrls: ['./registrant-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrantTableComponent implements OnInit {
-  dynamics: Dynamic[];
+export class RegistrantTableComponent implements OnInit, OnChanges {
   qrData: any;
 
   @Input('data') registrantsData: PaginatedData<Registrant>;
+  @Input('dynamics') dynamics: Dynamic[];
   @Output('page') PageEvent: EventEmitter<any> = new EventEmitter();
   @Output('select') SelectEvent: EventEmitter<any> = new EventEmitter();
   @Output('QREvent') QREvent: EventEmitter<string> = new EventEmitter();
@@ -50,12 +49,11 @@ export class RegistrantTableComponent implements OnInit {
     private _registrants: RegistrantsService,
     private cdr: ChangeDetectorRef,
     private _mail: MailService
-  ) {
-    this.dynamics = this._registrants.getDynamicsValue();
-    console.log('dyna: ' + this.dynamics);
-  }
+  ) {}
 
   ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   onPage(event: any) {
     this.PageEvent.emit(event);
@@ -71,7 +69,14 @@ export class RegistrantTableComponent implements OnInit {
 
   deleteItem(id: number) {
     confirm('Estás seguro que deseas eliminar este registro?')
-      ? this._registrants.deleteOne(id)
+      ? this._registrants
+          .deleteOne(id)
+          .subscribe((res: { deleted: number }) => {
+            if (res.deleted > 0)
+              this.registrantsData.data = this.registrantsData.data.filter(
+                (registrant) => registrant.id !== id
+              );
+          }, console.log)
       : null;
   }
 
@@ -114,5 +119,9 @@ export class RegistrantTableComponent implements OnInit {
 
   handlePrintStickerEvent(data: Registrant) {
     this.PrintStickerEvent.emit(data);
+  }
+
+  sendMail(registrant: Registrant) {
+    this._mail.sendMail(registrant.email, registrant, 'Registro al Evento.');
   }
 }

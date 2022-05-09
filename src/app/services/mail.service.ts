@@ -42,7 +42,6 @@ export class MailService {
         registrant: data,
       },
       mail: {
-        from: this.from,
         to: address,
         subject,
       },
@@ -52,7 +51,7 @@ export class MailService {
         if (res.info.rejected.length > 0) {
           this._not.showError({
             type: 'danger',
-            message: `El envio no a ${data.firstName} se ha completado`,
+            message: `El envio a ${data.firstName} se ha completado`,
           });
         } else {
           this._not.showSuccess(

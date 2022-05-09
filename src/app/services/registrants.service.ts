@@ -41,7 +41,8 @@ export class RegistrantsService {
     },
   ];
 
-  private registrants$: Subject<PaginatedData<Registrant>> = new Subject();
+  private registrants$: BehaviorSubject<PaginatedData<Registrant>> =
+    new BehaviorSubject(null);
   public registrants: Observable<PaginatedData<Registrant>> =
     this.registrants$.asObservable();
 
@@ -83,17 +84,20 @@ export class RegistrantsService {
 
   update(registrants: Registrant) {
     this.http
-      .post(this.uri + '/registrants/update', registrants)
+      .post(
+        `${this.uri}/projects/${this._projects.project}/registrants/update`,
+        registrants
+      )
       .subscribe(console.log, console.log);
   }
 
-  deleteOne(id: number) {
-    this.http
-      .delete(this.uri + '/registrants/' + id)
-      .subscribe(console.log, console.log);
+  deleteOne(id: number | string) {
+    return this.http.delete(
+      `${this.uri}/projects/${this._projects.project}/registrants/${id}`
+    );
   }
 
-  getDynamics() {
+  getDynamics(): void {
     this.http
       .get(
         this.uri +
@@ -101,8 +105,10 @@ export class RegistrantsService {
           this._projects.project +
           '/registrants/dynamics'
       )
-      .subscribe((res: any) => {
-        this.dynamics$.next(res.data);
+      .subscribe((res: Dynamic[]) => {
+        console.log({ res });
+
+        this.dynamics$.next(res);
       }, console.log);
   }
 
@@ -121,17 +127,22 @@ export class RegistrantsService {
       )
       .subscribe((res: any) => {
         let tDynamics = this.dynamics$.getValue();
-        tDynamics.push(res.dynamic);
+        tDynamics.push(res);
         this.dynamics$.next(tDynamics);
       }, console.log);
   }
 
-  deleteDynamic(id: number) {
+  deleteDynamic(id: number | string) {
     this.http
-      .delete(this.uri + '/registrants/dynamics/' + id)
+      .delete(
+        `${this.uri}/projects/${this._projects.project}/registrants/dynamics/${id}`
+      )
       .subscribe((res: any) => {
         if (res.deleted > 0) {
-          this.dynamics$.next(res.dynamics.data);
+          let dynamics = this.dynamics$
+            .getValue()
+            .filter((dynamic, index) => dynamic.id !== id);
+          this.dynamics$.next(dynamics);
         }
       }, console.log);
   }

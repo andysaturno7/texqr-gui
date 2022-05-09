@@ -1,0 +1,74 @@
+<form [formGroup]="form">
+  <div class="form-row align-items-center">
+    <div class="col-sm">
+      <label>Tabla:</label>
+      <input
+        type="text"
+        formControlName="table"
+        class="form-control"
+        readonly
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-sm-6">
+      <label for="field-dynamic">Campo:</label>
+      <input
+        type="text"
+        name="field"
+        formControlName="field"
+        id="field-dynamic"
+        class="form-control"
+      />
+    </div>
+    <div class="col-sm-6">
+      <label for="fieldLabel-dynamic">Nombre:</label>
+      <input
+        type="text"
+        name="fieldLabel"
+        formControlName="fieldLabel"
+        id="fieldLabel-dynamic"
+        class="form-control"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col">
+      <label for="type-dynamic">Tipo:</label>
+      <select
+        name="type"
+        formControlName="type"
+        id="type-dynamic"
+        class="form-control"
+      >
+        <option value="text" class="form-control">Texto</option>
+        <option value="number" class="form-control">Numérico</option>
+        <option value="select" class="form-control">Selección</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label for=""></label>
+      <div class="form-check">
+        <input
+          type="checkbox"
+          name="required"
+          formControlName="required"
+          id="required-dynamic"
+          class="form-check-input"
+        />
+        <label for="required-dynamic" class="form-check-label"
+          >Obligatorio</label
+        >
+      </div>
+    </div>
+  </div>
+  <div class="form-row mt-3">
+    <div class="col">
+      <div>
+        <button class="btn btn-primary" (click)="launchAddEvent()">
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -15,15 +15,6 @@
   (select)="onSelect($event)"
 >
   <ngx-datatable-column
-    [cellTemplate]="contextMenuTemplate"
-    [width]="30"
-    [sortable]="false"
-    [canAutoResize]="false"
-    [draggable]="false"
-    [resizeable]="false"
-  >
-  </ngx-datatable-column>
-  <ngx-datatable-column
     [width]="30"
     [sortable]="false"
     [canAutoResize]="false"
@@ -33,6 +24,15 @@
     [checkboxable]="true"
   >
   </ngx-datatable-column>
+  <ngx-datatable-column
+    [cellTemplate]="contextMenuTemplate"
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+  >
+  </ngx-datatable-column>
   <ngx-datatable-column prop="firstName" name="Nombre"></ngx-datatable-column>
   <ngx-datatable-column prop="lastName" name="Apellidos"></ngx-datatable-column>
   <ngx-datatable-column prop="email" name="Correo"></ngx-datatable-column>
@@ -40,6 +40,7 @@
     name="Código"
     [cellTemplate]="codeTemplate"
   ></ngx-datatable-column>
+
   <ng-template #nameTemplate let-row="row">
     <a routerLink="">{{ row.firstName }} {{ row.lastName }}</a>
   </ng-template>
@@ -80,19 +81,37 @@
       <ul
         id="basic-link-dropdown"
         *dropdownMenu
-        class="dropdown-menu p-2 shadow"
+        class="dropdown-menu shadow"
         role="menu"
         aria-labelledby="basic-link"
       >
-        <li role="button" (click)="handlePrintStickerEvent(row)">
-          <i class="fa fa-print"></i> Imprimir Sticker
+        <li class="dropdown-item" role="button">
+          <i class="fa fa-edit"></i> Editar
+        </li>
+        <li class="dropdown-item" role="button" (click)="deleteItem(row.id)">
+          <i class="fa fa-trash"></i> Eliminar
+        </li>
+        <li class="dropdown-item" role="button" (click)="sendMail(row)">
+          <i class="fa fa-paper-plane"></i> Enviar correo
         </li>
         <li class="divider dropdown-divider"></li>
-        <li>Gráfico de asistencia</li>
+        <li
+          class="dropdown-item"
+          role="button"
+          (click)="handlePrintStickerEvent(row)"
+        >
+          <i class="fa fa-print"></i> Imprimir Sticker
+        </li>
+        <li class="dropdown-item" role="button">
+          <i class="fa fa-bar-chart"></i> Gráfico de asistencia
+        </li>
       </ul>
     </span>
   </ng-template>
   <ng-container *ngFor="let dynamic of dynamics">
-    <ngx-datatable-column [name]="dynamic.fieldLabel"></ngx-datatable-column>
+    <ngx-datatable-column
+      [name]="dynamic.fieldLabel"
+      [prop]="'dynamics.' + dynamic.field"
+    ></ngx-datatable-column>
   </ng-container>
 </ngx-datatable>

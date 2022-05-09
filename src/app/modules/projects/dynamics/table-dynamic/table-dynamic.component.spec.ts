@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegistrantComponent } from './registrant.component';
+import { TableDynamicComponent } from './table-dynamic.component';
 
-describe('RegistrantComponent', () => {
-  let component: RegistrantComponent;
-  let fixture: ComponentFixture<RegistrantComponent>;
+describe('TableDynamicComponent', () => {
+  let component: TableDynamicComponent;
+  let fixture: ComponentFixture<TableDynamicComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RegistrantComponent ]
+      declarations: [ TableDynamicComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegistrantComponent);
+    fixture = TestBed.createComponent(TableDynamicComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

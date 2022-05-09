@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <div *ngIf="dataRegistrants" class="card shadow mt-4">
+    <div *ngIf="dataRegistrants" class="card shadow">
       <div class="card-header">
         <div class="row">
           <div class="col-sm-9">
@@ -23,6 +23,7 @@
       </div>
       <registrant-table
         [data]="dataRegistrants"
+        [dynamics]="dynamics"
         (select)="onSelect($event)"
         (page)="getRegistrants($event)"
         (QREvent)="handleQRTouched($event)"

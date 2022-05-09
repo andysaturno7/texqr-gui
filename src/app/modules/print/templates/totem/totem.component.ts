@@ -18,7 +18,7 @@ export class TotemComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this._print.readyToPrint();
+      // this._print.readyToPrint();
     }, 500);
   }
 }

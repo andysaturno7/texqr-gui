@@ -1,24 +1,24 @@
 <ng-container *ngIf="data">
   <div class="paper">
     <div class="row h-100">
-      <div class="col-4">
-        <div class="row h-100 align-items-center code-container" id="qrcode">
-          <qrcode [qrdata]="data.code"></qrcode>
+      <div class="row row-cols-1" style="max-width: min-content !important">
+        <div class="qr-container">
+          <qrcode [qrdata]="data.code" [width]="128"></qrcode>
+        </div>
+        <div class="text-center logo" style="font-style: oblique">
+          <h3>[[LOGO]]</h3>
         </div>
       </div>
-      <div class="col-8 data-container">
-        <div class="row text-left data">
-          <div class="name" id="name">
-            {{ data.firstName }} {{ data.lastName[0] }}.
-          </div>
-          <div class="divider my-2"></div>
-          <div class="company" id="company">Empresa o Compania</div>
-          <div class="country" id="country">Pais</div>
+      <div class="col data-container">
+        <div class="name" id="name">
+          <h3>{{ data.firstName }} {{ data.lastName }}.</h3>
         </div>
-        <div class="row water-mark">
-          <div class="col-12">
-            <img src="./img/logo.png" alt="logo" />
-          </div>
+        <div class="my-2"></div>
+        <div class="company" id="company">
+          <h4>Empresa o Compania</h4>
+        </div>
+        <div class="country" id="country">
+          <h5>Pais</h5>
         </div>
       </div>
     </div>
