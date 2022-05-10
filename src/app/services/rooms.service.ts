@@ -123,7 +123,7 @@ export class RoomsService {
 
   getMobileUri(id) {
     return this.http
-      .get(this.uri + '/rooms/' + id + '/mobile')
+      .get(this.uri + '/projects' + this._projects.project + '/rooms/' + id + '/mobile')
       .toPromise()
       .then((res: any) => {
         localStorage.setItem('mtk', res.mobileToken);
@@ -132,7 +132,7 @@ export class RoomsService {
   }
 
   createMobileUrl(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       if (!!localStorage.getItem('mtk')) {
         return resolve(
           `${environment.mobileUri}/?room=${id}&tk=${localStorage.getItem(

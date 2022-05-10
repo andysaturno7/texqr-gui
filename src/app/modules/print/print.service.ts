@@ -10,16 +10,15 @@ import { environment } from 'src/environments/environment';
 export class PrintService {
   isPrinting: boolean = false;
 
+  public lastData: any;
+
   constructor(private _router: Router, private _location: Location) {}
 
   printSticker(data: Registrant) {
+    if(this.isPrinting) return;
     this.isPrinting = true;
-    let sticker_url = environment.uri + '/print/templates/totem-sticker.html';
-    localStorage.setItem('registrant', JSON.stringify(data));
-    let a = document.createElement('a');
-    a.href = sticker_url;
-    a.click();
-    // this._router.navigate(['print', 'sticker'], { queryParams: data });
+    this.lastData = data;
+    this._router.navigate(['print', 'sticker']);
   }
 
   readyToPrint() {

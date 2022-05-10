@@ -15,7 +15,7 @@ export interface Registrant {
   lastName?: string;
   code?: string | number;
   email: string;
-  dynamics?: string;
+  dynamics?: string | any;
   connected?: number;
   Rooms?: Room[];
 }
@@ -82,7 +82,7 @@ export class RegistrantsService {
     );
   }
 
-  update(registrants: Registrant) {
+  update(registrants: Registrant) {    
     this.http
       .post(
         `${this.uri}/projects/${this._projects.project}/registrants/update`,
@@ -95,6 +95,10 @@ export class RegistrantsService {
     return this.http.delete(
       `${this.uri}/projects/${this._projects.project}/registrants/${id}`
     );
+  }
+
+  deleteBulk(registrants: Registrant[]){
+    return this.http.post(`${this.uri}/projects/${this._projects.project}/registrants/delete`, {id: registrants.map(registrant=> registrant.id )});
   }
 
   getDynamics(): void {

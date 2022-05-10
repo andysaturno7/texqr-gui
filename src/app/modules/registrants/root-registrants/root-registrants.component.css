@@ -5,3 +5,9 @@
   border-radius: 12px;
   transform: translate(0, -50%);
 }
+
+.selected-container-options {
+  border: 1px solid #3333;
+  border-radius: 8px;
+  width: max-content !important;
+}

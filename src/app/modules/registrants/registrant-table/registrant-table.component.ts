@@ -31,6 +31,7 @@ import {
 })
 export class RegistrantTableComponent implements OnInit, OnChanges {
   qrData: any;
+  editing = {};
 
   @Input('data') registrantsData: PaginatedData<Registrant>;
   @Input('dynamics') dynamics: Dynamic[];
@@ -84,6 +85,15 @@ export class RegistrantTableComponent implements OnInit, OnChanges {
     console.log(id);
   }
 
+  updateValue(event, cell, rowIndex, isDynamic = false){
+    this.editing[rowIndex + '-' + cell] = false;
+    let newData: Registrant = this.registrantsData.data[rowIndex];
+    isDynamic ? newData.dynamics[cell] = event.target.value : newData[cell] = event.target.value;
+    this._registrants.update(newData);
+    this.registrantsData.data[rowIndex] = newData;
+    this.registrantsData.data = [...this.registrantsData.data];
+  }
+
   importDB(ev) {
     let file = ev.target.files[0];
     this._registrants.import(file);
@@ -118,6 +128,8 @@ export class RegistrantTableComponent implements OnInit, OnChanges {
   }
 
   handlePrintStickerEvent(data: Registrant) {
+    console.log({data});
+    
     this.PrintStickerEvent.emit(data);
   }
 

@@ -1,19 +1,5 @@
 @page {
   margin: 0;
-  width: 400px;
-  height: 200px;
-}
-
-@media screen {
-  * {
-    margin: 0;
-  }
-}
-
-@media print {
-  * {
-    margin: 0;
-  }
 }
 
 body {
@@ -22,14 +8,14 @@ body {
 }
 
 .paper {
-  width: 400px;
-  height: 193px;
+  width: 588px;
+  height: 287px;
   margin: 0;
   padding: 15px;
   box-sizing: border-box;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .qr-container {

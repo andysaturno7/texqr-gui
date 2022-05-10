@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { PageInfo, PaginatedData } from 'src/app/interfaces/paginated-data';
-import { Room } from 'src/app/services/rooms.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { Room, RoomsService } from 'src/app/services/rooms.service';
 
 @Component({
   selector: 'table-rooms',
@@ -19,7 +20,7 @@ export class TableRoomsComponent implements OnInit {
   columnMode = ColumnMode;
   selectionType = SelectionType;
 
-  constructor() {}
+  constructor(private _room: RoomsService, private _not: NotificationsService) {}
 
   ngOnInit(): void {}
 
@@ -41,5 +42,9 @@ export class TableRoomsComponent implements OnInit {
 
   exportTable() {}
 
-  createMobileUrl(roomId: number | string) {}
+  async createMobileUrl(roomId: number | string) {    
+    let rmurl = await this._room.createMobileUrl(roomId);
+    navigator.clipboard.writeText(rmurl);
+    this._not.showSuccess("Se ha copiado la url al clip.")
+  }
 }

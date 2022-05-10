@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PrintService } from '../../print/print.service';
 import { Dynamic } from 'src/app/models/dynamic.interface';
 import { Subscription } from 'rxjs';
+import { MailService } from 'src/app/services/mail.service';
 
 @Component({
   selector: 'root-registrants',
@@ -28,10 +29,13 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
 
   modalRef?: BsModalRef;
 
+  selected: Registrant[] | undefined;
+
   constructor(
     private _regis: RegistrantsService,
     private _modalService: BsModalService,
-    private _print: PrintService
+    private _print: PrintService,
+    private _mail: MailService
   ) {
     this.dynamicsSubscription = this.subscribeDynamics();
     this.registrantsSubscription = this.getRegistrants({
@@ -86,8 +90,20 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
     this.modalRef = this._modalService.show(template);
   }
 
+  sendBulkMail(registrants: Registrant[]){
+    this._mail.sendRegistrantBulkMail(registrants);
+  }
+
+  bulkDelete(registrants: Registrant[]){
+    this._regis.deleteBulk(registrants).subscribe(res=>{console.log({res});
+    }, error=>{console.log({error});
+    });
+  }
+
   onSelect({ selected }) {
-    console.log({ selected });
+    this.selected = selected;
+    console.log(this.selected);
+    
   }
 
   handleQRTouched(code) {

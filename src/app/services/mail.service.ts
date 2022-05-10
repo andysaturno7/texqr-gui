@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { NotificationsService } from './notifications.service';
+import { Registrant } from './registrants.service';
 
 export interface addressObject {
   name: string;
@@ -33,6 +34,7 @@ export class MailService {
     address: 'no-reply@tex.cr',
   };
   from = this.user;
+  limitBulk = 10;
 
   constructor(private http: HttpClient, private _not: NotificationsService) {}
 
@@ -65,5 +67,10 @@ export class MailService {
         this._not.showError(error, error?.syscall + ' code: ' + error?.code);
       }
     );
+  }
+
+  sendRegistrantBulkMail(registrants: Registrant[]){
+    if(registrants.length > this.limitBulk) return this._not.showError(new Error(`Solo se admite un máximo de ${this.limitBulk} envios de correo al mismo tiempo.`))
+    return Promise.all(registrants.map((registrant=>this.sendMail(registrant.email, registrant, `Registro al Evento.`))));
   }
 }

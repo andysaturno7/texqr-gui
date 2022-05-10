@@ -60,6 +60,10 @@
       role="menu"
       aria-labelledby="basic-link"
     >
+      <li role="button" (click)="createMobileUrl(row.id)">
+        <i class="fa fa-clipboard"></i>
+        Obtener link móvil
+      </li>
       <li role="button" (click)="onExportReport(row)">
         <i class="fa fa-file-excel-o"></i> Descargar asistencia
       </li>
