@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, UrlCreationOptions } from '@angular/router';
 import { Registrant } from 'src/app/services/registrants.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,12 @@ export class PrintService {
 
   printSticker(data: Registrant) {
     this.isPrinting = true;
-    this._router.navigate(['print', 'sticker'], { queryParams: data });
+    let sticker_url = environment.uri + '/print/templates/totem-sticker.html';
+    localStorage.setItem('registrant', JSON.stringify(data));
+    let a = document.createElement('a');
+    a.href = sticker_url;
+    a.click();
+    // this._router.navigate(['print', 'sticker'], { queryParams: data });
   }
 
   readyToPrint() {

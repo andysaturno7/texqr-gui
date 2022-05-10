@@ -1,10 +1,12 @@
-<button class="btn btn-outline-success">
-  <i class="fa fa-plus"></i> Nuevo
-</button>
-<div class="d-flex" style="cursor: pointer; gap: 15px" *ngIf="projects">
+<div class="m-3 d-flex" style="gap: 15px" *ngIf="projects">
+  <div class="btn btn-outline-success d-flex align-items-center">
+    <i class="fa fa-plus"></i>
+  </div>
   <ng-container *ngFor="let project of projects">
-    <button class="btn" (click)="selectProject(project.id)">
-      <item-project [project]="project"></item-project>
-    </button>
+    <item-project
+      role="button"
+      [project]="project"
+      (click)="selectProject(project.id)"
+    ></item-project>
   </ng-container>
 </div>
