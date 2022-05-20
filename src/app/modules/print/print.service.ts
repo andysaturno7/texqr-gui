@@ -23,7 +23,7 @@ export class PrintService {
 
   readyToPrint() {
     window.print();
-    this.isPrinting = false;
     this._location.back();
+    this.isPrinting = false;
   }
 }
