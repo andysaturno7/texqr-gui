@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PageInfo, PaginatedData } from 'src/app/interfaces/paginated-data';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { Room, RoomsService } from 'src/app/services/rooms.service';
@@ -12,9 +13,12 @@ export class RootRoomsComponent implements OnInit {
   dataRooms: PaginatedData<Room>;
   dataRoomsFilter: string = '';
 
+  modalRef: BsModalRef;
+
   constructor(
     private _rooms: RoomsService,
-    private _toast: NotificationsService
+    private _toast: NotificationsService,
+    private _modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +44,9 @@ export class RootRoomsComponent implements OnInit {
 
   onSelect(event) {
     console.log(event);
+  }
+
+  openModal(template: TemplateRef<any>){
+    this.modalRef = this._modalService.show(template);
   }
 }

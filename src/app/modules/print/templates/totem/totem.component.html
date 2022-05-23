@@ -1,29 +1,38 @@
 <ng-container *ngIf="data">
   <div #template class="paper">
-    <div class="row h-100">
-      <div class="row row-cols-1 align-items-center col-auto">
-        <div>
-          <img src="assets/img/logo_icomet.png" width="160px" height="auto" alt="logo">
+    <div class="row">
+      <p class="text-center m-auto mb-2">
+        <img
+          src="assets/img/logo_icomet.png"
+          width="150px"
+          height="auto"
+          alt="logo"
+          class="mx-2 pt-1"
+        />
+        <img
+          src="assets/img/logo_icomet_duo.png"
+          width="150px"
+          height="auto"
+          alt="logo"
+          class="mx-2"
+        />
+      </p>
+    </div>
+    <hr>
+    <div class="row mt-4">
+      <div class="col align-items-center">
+        <div class="name">
+          <p id="name">{{data.firstName}} {{data.lastName}}</p>
+        </div>
+        <div class="position">
+          <p id="position"></p>
+        </div>
+        <div class="number">
+          <p>No. <span id="number">{{ data.dynamics?.number || "" }}</span></p>
         </div>
       </div>
-      <div class="col row row-cols-1 align-items-center">
-        <div>
-          <div class="name" id="name">
-            <h2>{{ data.firstName }} {{ data.lastName }}.</h2>
-          </div>
-          <div class="my-2"></div>
-          <div class="company" id="company">
-            <h4>{{ data.dynamics?.position || "" }}</h4>
-        </div>
-        <div class="country" id="country">
-          <h2>{{ data.dynamics?.number || "" }}</h2>
-        </div>
-      </div>
-      </div>
-      <div class="row row-cols-1 col-auto" style="max-width: min-content !important">
-        <div class="qr-container">
-          <qrcode [qrdata]="data.code" [width]="180"></qrcode>
-        </div>
+      <div class="qr-container col">
+        <qrcode id="qrcode" [qrdata]="data.code" [width]="170"></qrcode>
       </div>
     </div>
   </div>

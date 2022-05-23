@@ -7,21 +7,33 @@ body {
   padding: 0;
 }
 
+hr {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
 .paper {
   width: 588px;
   height: 287px;
   margin: 0;
   padding: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
   box-sizing: border-box;
   border-radius: 12px;
   overflow: hidden;
-  /* border: 1px solid black; */
+  border: 1px solid black;
 }
 
 .qr-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: fit-content;
+  margin-right: -15px;
 }
 
 qr-code {
@@ -35,4 +47,23 @@ qr-code {
 .data-container {
   padding-left: 4px;
   padding-top: 8px;
+}
+
+.name {
+  font-size: 38px;
+  font-weight: 550;
+}
+
+.number{
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
+#number {
+  font-size: 50px;
+}
+
+.position {
+  font-size: large;
+  font-weight: bold;
 }

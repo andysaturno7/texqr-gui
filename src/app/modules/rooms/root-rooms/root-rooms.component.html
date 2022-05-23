@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row">
       <div class="col-sm-9">
-        <i class="fa fa-plus" role="button" (click)="(false)"></i>
+        <i class="fa fa-plus" role="button" (click)="openModal(addEditTemplate)"></i>
       </div>
       <div class="col-sm-3">
         <input
@@ -22,3 +22,21 @@
     (exportReport)="exportAsistancesByRoom($event)"
   ></table-rooms>
 </div>
+
+<!-- Add Room -->
+<ng-template #addEditTemplate>
+  <div class="modal-header bg-light">
+    <h4 class="modal-title pull-left">Sala Nueva</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <add-room></add-room>
+  </div>
+</ng-template>

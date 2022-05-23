@@ -67,6 +67,9 @@
       <li role="button" (click)="onExportReport(row)">
         <i class="fa fa-file-excel-o"></i> Descargar asistencia
       </li>
+      <li role="button" (click)="deleteItem(row.id)">
+        <i class="fa fa-trash"> Eliminar</i>
+      </li>
       <li class="divider dropdown-divider"></li>
       <li>Gráfico de asistencia</li>
     </ul>

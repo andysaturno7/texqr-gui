@@ -53,13 +53,13 @@ export class RoomsService {
   }
 
   invokeRooms() {
-    this.http.get(this.uri + '/rooms').subscribe((rooms: Room[]) => {
-      this.setRooms(rooms);
+    this.http.get(`${this.uri}/projects/${this._projects.project}/rooms`).subscribe((rooms: PaginatedData<Room>) => {
+      this.setRooms(rooms.data);
     });
   }
 
   addRoom(room: Room) {
-    this.http.post(this.uri + '/rooms', room).subscribe((addedRoom: Room) => {
+    this.http.post(`${this.uri}/projects/${this._projects.project}/rooms`, room).subscribe((addedRoom: Room) => {
       let Rooms = this.rooms$.getValue();
       Rooms.push(addedRoom);
       this.rooms$.next(Rooms);
@@ -67,8 +67,8 @@ export class RoomsService {
     }, console.log);
   }
 
-  deleteRoom(id: number) {
-    this.http.delete(this.uri + '/rooms/' + id).subscribe((res: any) => {
+  deleteRoom(id: number | string) {
+    this.http.delete(`${this.uri}/projects/${this._projects.project}/rooms/${id}`).subscribe((res: any) => {
       if (res.deleted > 0) {
         let Rooms = this.rooms$.getValue().filter((val) => val.id != id);
         this.rooms$.next(Rooms);
@@ -79,7 +79,7 @@ export class RoomsService {
 
   editRoom(room: Room) {
     this.http
-      .post(this.uri + '/rooms/update', { room })
+      .post(`${this.uri}/projects/${this._projects.project}/rooms/update`, { room })
       .subscribe((res: any[]) => {
         if (res.length > 0 && res[0] > 0)
           this._toast.showSuccess(`Room ${room.name} ha sido actualizado`);
@@ -123,7 +123,7 @@ export class RoomsService {
 
   getMobileUri(id) {
     return this.http
-      .get(this.uri + '/projects' + this._projects.project + '/rooms/' + id + '/mobile')
+      .get(this.uri + '/projects/' + this._projects.project + '/rooms/' + id + '/mobile')
       .toPromise()
       .then((res: any) => {
         localStorage.setItem('mtk', res.mobileToken);

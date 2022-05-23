@@ -36,7 +36,10 @@ export class TableRoomsComponent implements OnInit {
     this.ExportReport.emit(room);
   }
 
-  deleteItem(id) {}
+  deleteItem(id) {
+    if(confirm("Seguro deseas eliminar este elemento?"))
+    this._room.deleteRoom(id);
+  }
 
   editItem(event: any) {}
 

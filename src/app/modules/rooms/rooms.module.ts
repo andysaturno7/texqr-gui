@@ -7,6 +7,8 @@ import { AddRoomComponent } from './add-room/add-room.component';
 import { TableRoomsComponent } from './table-rooms/table-rooms.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { SharedModule } from '../shared/shared.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [RootRoomsComponent, AddRoomComponent, TableRoomsComponent],
@@ -17,6 +19,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     ReactiveFormsModule,
     NgxDatatableModule,
     BsDropdownModule.forRoot(),
+    SharedModule,
+    ModalModule.forRoot()
   ],
 })
 export class RoomsModule {}
