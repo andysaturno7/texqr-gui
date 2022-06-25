@@ -1,32 +1,29 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PrintService } from '../../print.service';
 
 @Component({
-  selector: 'app-totem',
-  templateUrl: './totem.component.html',
-  styleUrls: ['./totem.component.css'],
+  selector: 'tmp-dipo',
+  templateUrl: './dipo.component.html',
+  styleUrls: ['./dipo.component.css']
 })
-export class TotemComponent implements AfterViewInit, OnDestroy {
+export class DipoComponent implements OnInit, AfterViewInit {
+
   data;
-  styleId = 'totem-sticker-style';
+  styleId = '';
   @ViewChild('template') template: ElementRef;
 
   constructor(private _route: ActivatedRoute, private _print: PrintService) {
     this.data = this._print.lastData;
+   }
+
+  ngOnInit(): void {
   }
-  
-  ngOnDestroy(): void {}
-  
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this._print.readyToPrint();
     }, 500);
   }
+
 }

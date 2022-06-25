@@ -14,11 +14,11 @@ export class PrintService {
 
   constructor(private _router: Router, private _location: Location) {}
 
-  printSticker(data: Registrant) {
+  printSticker(data: Registrant, template: string = 'sticker') {
     if(this.isPrinting) return;
     this.isPrinting = true;
     this.lastData = data;
-    this._router.navigate(['print', 'sticker']);
+    this._router.navigate(['print', template]);
   }
 
   readyToPrint() {

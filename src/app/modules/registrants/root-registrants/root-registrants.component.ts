@@ -111,6 +111,6 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
   }
 
   printStickerEvent(dataSticker: Registrant) {
-    this._print.printSticker(dataSticker);
+    this._print.printSticker(dataSticker, 'dipo');
   }
 }
