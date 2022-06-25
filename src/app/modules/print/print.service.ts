@@ -22,8 +22,8 @@ export class PrintService {
   }
 
   readyToPrint() {
-    // window.print();
-    // this._location.back();
+    window.print();
+    this._location.back();
     this.isPrinting = false;
   }
 }
