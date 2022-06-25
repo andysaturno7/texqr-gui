@@ -5,12 +5,12 @@
                 <img src="assets/img/dipo_expo.png" alt="dipo_expo" width="150" height="auto">
             </div>
             <div class="col">
-                <p>Cliente: {{data.firstName}}</p>
-                <p>Código de Cliente: {{data.code}}</p>
-                <p>Ruta Preventa: {{data.dynamics?.r_preventa || "sin código" }}</p>
+                <p>Cliente: <span class="destacado">{{data.firstName}}</span></p>
+                <p>Código de Cliente: <span class="code destacado">{{data.code}}</span></p>
+                <p>Ruta Preventa: <span class="destacado">{{data.dynamics?.r_preventa || "sin código" }}</span></p>
                 <p>Nombre del Preventa:</p>
-                <p>{{data.dynamics?.n_preventa || "" }}</p>
-                <p>Oficina: {{data.dynamics?.off_venta || "" }}</p>
+                <p class="destacado">{{data.dynamics?.n_preventa || "" }}</p>
+                <p>Oficina: <span class="destacado">{{data.dynamics?.off_venta || "" }}</span></p>
             </div>
         </div>
     </div>
