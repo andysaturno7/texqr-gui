@@ -26,7 +26,7 @@
   </ngx-datatable-column>
   <ngx-datatable-column
     [cellTemplate]="contextMenuTemplate"
-    [width]="30"
+    [width]="50"
     [sortable]="false"
     [canAutoResize]="false"
     [draggable]="false"
@@ -128,6 +128,11 @@
     </div>
   </ng-template>
   <ng-template #contextMenuTemplate let-row="row">
+    <i
+      class="fa fa-check-circle {{
+        row.connected > 0 ? 'text-success' : 'text-secondary'
+      }} mr-2"
+    ></i>
     <span
       dropdown
       (onShown)="(false)"
@@ -176,29 +181,29 @@
       [name]="dynamic.fieldLabel"
       [prop]="'dynamics.' + dynamic.field"
     >
-    <ngx-datatable-column prop="email" name="Correo">
-      <ng-template
-        ngx-datatable-cell-template
-        let-rowIndex="rowIndex"
-        let-value="value"
-        let-row="row"
-      >
-        <span
-          title="Double click to edit"
-          (dblclick)="editing[rowIndex + '-' + dynamic.field] = true"
-          *ngIf="!editing[rowIndex + '-' + dynamic.field]"
+      <ngx-datatable-column prop="email" name="Correo">
+        <ng-template
+          ngx-datatable-cell-template
+          let-rowIndex="rowIndex"
+          let-value="value"
+          let-row="row"
         >
-          {{ value }}
-        </span>
-        <input
-          autofocus
-          (blur)="updateValue($event, dynamic.field, rowIndex, true)"
-          *ngIf="editing[rowIndex + '-' + dynamic.field]"
-          type="text"
-          [value]="value"
-        />
-      </ng-template>
+          <span
+            title="Double click to edit"
+            (dblclick)="editing[rowIndex + '-' + dynamic.field] = true"
+            *ngIf="!editing[rowIndex + '-' + dynamic.field]"
+          >
+            {{ value }}
+          </span>
+          <input
+            autofocus
+            (blur)="updateValue($event, dynamic.field, rowIndex, true)"
+            *ngIf="editing[rowIndex + '-' + dynamic.field]"
+            type="text"
+            [value]="value"
+          />
+        </ng-template>
+      </ngx-datatable-column>
     </ngx-datatable-column>
-  </ngx-datatable-column>
   </ng-container>
 </ngx-datatable>

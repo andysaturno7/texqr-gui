@@ -35,7 +35,7 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
     private _regis: RegistrantsService,
     private _modalService: BsModalService,
     private _print: PrintService,
-    private _mail: MailService
+    private _mail: MailService,
   ) {
     this.dynamicsSubscription = this.subscribeDynamics();
     this.registrantsSubscription = this.getRegistrants({
@@ -60,6 +60,8 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (res) => {
+          console.log({res});
+          
           res.offset = res.offset / res.limit;
           res.data.forEach((registrant) => {
             registrant.dynamics = JSON.parse(registrant.dynamics);
@@ -111,6 +113,21 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
   }
 
   printStickerEvent(dataSticker: Registrant) {
+    if(confirm("Deseas Registrar la Asistencia de este Registro?")){
+      this.handleRegisterAsistance(dataSticker.id).then(res=>{
+        alert(dataSticker.firstName + " ha sido registrado como asistente");
+      });
+    }
     this._print.printSticker(dataSticker, 'dipo');
+  }
+
+  handleRegisterAsistance(registrantId){
+    return new Promise((resolve, reject)=>{
+      const RoomId = 'ef75a165-c467-4772-b661-d6f26c4921cb';
+      this._regis.join(registrantId, RoomId).subscribe(res=>{
+        console.log({res});
+        resolve(res);
+      },reject);
+    });
   }
 }

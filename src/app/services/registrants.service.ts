@@ -101,6 +101,10 @@ export class RegistrantsService {
     return this.http.post(`${this.uri}/projects/${this._projects.project}/registrants/delete`, {id: registrants.map(registrant=> registrant.id )});
   }
 
+  join( RegistrantId: string | number, RoomId: string | number ){
+    return this.http.post(`${this.uri}/projects/${this._projects.project}/asistance`, {RegistrantId, RoomId});
+  }
+
   getDynamics(): void {
     this.http
       .get(
