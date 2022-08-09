@@ -33,7 +33,7 @@ export class AuthenticationService {
     this.router.navigate(["/login"]);
   }
 
-  getLoggedUser(): User {
+  getLoggedUser(): {token: string} {
     return JSON.parse(localStorage.getItem("musicUser"));
   }
 

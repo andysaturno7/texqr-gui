@@ -30,8 +30,8 @@ export class MailService {
   uriServer: string = environment.uri;
 
   user = {
-    name: 'Refri Américas 2021',
-    address: 'no-reply@tex.cr',
+    name: 'The Green Reset',
+    address: 'datacenter@tex.cr',
   };
   from = this.user;
   limitBulk = 10;
@@ -44,6 +44,7 @@ export class MailService {
         registrant: data,
       },
       mail: {
+        from: this.from,
         to: address,
         subject,
       },

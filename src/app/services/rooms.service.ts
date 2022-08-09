@@ -8,6 +8,7 @@ import { NotificationsService } from './notifications.service';
 import { ProjectsService } from './projects.service';
 
 import { ExportToCSV } from '@molteni/export-csv';
+import { AuthenticationService } from '../modules/authentication/authentication.service';
 
 export interface Room {
   id?: number;
@@ -34,7 +35,8 @@ export class RoomsService {
   constructor(
     private http: HttpClient,
     private _toast: NotificationsService,
-    private _projects: ProjectsService
+    private _projects: ProjectsService,
+    private _auth: AuthenticationService
   ) {}
 
   setRooms(rooms: Room[]) {
@@ -133,17 +135,8 @@ export class RoomsService {
 
   createMobileUrl(id) {
     return new Promise<string>((resolve, reject) => {
-      if (!!localStorage.getItem('mtk')) {
-        return resolve(
-          `${environment.mobileUri}/?room=${id}&tk=${localStorage.getItem(
-            'mtk'
-          )}`
-        );
-      } else {
-        this.getMobileUri(id).then((tk) => {
-          return resolve(`${environment.mobileUri}/?room=${id}&tk=${tk}`);
-        });
-      }
+      let tk = this._auth.getLoggedUser().token;
+      return resolve(`${environment.mobileUri}/?room=${id}&project=${this._projects.project}&tk=${tk}`);
     });
   }
 }
