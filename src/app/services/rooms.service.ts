@@ -9,6 +9,7 @@ import { ProjectsService } from './projects.service';
 
 import { ExportToCSV } from '@molteni/export-csv';
 import { AuthenticationService } from '../modules/authentication/authentication.service';
+import { RegistrantsService } from './registrants.service';
 
 export interface Room {
   id?: number;
@@ -36,7 +37,8 @@ export class RoomsService {
     private http: HttpClient,
     private _toast: NotificationsService,
     private _projects: ProjectsService,
-    private _auth: AuthenticationService
+    private _auth: AuthenticationService,
+    private _reg: RegistrantsService
   ) {}
 
   setRooms(rooms: Room[]) {
@@ -98,7 +100,12 @@ export class RoomsService {
         res.forEach((row) => {
           let registrant = row.Registrant;
           delete row.Registrant;
-          dataModified.push({ ...row, ...registrant });
+          let dynamics = JSON.parse(registrant.dynamics);
+          delete registrant.dynamics;
+          let date = new Date(row.joinTime);
+          registrant["time"] = date.toLocaleTimeString();
+          registrant["date"] = date.toLocaleDateString();
+          dataModified.push({ ...row, ...registrant, ...dynamics });
         });
         if (dataModified.length > 0) {
           // descargar
@@ -106,9 +113,15 @@ export class RoomsService {
             'firstName',
             'lastName',
             'email',
-            'joinTime',
-            'leaveTime',
+            'time',
+            'date'
           ];
+
+          let dynamics = this._reg.getDynamicsValue();
+          dynamics.forEach(dynamic=>{
+            columns.push(dynamic.field);
+          });          
+          
           this.exportToCsv.exportColumnsToCSV(
             dataModified,
             room.name + '_asistencias',
