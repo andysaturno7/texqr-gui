@@ -1,17 +1,39 @@
 <ng-container *ngIf="data">
-    <div #template class="paper">
-        <div class="row h-100 align-items-center">
-            <div class="col col-auto p-0">
-                <img src="assets/img/dipo_expo.png" alt="dipo_expo" width="150" height="auto">
-            </div>
-            <div class="col">
-                <p>Cliente: <span class="destacado">{{data.firstName}}</span></p>
-                <p>Código de Cliente: <span class="code destacado">{{data.code}}</span></p>
-                <p>Ruta Preventa: <span class="destacado">{{data.dynamics?.r_preventa || "sin código" }}</span></p>
-                <p>Nombre del Preventa:</p>
-                <p class="destacado">{{data.dynamics?.n_preventa || "" }}</p>
-                <p>Oficina: <span class="destacado">{{data.dynamics?.off_venta || "" }}</span></p>
-            </div>
-        </div>
+  <div #template class="paper">
+    <div class="row h-100 align-items-center">
+      <div class="col col-auto p-0">
+        <img
+          src="assets/img/dipo_expo.png"
+          alt="dipo_expo"
+          width="150"
+          height="auto"
+        />
+      </div>
+      <div class="col">
+        <p>
+          Nombre del cliente:
+          <span class="destacado">{{ data.firstName }}</span>
+        </p>
+        <p>
+          Cód de cliente: <span class="code destacado">{{ data.code }}</span>
+        </p>
+        <p>
+          Ruta preventa:
+          <span class="destacado">{{
+            data.dynamics?.ruta_preventa || "sin código"
+          }}</span>
+        </p>
+        <p>Nombre preventa:</p>
+        <p class="destacado">{{ data.dynamics?.nombre_preventa || "" }}</p>
+        <p>
+          Sucursal:
+          <span class="destacado">{{ data.dynamics?.office || "" }}</span>
+        </p>
+        <p>
+          Jefe vtas:
+          <span class="destacado">{{ data.dynamics?.sell_boss || "" }}</span>
+        </p>
+      </div>
     </div>
+  </div>
 </ng-container>
