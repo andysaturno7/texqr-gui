@@ -1,7 +1,16 @@
+<label role="button" for="import-button" class="nav-link"
+  >Importar Registro</label
+>
 <div class="row">
+  <input
+    type="file"
+    class="d-none"
+    id="import-button"
+    (change)="importDB($event)"
+  />
   <div class="col">
-    <div *ngIf="dataRegistrants" class="card shadow">
-      <div class="card-header">
+    <div *ngIf="dataRegistrants">
+      <div>
         <div class="row">
           <div class="col-sm-9">
             <i
@@ -11,8 +20,16 @@
             ></i>
             <ng-container *ngIf="selected && selected.length > 0">
               <div class="selected-container-options d-inline mx-2 p-2">
-                  <i class="fa fa-trash text-danger" role="button" (click)="bulkDelete(selected)"></i>
-                  <i class="fa fa-envelope text-info ml-2" role="button" (click)="sendBulkMail(selected)"></i>
+                <i
+                  class="fa fa-trash text-danger"
+                  role="button"
+                  (click)="bulkDelete(selected)"
+                ></i>
+                <i
+                  class="fa fa-envelope text-info ml-2"
+                  role="button"
+                  (click)="sendBulkMail(selected)"
+                ></i>
               </div>
             </ng-container>
           </div>
@@ -55,15 +72,23 @@
       </div>
     </ng-template>
   </div>
-  <div class="col mt-4" style="max-width: 165px">
-    <ng-container *ngIf="qrdata">
-      <qrcode
-        [qrdata]="qrdata"
-        [errorCorrectionLevel]="'M'"
-        [width]="128"
-      ></qrcode>
-      <i class="fa fa-close mr-3" role="button" (click)="qrdata = null"></i>
-      <i class="fa fa-print mr-3" role="button"></i>
-    </ng-container>
+  <div class="col" style="max-width: 165px">
+    <div class="card">
+      <div class="card-header">
+        <span *ngIf="qrdata" class="w-100 d-flex justify-content-between">
+          <i class="fa fa-download" role="button"></i>
+          <i class="fa fa-close" role="button" (click)="qrdata = null"></i>
+        </span>
+      </div>
+      <div class="m-auto">
+        <ng-container *ngIf="qrdata">
+          <qrcode
+            [qrdata]="qrdata"
+            [errorCorrectionLevel]="'M'"
+            [width]="128"
+          ></qrcode>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

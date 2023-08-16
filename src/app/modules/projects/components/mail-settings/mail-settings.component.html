@@ -1,0 +1,11 @@
+<texqr-select-senders
+  (selected)="onSenderSelected($event)"
+  (unselected)="onSenderUnselected()"
+></texqr-select-senders>
+<hr />
+<texqr-mail-personalizations
+  [project]="selectedProject"
+  (dataChange)="onPersonalizationsChanged($event)"
+></texqr-mail-personalizations>
+<hr />
+<texqr-select-templates [project]="selectedProject"></texqr-select-templates>

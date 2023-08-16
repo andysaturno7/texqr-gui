@@ -1,0 +1,44 @@
+<button class="btn btn-outline-primary" routerLink="nuevo">
+  Nueva Plantilla
+</button>
+<hr />
+<ng-container *ngIf="templates; else noTemplates">
+  <ng-container *ngFor="let grouptemplate of templates | groupBy : 'type'">
+    <h6>
+      Plantillas de {{ grouptemplate.key === "mail" ? "Correo" : "Sticker" }}
+    </h6>
+    <br />
+    <div *ngFor="let template of grouptemplate.value">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h6 class="text-info d-inline">{{ template.name }}</h6>
+          <i
+            class="fa fa-pencil text-success px-2"
+            style="font-size: x-small"
+            role="button"
+            routerLink="edit/{{ template.id }}"
+          ></i>
+          <div class="text-secondary" style="font-size: smaller">
+            <span>engine: {{ template.engine }} </span>
+            <span *ngIf="template.type === 'sticker'">
+              | paper:
+              {{ template.keys.page_size.width }} X
+              {{ template.keys.page_size.height }}
+            </span>
+          </div>
+        </div>
+        <div>
+          <i
+            class="fa fa-trash text-danger"
+            style="font-size: smaller"
+            role="button"
+            (click)="deleteTemplate(template.id)"
+          ></i>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #noTemplates> No hay Plantillas </ng-template>

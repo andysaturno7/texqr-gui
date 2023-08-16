@@ -1,12 +1,13 @@
-<div class="m-3 d-flex" style="gap: 15px" *ngIf="projects">
-  <div class="btn btn-outline-success d-flex align-items-center">
-    <i class="fa fa-plus"></i>
-  </div>
+<router-outlet></router-outlet>
+<a routerLink="nuevo" class="btn btn-outline-primary"> Nuevo </a>
+<hr />
+<div *ngIf="projects">
   <ng-container *ngFor="let project of projects">
     <item-project
       role="button"
       [project]="project"
-      (click)="selectProject(project.id)"
+      (onDelete)="deleteProject($event)"
     ></item-project>
+    <hr />
   </ng-container>
 </div>

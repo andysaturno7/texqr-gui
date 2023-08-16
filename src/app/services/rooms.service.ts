@@ -52,38 +52,46 @@ export class RoomsService {
     let query = new URLSearchParams(`offset=${offset}&limit=${limit}`);
     if (filter) query.append('filter', `${filter}`);
     return this.http.get<PaginatedData<Room>>(
-      `${this.uri}/projects/${this._projects.project}/rooms?${query}`
+      `${this.uri}/projects/${this._projects.project.id}/rooms?${query}`
     );
   }
 
   invokeRooms() {
-    this.http.get(`${this.uri}/projects/${this._projects.project}/rooms`).subscribe((rooms: PaginatedData<Room>) => {
-      this.setRooms(rooms.data);
-    });
+    this.http
+      .get(`${this.uri}/projects/${this._projects.project.id}/rooms`)
+      .subscribe((rooms: PaginatedData<Room>) => {
+        this.setRooms(rooms.data);
+      });
   }
 
   addRoom(room: Room) {
-    this.http.post(`${this.uri}/projects/${this._projects.project}/rooms`, room).subscribe((addedRoom: Room) => {
-      let Rooms = this.rooms$.getValue();
-      Rooms.push(addedRoom);
-      this.rooms$.next(Rooms);
-      return;
-    }, console.log);
+    this.http
+      .post(`${this.uri}/projects/${this._projects.project.id}/rooms`, room)
+      .subscribe((addedRoom: Room) => {
+        let Rooms = this.rooms$.getValue();
+        Rooms.push(addedRoom);
+        this.rooms$.next(Rooms);
+        return;
+      }, console.log);
   }
 
   deleteRoom(id: number | string) {
-    this.http.delete(`${this.uri}/projects/${this._projects.project}/rooms/${id}`).subscribe((res: any) => {
-      if (res.deleted > 0) {
-        let Rooms = this.rooms$.getValue().filter((val) => val.id != id);
-        this.rooms$.next(Rooms);
-      }
-      return;
-    }, console.log);
+    this.http
+      .delete(`${this.uri}/projects/${this._projects.project.id}/rooms/${id}`)
+      .subscribe((res: any) => {
+        if (res.deleted > 0) {
+          let Rooms = this.rooms$.getValue().filter((val) => val.id != id);
+          this.rooms$.next(Rooms);
+        }
+        return;
+      }, console.log);
   }
 
   editRoom(room: Room) {
     this.http
-      .post(`${this.uri}/projects/${this._projects.project}/rooms/update`, { room })
+      .post(`${this.uri}/projects/${this._projects.project.id}/rooms/update`, {
+        room,
+      })
       .subscribe((res: any[]) => {
         if (res.length > 0 && res[0] > 0)
           this._toast.showSuccess(`Room ${room.name} ha sido actualizado`);
@@ -93,7 +101,7 @@ export class RoomsService {
   getAsistances(room: Room) {
     this.http
       .get(
-        `${this.uri}/projects/${this._projects.project}/rooms/${room.id}/asistance`
+        `${this.uri}/projects/${this._projects.project.id}/rooms/${room.id}/asistance`
       )
       .subscribe((res: Asistance[]) => {
         let dataModified = [];
@@ -103,25 +111,19 @@ export class RoomsService {
           let dynamics = JSON.parse(registrant.dynamics);
           delete registrant.dynamics;
           let date = new Date(row.joinTime);
-          registrant["time"] = date.toLocaleTimeString();
-          registrant["date"] = date.toLocaleDateString();
+          registrant['time'] = date.toLocaleTimeString();
+          registrant['date'] = date.toLocaleDateString();
           dataModified.push({ ...row, ...registrant, ...dynamics });
         });
         if (dataModified.length > 0) {
           // descargar
-          let columns = [
-            'firstName',
-            'lastName',
-            'email',
-            'time',
-            'date'
-          ];
+          let columns = ['firstName', 'lastName', 'email', 'time', 'date'];
 
           let dynamics = this._reg.getDynamicsValue();
-          dynamics.forEach(dynamic=>{
+          dynamics.forEach((dynamic) => {
             columns.push(dynamic.field);
-          });          
-          
+          });
+
           this.exportToCsv.exportColumnsToCSV(
             dataModified,
             room.name + '_asistencias',
@@ -138,7 +140,14 @@ export class RoomsService {
 
   getMobileUri(id) {
     return this.http
-      .get(this.uri + '/projects/' + this._projects.project + '/rooms/' + id + '/mobile')
+      .get(
+        this.uri +
+          '/projects/' +
+          this._projects.project.id +
+          '/rooms/' +
+          id +
+          '/mobile'
+      )
       .toPromise()
       .then((res: any) => {
         localStorage.setItem('mtk', res.mobileToken);
@@ -149,7 +158,9 @@ export class RoomsService {
   createMobileUrl(id) {
     return new Promise<string>((resolve, reject) => {
       let tk = this._auth.getLoggedUser().token;
-      return resolve(`${environment.mobileUri}/?room=${id}&project=${this._projects.project}&tk=${tk}`);
+      return resolve(
+        `${environment.mobileUri}/?room=${id}&project=${this._projects.project.id}&tk=${tk}`
+      );
     });
   }
 }

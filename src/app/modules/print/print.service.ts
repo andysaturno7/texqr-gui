@@ -1,8 +1,7 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router, UrlCreationOptions } from '@angular/router';
-import { Registrant } from 'src/app/services/registrants.service';
-import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+declare const ejs;
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +13,12 @@ export class PrintService {
 
   constructor(private _router: Router, private _location: Location) {}
 
-  printSticker(data: Registrant, template: string = 'sticker') {
-    if(this.isPrinting) return;
+  printSticker(template: string, data: any) {
+    if (this.isPrinting) return;
     this.isPrinting = true;
-    this.lastData = data;
-    this._router.navigate(['print', template]);
+    let render = ejs.render(template, data);
+    this.lastData = { render, data };
+    this._router.navigate(['print', 'sticker']);
   }
 
   readyToPrint() {

@@ -1,0 +1,72 @@
+<button routerLink="nuevo" class="btn btn-outline-primary">Nuevo</button>
+<hr />
+<ngx-datatable
+  *ngIf="rolesData"
+  class="bootstrap"
+  [rows]="rolesData.data"
+  columnMode="force"
+  [footerHeight]="50"
+  [rowHeight]="60"
+  [selected]="selected"
+  [selectionType]="selectionType.checkbox"
+  [externalPaging]="true"
+  [count]="rolesData.count"
+  [offset]="rolesData.offset"
+  [limit]="rolesData.limit"
+  (select)="onSelect($event)"
+  (page)="onPage($event)"
+>
+  <ngx-datatable-column
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true"
+  >
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    [cellTemplate]="contextMenuTemplate"
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+  >
+  </ngx-datatable-column>
+  <ngx-datatable-column prop="name" name="Nombre"></ngx-datatable-column>
+  <ngx-datatable-column
+    prop="permissions"
+    name="Permisos"
+  ></ngx-datatable-column>
+  <ngx-datatable-column prop="createdAt" name="Creado"></ngx-datatable-column>
+</ngx-datatable>
+
+<ng-template #contextMenuTemplate let-row="row">
+  <span
+    dropdown
+    (onShown)="(false)"
+    (onHidden)="(false)"
+    (isOpenChange)="(false)"
+  >
+    <i
+      dropdownToggle
+      (click)="(false)"
+      aria-controls="basic-link-dropdown"
+      class="fa fa-caret-down"
+      role="button"
+    ></i>
+    <ul
+      id="basic-link-dropdown"
+      *dropdownMenu
+      class="dropdown-menu shadow"
+      role="menu"
+      aria-labelledby="basic-link"
+    >
+      <li class="dropdown-item" role="button" routerLink="{{ row.id }}">
+        <i class="fa fa-edit"></i> Editar
+      </li>
+    </ul>
+  </span>
+</ng-template>

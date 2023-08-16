@@ -10,6 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { PreDataModule } from './modules/pre-data/pre-data.module';
 
 import { SharedModule } from './modules/shared/shared.module';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { ListComponent } from './components/list/list.component';
 import { ClientLayoutComponent } from './components/client-layout/client-layout.component';
@@ -22,7 +26,6 @@ import { AuthenticationModule } from './modules/authentication/authentication.mo
 import { LibraryConfig } from './modules/authentication/models/config';
 import { AlertsComponent } from './components/alerts/alerts.component';
 
-declare const __dirname: any;
 let uri = environment.uri;
 const socketConfig: SocketIoConfig = { url: uri, options: {} };
 const authConfig: LibraryConfig = {
@@ -52,6 +55,10 @@ const authConfig: LibraryConfig = {
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     SocketIoModule.forRoot(socketConfig),
     AuthenticationModule.forRoot(authConfig),
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    AccordionModule.forRoot(),
+    CollapseModule.forRoot(),
   ],
   providers: [
     {

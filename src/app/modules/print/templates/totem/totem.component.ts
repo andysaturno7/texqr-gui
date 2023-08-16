@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PrintService } from '../../print.service';
+import { DynamicComponent } from '../../components/dynamic/dynamic.component';
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
 @Component({
   selector: 'app-totem',
@@ -14,17 +16,20 @@ import { PrintService } from '../../print.service';
   styleUrls: ['./totem.component.css'],
 })
 export class TotemComponent implements AfterViewInit, OnDestroy {
-  data;
-  styleId = 'totem-sticker-style';
+  registrant;
+  render: string;
+
   @ViewChild('template') template: ElementRef;
 
-  constructor(private _route: ActivatedRoute, private _print: PrintService) {
-    this.data = this._print.lastData;
+  constructor(private _print: PrintService) {
+    this.registrant = this._print.lastData.data;
+    this.render = this._print.lastData.render;
   }
-  
+
   ngOnDestroy(): void {}
-  
+
   ngAfterViewInit(): void {
+    this.template.nativeElement.innerHTML = this.render;
     setTimeout(() => {
       this._print.readyToPrint();
     }, 500);

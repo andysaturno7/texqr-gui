@@ -1,0 +1,29 @@
+<ng-container *ngIf="senders">
+  <div *ngFor="let sender of senders">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h6 class="text-info">
+          {{ sender.name }}
+        </h6>
+        <span
+          style="
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: smaller;
+          "
+          class="text-secondary"
+        >
+          usuario: {{ sender.user }} | host: {{ sender.host }} | port:
+          {{ sender.port }}
+        </span>
+      </div>
+      <div>
+        <i
+          class="fa fa-trash text-danger"
+          role="button"
+          (click)="onDelete(sender.id)"
+        ></i>
+      </div>
+    </div>
+    <hr />
+  </div>
+</ng-container>

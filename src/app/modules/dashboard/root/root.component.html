@@ -1,4 +1,24 @@
 <div class="container container-fluid">
+  <label class="form-label">API KEY</label>
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="APP KEY"
+      aria-label="APP KEY"
+      aria-describedby="button-addon2"
+      #inputApiKey
+      disabled
+    />
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      id="button-addon2"
+      (click)="copyClipboard(inputApiKey.value)"
+    >
+      <i class="fa fa-clipboard"></i>
+    </button>
+  </div>
   <h4 class="text-center">Proyectos (0)</h4>
   <div
     class="projects-box card"

@@ -2,19 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
   OnInit,
   Output,
-  ViewChild,
   EventEmitter,
   Input,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ICellRendererParams } from 'ag-grid-community';
-import { Subscription } from 'rxjs';
 import { PaginatedData } from 'src/app/interfaces/paginated-data';
 import { Dynamic } from 'src/app/models/dynamic.interface';
 import { MailService } from 'src/app/services/mail.service';
@@ -85,18 +80,15 @@ export class RegistrantTableComponent implements OnInit, OnChanges {
     console.log(id);
   }
 
-  updateValue(event, cell, rowIndex, isDynamic = false){
+  updateValue(event, cell, rowIndex, isDynamic = false) {
     this.editing[rowIndex + '-' + cell] = false;
     let newData: Registrant = this.registrantsData.data[rowIndex];
-    isDynamic ? newData.dynamics[cell] = event.target.value : newData[cell] = event.target.value;
+    isDynamic
+      ? (newData.dynamics[cell] = event.target.value)
+      : (newData[cell] = event.target.value);
     this._registrants.update(newData);
     this.registrantsData.data[rowIndex] = newData;
     this.registrantsData.data = [...this.registrantsData.data];
-  }
-
-  importDB(ev) {
-    let file = ev.target.files[0];
-    this._registrants.import(file);
   }
 
   dropDB() {
@@ -128,12 +120,12 @@ export class RegistrantTableComponent implements OnInit, OnChanges {
   }
 
   handlePrintStickerEvent(data: Registrant) {
-    console.log({data});
-    
+    console.log({ data });
+
     this.PrintStickerEvent.emit(data);
   }
 
   sendMail(registrant: Registrant) {
-    this._mail.sendMail(registrant.email, registrant, 'Registro al Evento.');
+    this._mail.sendMail({ address: registrant.email, data: { registrant } });
   }
 }

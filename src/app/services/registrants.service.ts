@@ -65,7 +65,7 @@ export class RegistrantsService {
     let offset = limit * page;
     let query = new URLSearchParams(`offset=${offset}&limit=${limit}`);
     if (filter) query.append('filter', `${filter}`);
-    let projectId = this._projects.project;
+    let projectId = this._projects.project.id;
     return this.http.get<PaginatedData<Registrant>>(
       `${this.uri}/projects/${projectId}/registrants?${query}`
     );
@@ -77,15 +77,15 @@ export class RegistrantsService {
 
   addOne(registrant: Registrant) {
     return this.http.post<Registrant>(
-      this.uri + '/projects/' + this._projects.project + '/registrants',
+      this.uri + '/projects/' + this._projects.project.id + '/registrants',
       registrant
     );
   }
 
-  update(registrants: Registrant) {    
+  update(registrants: Registrant) {
     this.http
       .post(
-        `${this.uri}/projects/${this._projects.project}/registrants/update`,
+        `${this.uri}/projects/${this._projects.project.id}/registrants/update`,
         registrants
       )
       .subscribe(console.log, console.log);
@@ -93,16 +93,22 @@ export class RegistrantsService {
 
   deleteOne(id: number | string) {
     return this.http.delete(
-      `${this.uri}/projects/${this._projects.project}/registrants/${id}`
+      `${this.uri}/projects/${this._projects.project.id}/registrants/${id}`
     );
   }
 
-  deleteBulk(registrants: Registrant[]){
-    return this.http.post(`${this.uri}/projects/${this._projects.project}/registrants/delete`, {id: registrants.map(registrant=> registrant.id )});
+  deleteBulk(registrants: Registrant[]) {
+    return this.http.post(
+      `${this.uri}/projects/${this._projects.project.id}/registrants/delete`,
+      { id: registrants.map((registrant) => registrant.id) }
+    );
   }
 
-  join( RegistrantId: string | number, RoomId: string | number ){
-    return this.http.post(`${this.uri}/projects/${this._projects.project}/asistance`, {RegistrantId, RoomId});
+  join(RegistrantId: string | number, RoomId: string | number) {
+    return this.http.post(
+      `${this.uri}/projects/${this._projects.project.id}/asistance`,
+      { RegistrantId, RoomId }
+    );
   }
 
   getDynamics(): void {
@@ -110,12 +116,10 @@ export class RegistrantsService {
       .get(
         this.uri +
           '/projects/' +
-          this._projects.project +
+          this._projects.project.id +
           '/registrants/dynamics'
       )
       .subscribe((res: Dynamic[]) => {
-        console.log({ res });
-
         this.dynamics$.next(res);
       }, console.log);
   }
@@ -129,7 +133,7 @@ export class RegistrantsService {
       .post(
         this.uri +
           '/projects/' +
-          this._projects.project +
+          this._projects.project.id +
           '/registrants/dynamics',
         dynamic
       )
@@ -143,7 +147,7 @@ export class RegistrantsService {
   deleteDynamic(id: number | string) {
     this.http
       .delete(
-        `${this.uri}/projects/${this._projects.project}/registrants/dynamics/${id}`
+        `${this.uri}/projects/${this._projects.project.id}/registrants/dynamics/${id}`
       )
       .subscribe((res: any) => {
         if (res.deleted > 0) {
@@ -159,7 +163,13 @@ export class RegistrantsService {
     const formdata = new FormData();
     formdata.append('import', file);
     this.http
-      .post(this.uri + '/registrants/import', formdata)
+      .post(
+        this.uri +
+          '/projects/' +
+          this._projects.project.id +
+          '/registrants/import',
+        formdata
+      )
       .subscribe((res: any) => {
         if (res.status == 'bad_data')
           this._toast.showSuccess(

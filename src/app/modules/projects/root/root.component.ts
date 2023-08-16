@@ -26,7 +26,12 @@ export class RootComponent implements OnInit {
   }
 
   selectProject(projectId: string) {
-    this._projects.updateProject(projectId);
     this.router.navigate([projectId], { relativeTo: this.route });
+  }
+
+  deleteProject(id: string) {
+    this._projects.deleteProject(id).subscribe((res) => {
+      this.ngOnInit();
+    }, console.log);
   }
 }

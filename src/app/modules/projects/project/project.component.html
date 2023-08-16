@@ -1,16 +1,40 @@
-<nav class="nav nav-tabs">
-  <a class="nav-link" routerLinkActive="active" routerLink="configuraciones"
-    >Proyecto</a
-  >
-  <a class="nav-link" routerLinkActive="active" routerLink="registro"
-    >Registro</a
-  >
-  <a class="nav-link" routerLinkActive="active" routerLink="salas">Salas</a>
-  <a class="nav-link" routerLinkActive="active" routerLink="equipos">Equipos</a>
-  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-    >Disabled</a
-  >
-</nav>
-<div class="p-3">
-  <router-outlet></router-outlet>
-</div>
+<ng-container *ngIf="activeProject">
+  <h4>{{ activeProject.name }}</h4>
+  <div class="container container-fluid">
+    <hr />
+    <i
+      type="button"
+      class="fa fa-arrow-{{
+        !generalFormIsCollapsed ? 'up' : 'down'
+      }} btn btn-outline-secondary p-1"
+      style="border-radius: 50%; font-size: xx-small"
+      (click)="generalFormIsCollapsed = !generalFormIsCollapsed"
+      [attr.aria-expanded]="!generalFormIsCollapsed"
+      aria-controls="collapseBasic"
+    >
+    </i>
+    <div [collapse]="generalFormIsCollapsed" [isAnimated]="true">
+      <texqr-create-form [project]="activeProject"></texqr-create-form>
+    </div>
+    <nav class="nav nav-tabs mt-4">
+      <a class="nav-link" routerLinkActive="active" routerLink="registro"
+        >Registro</a
+      >
+      <a class="nav-link" routerLinkActive="active" routerLink="dynamics"
+        >Dinámicos</a
+      >
+      <a class="nav-link" routerLinkActive="active" routerLink="salas">Salas</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="correo"
+        >Correo</a
+      >
+      <a class="nav-link" routerLinkActive="active" routerLink="marca">Marca</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="equipos"
+        >Equipos</a
+      >
+    </nav>
+    <br />
+    <router-outlet></router-outlet>
+    <br />
+    <hr />
+  </div>
+</ng-container>

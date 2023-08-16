@@ -1,0 +1,38 @@
+<ng-container *ngIf="src; else emptyLogo">
+  <div class="row">
+    <div class="col-auto">
+      <span style="font-size: smaller">Insertar en Plantilla: </span>
+    </div>
+    <div class="col">
+      <p>
+        <code
+          ><![CDATA[ <img src="{{ location }}<%= project.keys.logo %>">
+          ]]></code
+        >
+        <span style="font-size: x-small">*Mail Support</span>
+      </p>
+      <p>
+        <code><![CDATA[ <img src="{{ location + src }}"> ]]></code>
+      </p>
+    </div>
+  </div>
+  <img alt="logo" [src]="src" width="200" height="auto" /> <br />
+  <label for="logo" role="button"><code>Cambiar Logo</code></label>
+  <br />
+  <span role="button" (click)="eliminarLogo()"
+    ><code><i class="fa fa-trash"></i></code
+  ></span>
+</ng-container>
+<ng-template #emptyLogo>
+  <div class="text-info" style="font-size: 100px; line-height: 10px">
+    <i class="fa fa-image"></i>
+  </div>
+  <label for="logo" role="button"><code>Subir Logo</code></label>
+</ng-template>
+<input
+  type="file"
+  name="logo"
+  id="logo"
+  class="d-none"
+  (change)="handleSelectedLogo($event)"
+/>

@@ -1,0 +1,80 @@
+<form [formGroup]="form">
+  <div>
+    <div class="row">
+      <div class="col">
+        <label for="nameTemplate">Nombre</label>
+        <input
+          class="form-control"
+          type="text"
+          id="nameTemplate"
+          formControlName="name"
+        />
+      </div>
+      <div class="col">
+        <label for="typeTemplate">Tipo</label>
+        <select class="form-control" id="typeTemplate" formControlName="type">
+          <option class="form-control" value="mail">Mail</option>
+          <option class="form-control" value="sticker">Sticker</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="engineTemplate">Engine</label>
+        <select
+          class="form-control"
+          id="engineTemplate"
+          formControlName="engine"
+        >
+          <option class="form-control" value="ejs">EJS</option>
+          <option class="form-control" value="hbs" disabled>HBS</option>
+        </select>
+      </div>
+    </div>
+    <ng-container formGroupName="keys">
+      <div
+        *ngIf="form.value.type === 'sticker'"
+        class="row"
+        formGroupName="page_size"
+      >
+        <div class="col-sm-3">
+          <label for="sticker_width">Ancho</label>
+          <input
+            class="form-control"
+            type="number"
+            id="sticker_width"
+            formControlName="width"
+          />
+        </div>
+        <div class="col-sm-3">
+          <label for="sticker_height">Altura</label>
+          <input
+            class="form-control"
+            type="number"
+            id="sticker_height"
+            formControlName="height"
+          />
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col">
+        <label for="textTemplate">Texto de plantilla</label>
+        <textarea
+          id="textTemplate"
+          cols="30"
+          rows="10"
+          formControlName="template"
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+    <br />
+    <button
+      class="btn btn-primary"
+      [disabled]="form.invalid"
+      (click)="onSendForm()"
+    >
+      {{ environment === "create" ? "Crear" : "Editar" }}
+    </button>
+  </div>
+</form>

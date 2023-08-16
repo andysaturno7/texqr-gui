@@ -30,6 +30,8 @@ export class RootRoomsComponent implements OnInit {
       .getRooms(pageInfo.offset, pageInfo.limit, this.dataRoomsFilter)
       .subscribe(
         (res: PaginatedData<Room>) => {
+          console.log({ res });
+
           this.dataRooms = res;
         },
         (error) => {
@@ -46,7 +48,7 @@ export class RootRoomsComponent implements OnInit {
     console.log(event);
   }
 
-  openModal(template: TemplateRef<any>){
+  openModal(template: TemplateRef<any>) {
     this.modalRef = this._modalService.show(template);
   }
 }

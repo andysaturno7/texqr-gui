@@ -1,0 +1,11 @@
+{
+  "sticker": {
+    "A4": "A4",
+    "letter": "letter",
+    "sticker_1": {
+      "type": "custom",
+      "width": 200,
+      "heigth": 100
+    }
+  }
+}

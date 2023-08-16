@@ -1,0 +1,113 @@
+<form [formGroup]="userForm">
+  <div class="form-group row">
+    <label for="staticName" class="col-sm-1 col-form-label">Nombre:</label>
+    <div class="col-sm-5">
+      <input
+        type="text"
+        class="form-control"
+        id="staticName"
+        formControlName="firstName"
+      />
+    </div>
+    <label for="staticLastName" class="col-sm-1 col-form-label"
+      >Apellidos:</label
+    >
+    <div class="col-sm-5">
+      <input
+        type="text"
+        class="form-control"
+        id="staticLastName"
+        formControlName="lastName"
+      />
+    </div>
+  </div>
+  <div class="form-group row mt-4">
+    <label for="staticUsername" class="col-sm-1 col-form-label">Usuario:</label>
+    <div class="col-sm-5">
+      <input
+        type="text"
+        class="form-control"
+        id="staticUsername"
+        formControlName="username"
+      />
+    </div>
+    <label for="staticEmail" class="col-sm-1 col-form-label">Correo:</label>
+    <div class="col-sm-5">
+      <input
+        type="email"
+        class="form-control"
+        id="staticEmail"
+        formControlName="email"
+      />
+    </div>
+  </div>
+  <div class="form-group row mt-4">
+    <label for="staticPassword" class="col-sm-1 col-form-label"
+      >Contraseña:</label
+    >
+    <div class="col-sm-5">
+      <input
+        type="password"
+        class="form-control"
+        id="staticPassword"
+        formControlName="password"
+      />
+    </div>
+    <label for="staticPassword2" class="col-sm-1 col-form-label"
+      >Repetir Contraseña:</label
+    >
+    <div class="col-sm-5">
+      <input type="password" class="form-control" id="staticPassword2" />
+    </div>
+  </div>
+  <div class="form-group row mt-4">
+    <label for="staticUsername" class="col-sm-1 col-form-label">Rol:</label>
+    <div class="col-sm-5">
+      <select class="form-control" formControlName="role">
+        <option value="">...</option>
+        <ng-container *ngIf="existingRoles; else noRoles">
+          <option
+            *ngFor="let rol of existingRoles; index as i"
+            value="{{ rol.id }}"
+            class="form-control"
+          >
+            {{ rol.name }}
+          </option>
+        </ng-container>
+        <ng-template #noRoles>
+          <option value="" class="form-control">Crear Rol...</option>
+        </ng-template>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row mt-4">
+    <label for="staticEmail" class="col-sm-1 col-form-label">Permisos:</label>
+    <div class="col-sm-11">
+      <!-- Checkboxes -->
+      <div class="col-sm-10" *ngIf="existingPermissions">
+        <div class="d-flex justify-content-between flex-wrap">
+          <ng-container
+            formArrayName="permissions"
+            *ngFor="let permission of permissionsFormArray.controls; index as i"
+          >
+            <div>
+              <input
+                type="checkbox"
+                name="p-{{ existingPermissions[i] }}"
+                id="ident-{{ i }}"
+                [formControlName]="i"
+              />
+              <label for="ident-{{ i }}" class="mx-2"
+                >{{ existingPermissions[i] }}
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <button class="btn btn-primary" (click)="submit()">
+    {{ environment === "create" ? "Crear" : "Editar" }}
+  </button>
+</form>

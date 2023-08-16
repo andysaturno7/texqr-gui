@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-sm-2 col-form-label">
+    <label for="mailTemplates">Plantilla de Correo:</label>
+  </div>
+  <div class="col-sm-4">
+    <ng-container *ngIf="mailTemplates.length > 0; else linkCreateTemplate">
+      <select
+        id="mailTemplates"
+        class="form-control"
+        [(ngModel)]="mailTemplateSelected"
+        (change)="saveTemplate()"
+      >
+        <option *ngFor="let template of mailTemplates" [value]="template.id">
+          {{ template.name }}
+        </option>
+      </select>
+    </ng-container>
+  </div>
+  <div class="col-sm-2 col-form-label">
+    <label for="mailTemplates">Plantilla de Sticker:</label>
+  </div>
+  <div class="col-sm-4">
+    <ng-container *ngIf="stickerTemplates.length > 0; else linkCreateTemplate">
+      <select
+        class="form-control"
+        id="stickerTemplates"
+        [(ngModel)]="stickerTemplateSelected"
+        (change)="saveTemplate()"
+      >
+        <option *ngFor="let template of stickerTemplates" [value]="template.id">
+          {{ template.name }}
+        </option>
+      </select>
+    </ng-container>
+  </div>
+</div>
+<ng-template #linkCreateTemplate>
+  <a class="nav-link small" routerLink="/admin/plantillas/nuevo"
+    >Crear Plantilla</a
+  >
+</ng-template>

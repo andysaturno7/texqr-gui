@@ -1,15 +1,4 @@
-<div class="w-100 bg-white my-4 shadow logo-container">
-  <img
-    src="assets/img/logo.png"
-    alt="logo"
-    style="max-height: 80px; width: auto"
-  />
-</div>
-<div
-  class="nav flex-column nav-pills"
-  role="tablist"
-  aria-orientation="vertical"
->
+<div class="flex-column nav-pills" role="tablist" aria-orientation="vertical">
   <a
     class="nav-link mt-4"
     routerLink="dashboard"
@@ -24,11 +13,40 @@
     routerLinkActive="active"
     ><i class="fa fa-product-hunt"></i> Proyectos</a
   >
-  <a class="nav-link mt-4" (click)="onSelected()" routerLinkActive="active"
-    ><i class="fa fa-envelope"></i> Correo</a
+  <a
+    class="nav-link mt-4"
+    routerLink="remitentes"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-envelope"></i> Remitentes</a
   >
-</div>
-
-<div style="position: absolute; bottom: 0; left: 0; margin: 2px">
-  <lib-logout></lib-logout>
+  <a
+    class="nav-link mt-4"
+    routerLink="plantillas"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-clone"></i> Plantillas</a
+  >
+  <hr />
+  <a
+    class="nav-link mt-4"
+    routerLink="usuarios"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-user"></i> Usuarios</a
+  >
+  <a
+    class="nav-link mt-4"
+    routerLink="usuarios/roles"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-user"></i> Roles</a
+  >
+  <a
+    class="nav-link mt-4"
+    routerLink="usuarios/permisos"
+    (click)="onSelected()"
+    routerLinkActive="active"
+    ><i class="fa fa-user"></i> Permisos</a
+  >
 </div>

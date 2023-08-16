@@ -36,7 +36,7 @@
               "src/styles.css",
               "src/assets/css/animate.min.css"
             ],
-            "scripts": []
+            "scripts": ["./node_modules/ejs/ejs.min.js"]
           },
           "configurations": {
             "production": {

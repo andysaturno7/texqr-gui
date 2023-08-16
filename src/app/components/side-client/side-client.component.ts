@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SideClientComponent implements OnInit {
   @Output() selected = new EventEmitter<any>();
+  isCollapsed: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}

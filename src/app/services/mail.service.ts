@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { NotificationsService } from './notifications.service';
 import { Registrant } from './registrants.service';
+import { ProjectsService } from './projects.service';
 
 export interface addressObject {
   name: string;
@@ -11,16 +12,16 @@ export interface addressObject {
 }
 
 export interface mailSetUp {
-  from?: string | addressObject;
   to: string;
-  subject: string;
+  subject?: string;
   text?: string;
   html?: string;
 }
 
-export interface mailBody {
+export interface mailRequestBody {
   mail: mailSetUp;
   data: any;
+  ProjectId: string;
 }
 
 @Injectable({
@@ -28,37 +29,34 @@ export interface mailBody {
 })
 export class MailService {
   uriServer: string = environment.uri;
-
-  user = {
-    name: 'The Green Reset',
-    address: 'datacenter@tex.cr',
-  };
-  from = this.user;
   limitBulk = 10;
 
-  constructor(private http: HttpClient, private _not: NotificationsService) {}
+  constructor(
+    private http: HttpClient,
+    private _not: NotificationsService,
+    private _project: ProjectsService
+  ) {}
 
-  sendMail(address: string, data: any, subject: string) {
-    var mail: mailBody = {
-      data: {
-        registrant: data,
-      },
-      mail: {
-        from: this.from,
-        to: address,
-        subject,
-      },
+  sendMail(options: { address: string; data: any; subject?: string }) {
+    let mailSetUp: mailSetUp = {
+      to: options.address,
+    };
+    if (!!options.subject) mailSetUp['subject'] = options.subject;
+    var mail: mailRequestBody = {
+      data: options.data,
+      mail: mailSetUp,
+      ProjectId: this._project.project.id,
     };
     return this.http.post(this.uriServer + '/mail/send', mail).subscribe(
       (res: any) => {
         if (res.info.rejected.length > 0) {
           this._not.showError({
             type: 'danger',
-            message: `El envio a ${data.firstName} se ha completado`,
+            message: `El envio a ${options.data.firstName} no se ha completado`,
           });
         } else {
           this._not.showSuccess(
-            `Mensaje enviado satisfactoriamente a ${data.firstName}`
+            `Mensaje enviado satisfactoriamente a ${options.data.firstName}`
           );
         }
       },
@@ -70,8 +68,20 @@ export class MailService {
     );
   }
 
-  sendRegistrantBulkMail(registrants: Registrant[]){
-    if(registrants.length > this.limitBulk) return this._not.showError(new Error(`Solo se admite un máximo de ${this.limitBulk} envios de correo al mismo tiempo.`))
-    return Promise.all(registrants.map((registrant=>this.sendMail(registrant.email, registrant, `Registro al Evento.`))));
+  sendRegistrantBulkMail(registrants: Registrant[]) {
+    if (registrants.length > this.limitBulk)
+      return this._not.showError(
+        new Error(
+          `Solo se admite un máximo de ${this.limitBulk} envios de correo al mismo tiempo.`
+        )
+      );
+    return Promise.all(
+      registrants.map((registrant) =>
+        this.sendMail({
+          address: registrant.email,
+          data: { registrant },
+        })
+      )
+    );
   }
 }

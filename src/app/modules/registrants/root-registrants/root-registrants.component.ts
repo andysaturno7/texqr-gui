@@ -9,6 +9,8 @@ import { PrintService } from '../../print/print.service';
 import { Dynamic } from 'src/app/models/dynamic.interface';
 import { Subscription } from 'rxjs';
 import { MailService } from 'src/app/services/mail.service';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { TemplatesService } from '../../templates/templates.service';
 
 @Component({
   selector: 'root-registrants',
@@ -36,6 +38,8 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
     private _modalService: BsModalService,
     private _print: PrintService,
     private _mail: MailService,
+    private _project: ProjectsService,
+    private _template: TemplatesService
   ) {
     this.dynamicsSubscription = this.subscribeDynamics();
     this.registrantsSubscription = this.getRegistrants({
@@ -60,8 +64,6 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (res) => {
-          console.log({res});
-          
           res.offset = res.offset / res.limit;
           res.data.forEach((registrant) => {
             registrant.dynamics = JSON.parse(registrant.dynamics);
@@ -81,6 +83,14 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
     this.dataRegistrants = this.dataRegistrants;
   }
 
+  importDB(ev) {
+    let file = ev.target.files[0];
+    console.log({ file });
+
+    if (file.size > 100000) return alert('Muy pesado');
+    this._regis.import(file);
+  }
+
   subscribeDynamics(): Subscription {
     this._regis.getDynamics();
     return this._regis.dynamics.subscribe((dynamics) => {
@@ -92,20 +102,24 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
     this.modalRef = this._modalService.show(template);
   }
 
-  sendBulkMail(registrants: Registrant[]){
+  sendBulkMail(registrants: Registrant[]) {
     this._mail.sendRegistrantBulkMail(registrants);
   }
 
-  bulkDelete(registrants: Registrant[]){
-    this._regis.deleteBulk(registrants).subscribe(res=>{console.log({res});
-    }, error=>{console.log({error});
-    });
+  bulkDelete(registrants: Registrant[]) {
+    this._regis.deleteBulk(registrants).subscribe(
+      (res) => {
+        console.log({ res });
+      },
+      (error) => {
+        console.log({ error });
+      }
+    );
   }
 
   onSelect({ selected }) {
     this.selected = selected;
     console.log(this.selected);
-    
   }
 
   handleQRTouched(code) {
@@ -113,21 +127,11 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
   }
 
   printStickerEvent(dataSticker: Registrant) {
-    if(confirm("Deseas Registrar la Asistencia de este Registro?")){
-      this.handleRegisterAsistance(dataSticker.id).then(res=>{
-        alert(dataSticker.firstName + " ha sido registrado como asistente");
-      });
-    }
-    this._print.printSticker(dataSticker, 'dipo');
-  }
-
-  handleRegisterAsistance(registrantId){
-    return new Promise((resolve, reject)=>{
-      const RoomId = 'ef75a165-c467-4772-b661-d6f26c4921cb';
-      this._regis.join(registrantId, RoomId).subscribe(res=>{
-        console.log({res});
-        resolve(res);
-      },reject);
-    });
+    let project = this._project.project;
+    let templateId = project.StickerTemplateId;
+    this._template.getById(templateId).subscribe((res) => {
+      let template = res.template;
+      this._print.printSticker(template, { registrant: dataSticker, project });
+    }, console.log);
   }
 }

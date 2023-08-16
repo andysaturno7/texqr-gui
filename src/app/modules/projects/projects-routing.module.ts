@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from '../authentication/guards/authentication.guard';
 import { ProjectComponent } from './project/project.component';
 import { RootComponent } from './root/root.component';
+import { CreateFormComponent } from './create-form/create-form.component';
+import { MarcaRootComponent } from './marca/marca-root/marca-root.component';
+import { SelectSendersComponent } from '../senders/components/select-senders/select-senders.component';
+import { MailSettingsComponent } from './components/mail-settings/mail-settings.component';
 import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
@@ -11,12 +15,14 @@ const routes: Routes = [
     pathMatch: 'full',
     component: RootComponent,
   },
+  { path: 'nuevo', component: CreateFormComponent },
   {
     path: ':projectId',
     component: ProjectComponent,
     children: [
-      { path: '', redirectTo: 'configuraciones' },
-      { path: 'configuraciones', component: SettingsComponent },
+      { path: 'marca', component: MarcaRootComponent },
+      { path: 'correo', component: MailSettingsComponent },
+      { path: 'dynamics', component: SettingsComponent },
       {
         path: 'registro',
         loadChildren: () =>

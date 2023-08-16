@@ -1,0 +1,41 @@
+<ng-container *ngIf="src; else emptyCover">
+  <div class="row">
+    <div class="col-auto">
+      <span style="font-size: smaller">Insertar en Plantilla: </span>
+    </div>
+    <div class="col">
+      <p>
+        <code
+          ><![CDATA[ <img src="{{ location }}<%= project.keys.cover %>">
+          ]]></code
+        >
+        <span style="font-size: x-small">*Mail Support</span>
+      </p>
+      <p>
+        <code><![CDATA[ <img src="{{ location + src }}"> ]]></code>
+      </p>
+    </div>
+  </div>
+  <img alt="cover" class="img-fluid" style="max-width: 100%" [src]="src" />
+  <br />
+  <label class="form-label" for="cover" role="button"
+    ><code>Cambiar carátula</code></label
+  >
+  <br />
+  <span role="button" (click)="eliminarCover()"
+    ><code><i class="fa fa-trash"></i></code
+  ></span>
+</ng-container>
+<ng-template #emptyCover>
+  <div class="text-info" style="font-size: 200px; line-height: 10px">
+    <i class="fa fa-image"></i>
+  </div>
+  <label for="cover" role="button"><code>Subir carátula</code></label>
+</ng-template>
+<input
+  type="file"
+  name="cover"
+  id="cover"
+  class="d-none"
+  (change)="handleSelectedCover($event)"
+/>

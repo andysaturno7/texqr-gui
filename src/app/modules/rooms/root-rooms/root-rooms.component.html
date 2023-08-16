@@ -1,8 +1,12 @@
-<div *ngIf="dataRooms" class="card shadow mt-4">
-  <div class="card-header">
+<div *ngIf="dataRooms">
+  <div>
     <div class="row">
       <div class="col-sm-9">
-        <i class="fa fa-plus" role="button" (click)="openModal(addEditTemplate)"></i>
+        <i
+          class="fa fa-plus"
+          role="button"
+          (click)="openModal(addEditTemplate)"
+        ></i>
       </div>
       <div class="col-sm-3">
         <input
@@ -25,8 +29,7 @@
 
 <!-- Add Room -->
 <ng-template #addEditTemplate>
-  <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Sala Nueva</h4>
+  <!-- <div>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -36,7 +39,7 @@
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <add-room></add-room>
-  </div>
+  <div class="modal-body"> -->
+  <add-room></add-room>
+  <!-- </div> -->
 </ng-template>

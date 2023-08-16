@@ -1,0 +1,10 @@
+<button class="btn btn-outline-primary" routerLink="nuevo">
+  Nuevo Usuario
+</button>
+<hr />
+<user-table
+  *ngIf="users"
+  [users]="users"
+  (deleteItemCommand)="onUserDeleteCommand($event)"
+  (editItemCommand)="onUserEditCommand($event)"
+></user-table>

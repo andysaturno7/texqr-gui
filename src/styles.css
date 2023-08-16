@@ -13,6 +13,43 @@
   overflow: unset !important;
 }
 
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(107, 107, 107);
+  border-radius: 6px;
+  border: 0px solid rgb(224, 224, 224);
+}
+
+.ngx-datatable.bootstrap
+  .datatable-body
+  .datatable-body-row.datatable-row-even {
+  background: none;
+}
+
+.ngx-datatable.bootstrap .datatable-footer {
+  background: none !important;
+  color: var(--bs-dark) !important;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager a {
+  color: var(--bs-dark);
+}
+
+.ngx-datatable .datatable-footer .datatable-pager .pager .active a {
+  color: var(--bs-light) !important;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--bs-info);
+}
 /* @page {
   margin: 0;
 } */

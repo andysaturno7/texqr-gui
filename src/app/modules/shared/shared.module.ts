@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SearchPipe } from './pipes/search.pipe';
-import { OptionsTableComponent } from './agRenderer/options-table/options-table.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { InputCellComponent } from './agRenderer/input-cell/input-cell.component';
 import { QrRendererComponent } from './agRenderer/qr-renderer/qr-renderer.component';
 import { RoomsOptionsComponent } from './agRenderer/rooms-options/rooms-options.component';
 import { InputDynamicComponent } from './dynamics/input-dynamic/input-dynamic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GroupByPipe } from './pipes/group-by.pipe';
 
 @NgModule({
   declarations: [
@@ -16,8 +15,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     QrRendererComponent,
     RoomsOptionsComponent,
     InputDynamicComponent,
+    GroupByPipe,
   ],
   imports: [CommonModule, AgGridModule, FormsModule, ReactiveFormsModule],
-  exports: [SearchPipe, InputDynamicComponent],
+  exports: [SearchPipe, InputDynamicComponent, GroupByPipe],
 })
 export class SharedModule {}

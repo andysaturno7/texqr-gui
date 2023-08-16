@@ -3,7 +3,6 @@
 }
 
 .side-client {
-  width: 13%;
   position: relative;
   margin: 0;
   display: inline-block;
@@ -17,7 +16,6 @@
 }
 
 .main-client {
-  width: 87%;
   display: inline-block;
   background-size: cover;
 }

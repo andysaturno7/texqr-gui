@@ -1,0 +1,8 @@
+<button class="btn btn-outline-primary" routerLink="nuevo">Nuevo</button><br />
+<span style="font-size: x-small" class="text-secondary">(SMTP Support)</span>
+<hr />
+<texqr-list-sender
+  [senders]="senders"
+  (delete)="onDelete($event)"
+></texqr-list-sender>
+<router-outlet></router-outlet>

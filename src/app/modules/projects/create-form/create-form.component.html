@@ -1,0 +1,62 @@
+<form [formGroup]="form">
+  <div class="mb-3 row">
+    <div class="col-10">
+      <label for="projectName" class="form-label">Nombre del Proyecto</label>
+      <input
+        type="text"
+        class="form-control"
+        id="projectName"
+        formControlName="name"
+      />
+    </div>
+    <div class="col">
+      <label for="prefix" class="form-label">Prefijo</label>
+      <input
+        type="text"
+        class="form-control"
+        id="prefix"
+        formControlName="code_prefix"
+      />
+    </div>
+  </div>
+  <div class="mb-3 row" formGroupName="keys">
+    <div class="col-sm-3 row">
+      <label for="date_start" class="form-label">Fecha de Inicio</label>
+      <div class="col">
+        <input
+          class="form-control"
+          type="date"
+          id="date_start"
+          formControlName="date_start"
+        />
+      </div>
+    </div>
+    <div class="col-sm-3 row">
+      <label for="date_end" class="form-label">Fecha Final</label>
+      <div class="col">
+        <input
+          class="form-control"
+          type="date"
+          id="date_end"
+          formControlName="date_end"
+        />
+      </div>
+    </div>
+    <div class="col-sm-6 row">
+      <label class="form-label">Horario</label>
+      <div class="col">
+        <input type="time" class="form-control" formControlName="time_start" />
+        <!-- <timepicker
+          formControlName="time_start"
+        ></timepicker> -->
+      </div>
+      <div class="col">
+        <input type="time" class="form-control" formControlName="time_end" />
+        <!-- <timepicker formControlName="time_end"></timepicker> -->
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="submit()">
+    {{ environment === "update" ? "Actualizar" : "Crear" }}
+  </button>
+</form>

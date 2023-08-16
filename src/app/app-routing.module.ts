@@ -4,6 +4,7 @@ import { ClientLayoutComponent } from './components/client-layout/client-layout.
 import { LoginComponent } from './modules/authentication/components/login/login.component';
 import { AuthenticationGuard } from './modules/authentication/guards/authentication.guard';
 import { LoadDataViewComponent } from './modules/pre-data/load-data-view/load-data-view.component';
+import { RootComponent } from './modules/senders/components/root/root.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -25,6 +26,13 @@ const routes: Routes = [
         component: LoadDataViewComponent,
       },
       {
+        path: 'remitentes',
+        loadChildren: () =>
+          import('./modules/senders/senders.module').then(
+            (m) => m.SendersModule
+          ),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./modules/dashboard/dashboard.module').then(
@@ -41,9 +49,22 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
       },
       {
+        path: 'plantillas',
+        loadChildren: () =>
+          import('./modules/templates/templates.module').then(
+            (m) => m.TemplatesModule
+          ),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('./modules/config/config.module').then((m) => m.ConfigModule),
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'usuarios',
+        loadChildren: () =>
+          import('./modules/users/users.module').then((m) => m.UsersModule),
         canActivate: [AuthenticationGuard],
       },
     ],
