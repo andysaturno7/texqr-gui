@@ -19,13 +19,19 @@ p {
   width: 588px;
   height: 287px;
   margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.paper-border {
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+.paper-padding {
   padding: 15px;
   padding-left: 25px;
   padding-right: 25px;
-  box-sizing: border-box;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid black;
 }
 
 .qr-container {
@@ -54,7 +60,7 @@ qr-code {
   font-weight: 550;
 }
 
-.number{
+.number {
   font-size: xx-large;
   font-weight: bolder;
 }

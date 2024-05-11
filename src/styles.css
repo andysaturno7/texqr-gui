@@ -69,7 +69,20 @@ body {
   border-radius: 12px;
   overflow: hidden;
 }
+*/
 
+.paper-border {
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+.paper-padding {
+  padding: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+/*
 .code-container img {
   border: 1px solid black;
   border-radius: 12px;
