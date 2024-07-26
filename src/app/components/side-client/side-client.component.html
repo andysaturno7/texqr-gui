@@ -28,25 +28,27 @@
     ><i class="fa fa-clone"></i> Plantillas</a
   >
   <hr />
-  <a
-    class="nav-link mt-4"
-    routerLink="usuarios"
-    (click)="onSelected()"
-    routerLinkActive="active"
-    ><i class="fa fa-user"></i> Usuarios</a
-  >
-  <a
-    class="nav-link mt-4"
-    routerLink="usuarios/roles"
-    (click)="onSelected()"
-    routerLinkActive="active"
-    ><i class="fa fa-user"></i> Roles</a
-  >
-  <a
-    class="nav-link mt-4"
-    routerLink="usuarios/permisos"
-    (click)="onSelected()"
-    routerLinkActive="active"
-    ><i class="fa fa-user"></i> Permisos</a
-  >
+  <div *ngIf="user.username === 'admin'">
+    <a
+      class="nav-link mt-4"
+      routerLink="usuarios"
+      (click)="onSelected()"
+      routerLinkActive="active"
+      ><i class="fa fa-user"></i> Usuarios</a
+    >
+    <a
+      class="nav-link mt-4"
+      routerLink="usuarios/roles"
+      (click)="onSelected()"
+      routerLinkActive="active"
+      ><i class="fa fa-user"></i> Roles</a
+    >
+    <a
+      class="nav-link mt-4"
+      routerLink="usuarios/permisos"
+      (click)="onSelected()"
+      routerLinkActive="active"
+      ><i class="fa fa-user"></i> Permisos</a
+    >
+  </div>
 </div>

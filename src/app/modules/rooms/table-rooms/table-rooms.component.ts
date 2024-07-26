@@ -20,9 +20,14 @@ export class TableRoomsComponent implements OnInit {
   columnMode = ColumnMode;
   selectionType = SelectionType;
 
-  constructor(private _room: RoomsService, private _not: NotificationsService) {}
+  constructor(
+    private _room: RoomsService,
+    private _not: NotificationsService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this.dataServer);
+  }
 
   onPage(event: PageInfo) {
     this.PageEvent.emit(event);
@@ -37,17 +42,17 @@ export class TableRoomsComponent implements OnInit {
   }
 
   deleteItem(id) {
-    if(confirm("Seguro deseas eliminar este elemento?"))
-    this._room.deleteRoom(id);
+    if (confirm('Seguro deseas eliminar este elemento?'))
+      this._room.deleteRoom(id);
   }
 
   editItem(event: any) {}
 
   exportTable() {}
 
-  async createMobileUrl(roomId: number | string) {    
+  async createMobileUrl(roomId: number | string) {
     let rmurl = await this._room.createMobileUrl(roomId);
     navigator.clipboard.writeText(rmurl);
-    this._not.showSuccess("Se ha copiado la url al clip.")
+    this._not.showSuccess('Se ha copiado la url al clip.');
   }
 }

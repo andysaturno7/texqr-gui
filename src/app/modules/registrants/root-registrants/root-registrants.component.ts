@@ -18,6 +18,7 @@ import { TemplatesService } from '../../templates/templates.service';
   styleUrls: ['./root-registrants.component.css'],
 })
 export class RootRegistrantsComponent implements OnInit, OnDestroy {
+  locationRegistroUrl;
   dataRegistrants: PaginatedData<Registrant>;
   registrantsSubscription: Subscription;
   dataRegistrantsFilter: string;
@@ -46,6 +47,8 @@ export class RootRegistrantsComponent implements OnInit, OnDestroy {
       offset: 0,
       limit: 10,
     });
+    this.locationRegistroUrl =
+      window.location.origin + '/registro?event=' + this._project.project.id;
   }
 
   ngOnInit(): void {}

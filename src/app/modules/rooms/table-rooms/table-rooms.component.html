@@ -4,7 +4,7 @@
   [rows]="dataServer.data"
   [columnMode]="columnMode.force"
   [footerHeight]="50"
-  [rowHeight]="40"
+  [rowHeight]="50"
   [selected]="selected"
   [selectionType]="selectionType.checkbox"
   [externalPaging]="true"
@@ -38,6 +38,12 @@
   </ngx-datatable-column>
   <ngx-datatable-column prop="capacity" name="Capacidad"></ngx-datatable-column>
   <ngx-datatable-column prop="createdAt" name="Creación"></ngx-datatable-column>
+  <ngx-datatable-column
+    prop="registrantsCount"
+    name="Reg"
+    [cellTemplate]="registrantsCount"
+    [width]="50"
+  ></ngx-datatable-column>
 </ngx-datatable>
 <ng-template #contextMenuTemplate let-row="row">
   <span
@@ -74,4 +80,9 @@
       <li>Gráfico de asistencia</li>
     </ul>
   </span>
+</ng-template>
+<ng-template #registrantsCount let-row="row">
+  <h5 class="text-{{ row.registrantsCount === 0 ? 'danger' : 'success' }}">
+    <b>{{ row.registrantsCount }}</b>
+  </h5>
 </ng-template>
